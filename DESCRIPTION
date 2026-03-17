@@ -8,6 +8,8 @@ Description: Provides low-level R bindings to the Anime.js JavaScript
     library (version 4), enabling the creation of browser-native SVG and
     HTML animations via the htmlwidgets framework.
 License: MIT + file LICENSE
+URL: https://github.com/long39ng/animejs
+BugReports: https://github.com/long39ng/animejs/issues
 Depends:
     R (>= 4.1.0)
 Suggests: 
