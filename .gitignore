@@ -1,0 +1,23 @@
+# R
+.Rproj.user/
+.Rhistory
+.RData
+.Ruserdata
+.httr-oauth
+.quarto
+*.tar.gz
+*.Rcheck/
+/doc/
+/Meta/
+
+# Node
+node_modules/
+pnpm-lock.yaml
+npm-debug.log*
+
+# Build artefacts
+inst/htmlwidgets/lib/anime.esm.min.js
+
+# OS
+.DS_Store
+Thumbs.db
