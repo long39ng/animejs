@@ -64,7 +64,7 @@ anime_add <- function(
 
   segment <- list(
     selector = selector,
-    props = to_js_props(props),
+    props = props,
     offset = offset
   )
   if (!is.null(duration)) {
@@ -77,7 +77,7 @@ anime_add <- function(
     segment$delay <- delay
   }
   if (!is.null(stagger)) {
-    segment$stagger <- stagger_to_js(stagger)
+    segment$stagger <- stagger
   }
 
   timeline$segments <- c(timeline$segments, list(segment))
