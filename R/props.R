@@ -1,7 +1,7 @@
 #' Specify per-property keyframes for `anime_add()`
 #'
-#' @param ... Keyframe values. Either a sequence of bare numeric values, or a
-#'   sequence of lists each with `$value` and optional `$easing` / `$duration`.
+#' @param ... Keyframe values. Either bare numeric values, or lists each with
+#'   a `$to` key and optional `$ease` and `$duration` overrides.
 #'
 #' @return An `anime_keyframes` object.
 #'
@@ -16,15 +16,14 @@
 #'   )
 #' )
 #'
-#' # Form 2: per-keyframe lists with optional easing and duration overrides
+#' # Form 2: per-keyframe lists with optional ease and duration overrides
 #' anime_add(
-#'   anime_timeline(),
 #'   selector = ".circle",
 #'   props = list(
 #'     opacity = anime_keyframes(
-#'       list(value = 0),
-#'       list(value = 1, easing = "easeOutQuad", duration = 400),
-#'       list(value = 0.5, easing = "linear", duration = 200)
+#'       list(to = 0),
+#'       list(to = 1, ease = "easeOutQuad", duration = 400),
+#'       list(to = 0.5, ease = "linear", duration = 200)
 #'     )
 #'   )
 #' )

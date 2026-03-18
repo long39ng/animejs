@@ -12,57 +12,48 @@ test_that("anime_keyframes() stores bare numeric values as list elements", {
   expect_equal(kf[[3]], 0.5)
 })
 
-test_that("to_js_props() converts anime_keyframes to a list of keyframe objects", {
-  kf <- anime_keyframes(0, 1, 0.5)
-  result <- to_js_props(list(opacity = kf))
-  expect_true(is.list(result$opacity))
-  expect_equal(result$opacity[[1]]$value, 0)
-  expect_equal(result$opacity[[2]]$value, 1)
-  expect_equal(result$opacity[[3]]$value, 0.5)
-})
-
 test_that("anime_keyframes() stores list-based keyframes as list elements", {
   kf <- anime_keyframes(
-    list(value = 0),
-    list(value = 1, easing = "easeOutQuad", duration = 400)
+    list(to = 0),
+    list(to = 1, ease = "easeOutQuad", duration = 400)
   )
   expect_s3_class(kf, "anime_keyframes")
-  expect_equal(kf[[1]]$value, 0)
-  expect_equal(kf[[2]]$value, 1)
+  expect_equal(kf[[1]]$to, 0)
+  expect_equal(kf[[2]]$to, 1)
 })
 
-test_that("anime_keyframes() preserves optional easing and duration per keyframe", {
+test_that("anime_keyframes() preserves optional ease and duration per keyframe", {
   kf <- anime_keyframes(
-    list(value = 0),
-    list(value = 1, easing = "easeOutQuad", duration = 400),
-    list(value = 0.5, easing = "linear", duration = 200)
+    list(to = 0),
+    list(to = 1, ease = "easeOutQuad", duration = 400),
+    list(to = 0.5, ease = "linear", duration = 200)
   )
-  expect_equal(kf[[2]]$easing, "easeOutQuad")
+  expect_equal(kf[[2]]$ease, "easeOutQuad")
   expect_equal(kf[[2]]$duration, 400)
-  expect_equal(kf[[3]]$easing, "linear")
+  expect_equal(kf[[3]]$ease, "linear")
   expect_equal(kf[[3]]$duration, 200)
 })
 
-test_that("to_js_props() passes list-based keyframes through unchanged", {
+test_that("to_js_props() passes list-based keyframes through with correct keys", {
   kf <- anime_keyframes(
-    list(value = 0),
-    list(value = 1, easing = "easeOutQuad", duration = 400)
+    list(to = 0),
+    list(to = 1, ease = "easeOutQuad", duration = 400)
   )
   result <- to_js_props(list(opacity = kf))
-  expect_equal(result$opacity[[1]], list(value = 0))
-  expect_equal(result$opacity[[2]]$value, 1)
-  expect_equal(result$opacity[[2]]$easing, "easeOutQuad")
+  expect_equal(result$opacity[[1]], list(to = 0))
+  expect_equal(result$opacity[[2]]$to, 1)
+  expect_equal(result$opacity[[2]]$ease, "easeOutQuad")
   expect_equal(result$opacity[[2]]$duration, 400)
 })
 
 test_that("to_js_props() handles mixed bare and list keyframes", {
   kf <- anime_keyframes(
     0,
-    list(value = 1, easing = "easeOutQuad")
+    list(to = 1, ease = "easeOutQuad")
   )
   result <- to_js_props(list(opacity = kf))
-  expect_equal(result$opacity[[1]], list(value = 0))
-  expect_equal(result$opacity[[2]]$easing, "easeOutQuad")
+  expect_equal(result$opacity[[1]], list(to = 0))
+  expect_equal(result$opacity[[2]]$ease, "easeOutQuad")
 })
 
 # anime_from_to() ---------------------------------------------------------

@@ -83,7 +83,7 @@ prop_value_to_js <- function(value) {
   } else if (inherits(value, "anime_keyframes")) {
     # Each element is one keyframe value (numeric or list with $value + opts).
     lapply(value, function(v) {
-      if (is.numeric(v)) list(value = v) else v
+      if (is.numeric(v)) list(to = v) else v
     })
   } else if (
     is.numeric(value) &&

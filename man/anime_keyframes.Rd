@@ -7,8 +7,8 @@
 anime_keyframes(...)
 }
 \arguments{
-\item{...}{Keyframe values. Either a sequence of bare numeric values, or a
-sequence of lists each with \verb{$value} and optional \verb{$easing} / \verb{$duration}.}
+\item{...}{Keyframe values. Either bare numeric values, or lists each with
+a \verb{$to} key and optional \verb{$ease} and \verb{$duration} overrides.}
 }
 \value{
 An \code{anime_keyframes} object.
@@ -27,15 +27,14 @@ anime_add(
   )
 )
 
-# Form 2: per-keyframe lists with optional easing and duration overrides
+# Form 2: per-keyframe lists with optional ease and duration overrides
 anime_add(
-  anime_timeline(),
   selector = ".circle",
   props = list(
     opacity = anime_keyframes(
-      list(value = 0),
-      list(value = 1, easing = "easeOutQuad", duration = 400),
-      list(value = 0.5, easing = "linear", duration = 200)
+      list(to = 0),
+      list(to = 1, ease = "easeOutQuad", duration = 400),
+      list(to = 0.5, ease = "linear", duration = 200)
     )
   )
 )
