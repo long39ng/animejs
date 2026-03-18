@@ -41,7 +41,7 @@ animejs_widget <- function(
 
 #' Render an anime_timeline as an htmlwidget
 #'
-#' Selialises an [aniem_timeline()] object to JSON and wraps it together with
+#' Selialises an [anime_timeline()] object to JSON and wraps it together with
 #' an SVG payload in an htmlwidget.
 #'
 #' @param timeline An `anime_timeline` object produced by [anime_timeline()].

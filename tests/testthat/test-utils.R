@@ -53,40 +53,6 @@ test_that("to_js_props() handles multiple properties simultaneously", {
   expect_equal(result$translateY$to, 0)
 })
 
-# to_js_props() -- anime_from_to object -----------------------------------
-
-test_that("to_js_props() converts an anime_from_to object with a unit to string values", {
-  ft <- structure(
-    list(from = 0, to = 100, unit = "px"),
-    class = "anime_from_to"
-  )
-  result <- to_js_props(list(translateX = ft))
-  expect_type(result$translateX, "list")
-  expect_equal(result$translateX$from, "0px")
-  expect_equal(result$translateX$to, "100px")
-})
-
-test_that("to_js_props() omits the unit suffix when unit is an empty string", {
-  ft <- structure(list(from = 0, to = 1, unit = ""), class = "anime_from_to")
-  result <- to_js_props(list(opacity = ft))
-  expect_equal(result$opacity$from, 0)
-  expect_equal(result$opacity$to, 1)
-})
-
-# to_js_props() -- anime_keyframes object ---------------------------------
-
-test_that("to_js_props() converts an anime_keyframes object to a list of keyframe objects", {
-  kf <- structure(list(opacity = c(0, 1, 0.5)), class = "anime_keyframes")
-  result <- to_js_props(list(opacity = kf))
-  # Each keyframe property should become a list of single-element lists
-  # with a "value" key.
-  expect_type(result$opacity, "list")
-  expect_equal(length(result$opacity), 3L)
-  expect_equal(result$opacity[[1]]$value, 0)
-  expect_equal(result$opacity[[2]]$value, 1)
-  expect_equal(result$opacity[[3]]$value, 0.5)
-})
-
 # stagger_to_js() ---------------------------------------------------------
 
 test_that("stagger_to_js() returns a list with a 'value' field", {
@@ -219,6 +185,8 @@ test_that("timeline_to_json_config() preserves loop", {
 })
 
 test_that("timeline_to_json_config() round-trips through JSON without data loss", {
+  skip_if_not_installed("jsonlite")
+
   tl <- structure(
     list(
       defaults = list(

@@ -35,7 +35,7 @@ needs to explicitly discover and interact with a specific widget instance.}
 An object of class \code{c("animejs", "htmlwidget")}.
 }
 \description{
-Selialises an \code{\link[=aniem_timeline]{aniem_timeline()}} object to JSON and wraps it together with
+Selialises an \code{\link[=anime_timeline]{anime_timeline()}} object to JSON and wraps it together with
 an SVG payload in an htmlwidget.
 }
 \examples{

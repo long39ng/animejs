@@ -7,7 +7,7 @@
 #'
 #' @param timeline An `anime_timeline` object.
 #' @return A plain list suitable for `jsonlite::toJSON(auto_unbox = TRUE)`.
-#' @noRd
+#' @keywords internal
 timeline_to_json_config <- function(timeline) {
   stopifnot(inherits(timeline, "anime_timeline"))
 
@@ -61,30 +61,15 @@ timeline_to_json_config <- function(timeline) {
 #'
 #' @param props Named list of property animations as supplied to [anime_add()].
 #' @return A named list ready for `jsonlite::toJSON()`.
-#' @noRd
+#' @keywords internal
 to_js_props <- function(props) {
   if (!is.list(props)) {
     rlang::abort("`props` must be a named list.")
   }
 
-  is_kf <- vapply(props, inherits, logical(1L), "anime_keyframes")
-
-  # Non-keyframe properties: one input key -> one output key
-  plain <- lapply(props[!is_kf], prop_value_to_js)
-
-  # Keyframe properties: one input key -> multiple output keys.
-  # prop_value_to_js() returns a named list of per-property keyframe lists;
-  # unlist one level to merge them into the top-level result.
-  expanded <- unlist(
-    lapply(props[is_kf], prop_value_to_js),
-    recursive = FALSE
-  )
-
-  c(plain, expanded)
+  lapply(props, prop_value_to_js)
 }
 
-#' Convert one property value to its JS-serialisable form
-#' @noRd
 prop_value_to_js <- function(value) {
   if (inherits(value, "anime_from_to")) {
     if (is.null(value$unit) || nzchar(value$unit)) {
@@ -96,12 +81,9 @@ prop_value_to_js <- function(value) {
       list(from = value$from, to = value$to)
     }
   } else if (inherits(value, "anime_keyframes")) {
-    # Each named element is a vector of keyframe values for one property.
-    # Flatten to a list of per-keyframe objects keyed by property name.
-    # anime_keyframes stores multiple properties; return them as a named list
-    # of keyframe value lists.
-    lapply(value, function(vals) {
-      lapply(vals, function(v) list(value = v))
+    # Each element is one keyframe value (numeric or list with $value + opts).
+    lapply(value, function(v) {
+      if (is.numeric(v)) list(value = v) else v
     })
   } else if (
     is.numeric(value) &&
@@ -123,7 +105,7 @@ prop_value_to_js <- function(value) {
 #'
 #' @param stagger An `anime_stagger` object.
 #' @return A plain list.
-#' @noRd
+#' @keywords internal
 stagger_to_js <- function(stagger) {
   stopifnot(inherits(stagger, "anime_stagger"))
 
@@ -151,7 +133,7 @@ stagger_to_js <- function(stagger) {
 #' @param x Value to validate.
 #' @param arg Argument name used in error messages.
 #' @return `x` invisibly if valid.
-#' @noRd
+#' @keywords internal
 validate_duration <- function(x, arg = "duration") {
   if (!is.numeric(x) || length(x) != 1L) {
     rlang::abort(
