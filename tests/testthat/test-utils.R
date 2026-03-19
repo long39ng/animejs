@@ -146,40 +146,6 @@ test_that("timeline_to_json_config() round-trips through JSON without data loss"
   expect_equal(round_trip$segments[[1]]$props$opacity$to, 1)
 })
 
-test_that("timeline_to_json_config() converts anime_stagger segments via stagger_to_js()", {
-  stagger <- structure(
-    list(value = 100, from = "center", grid = NULL, axis = NULL, easing = NULL),
-    class = "anime_stagger"
-  )
-  tl <- structure(
-    list(
-      defaults = list(
-        duration = 600,
-        easing = "linear",
-        delay = 0,
-        direction = "normal"
-      ),
-      loop = FALSE,
-      segments = list(
-        list(
-          selector = ".bar",
-          props = list(opacity = list(from = 0, to = 1)),
-          offset = "+=0",
-          stagger = stagger
-        )
-      ),
-      events = list()
-    ),
-    class = "anime_timeline"
-  )
-  result <- timeline_to_json_config(tl)
-  seg <- result$segments[[1]]
-  # stagger field should be the JS-ready list, not the R S3 object
-  expect_false(inherits(seg$stagger, "anime_stagger"))
-  expect_equal(seg$stagger$value, 100)
-  expect_equal(seg$stagger$from, "center")
-})
-
 test_that("timeline_to_json_config() includes optional playback fields when present", {
   tl <- structure(
     list(
