@@ -48,7 +48,7 @@ anime_timeline <- function(
 #' @param delay Overrides the timeline default for this segment.
 #' @param stagger An `anime_stagger` object for per-element delay offsets.
 #'
-#' @return The modified `anime_timeline` object (invisibly).
+#' @return The modified `anime_timeline` object.
 #' @export
 anime_add <- function(
   timeline,

@@ -66,10 +66,11 @@ anime_render <- function(
 ) {
   if (!inherits(timeline, "anime_timeline")) {
     rlang::abort(
-      "`timeline` must be an `anime_timeline` object ",
-      "(produced by anime_timeline()), not ",
-      paste(class(timeline), collapse = "/"),
-      "."
+      paste0(
+        "`timeline` must be an `anime_timeline` object, not ",
+        class(timeline)[[1L]],
+        "."
+      )
     )
   }
 

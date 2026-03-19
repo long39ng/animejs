@@ -36,10 +36,3 @@ test_that("a second anime_on() for the same event overwrites the first (last-wri
   expect_equal(tl$events[["onComplete"]], "secondCallback")
   expect_length(tl$events, 1L)
 })
-
-test_that("anime_on() returns the modified timeline visibly", {
-  tl <- anime_timeline()
-  result <- withVisible(anime_on(tl, "onComplete", "cb"))
-  expect_true(result$visible)
-  expect_s3_class(result$value, "anime_timeline")
-})

@@ -19,8 +19,7 @@ anime_on(
 \item{callback}{Character scalar. Name of the global JS function to invoke.}
 }
 \value{
-The modified \code{anime_timeline} object (visibly), suitable for
-continued piping.
+The modified \code{anime_timeline} object.
 }
 \description{
 The callback must be the name of a globally scoped JavaScript function

@@ -11,8 +11,7 @@
 #'   `"onLoop"`, matching the Anime.js v4 timeline callback API.
 #' @param callback Character scalar. Name of the global JS function to invoke.
 #'
-#' @return The modified `anime_timeline` object (visibly), suitable for
-#'   continued piping.
+#' @return The modified `anime_timeline` object.
 #'
 #' @examples
 #' \dontrun{

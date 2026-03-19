@@ -36,7 +36,7 @@ segment ends; a bare number is an absolute position in ms.}
 \item{stagger}{An \code{anime_stagger} object for per-element delay offsets.}
 }
 \value{
-The modified \code{anime_timeline} object (invisibly).
+The modified \code{anime_timeline} object.
 }
 \description{
 Pipe-friendly. Each call appends one segment: a set of CSS property
