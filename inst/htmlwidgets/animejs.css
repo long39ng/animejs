@@ -8,12 +8,7 @@
 }
 
 .animejs-controls button {
-	background: none;
 	width: 32px;
-	border: 1px solid #888;
-	border-radius: 3px;
-	padding: 2px 8px;
-	cursor: pointer;
 }
 
 .animejs-controls input[type="range"] {
