@@ -11,10 +11,7 @@ HTMLWidgets.widget({
 				// 2. Build and play the Anime.js timeline.
 				const tl = buildTimeline(el, x.config);
 				if (x.config.controls) {
-					attachControls(el, tl);
-				}
-				if (x.config.autoplay !== false) {
-					tl.play();
+					attachControls(el, tl, x.config.autoplay);
 				}
 			},
 
@@ -34,7 +31,7 @@ function buildTimeline(el, config) {
 	const tl = anime.createTimeline({
 		defaults: defaults,
 		loop: config.loop ?? false,
-		autoplay: false,
+		autoplay: config.autoplay ?? false,
 	});
 
 	for (const segment of config.segments || []) {
@@ -92,58 +89,57 @@ function resolveStagger(s) {
 // attachControls
 // Injects a minimal play / pause / seek bar beneath the SVG.
 // ---------------------------------------------------------------------------
-function attachControls(el, tl) {
+function attachControls(el, tl, autoplay) {
 	const bar = document.createElement("div");
 	bar.className = "animejs-controls";
-	bar.style.cssText = [
-		"display:flex",
-		"align-items:center",
-		"gap:8px",
-		"padding:4px 0",
-		"font-family:sans-serif",
-		"font-size:12px",
-	].join(";");
 
 	const btn = document.createElement("button");
-	btn.textContent = "▶";
-	btn.style.cssText = "cursor:pointer;padding:2px 6px";
+	btn.textContent = autoplay ? "⏸" : "▶";
 
 	const scrubber = document.createElement("input");
 	scrubber.type = "range";
 	scrubber.min = 0;
 	scrubber.max = 1000;
 	scrubber.value = 0;
-	scrubber.style.cssText = "flex:1";
-
-	let playing = false;
-
-	btn.addEventListener("click", () => {
-		if (playing) {
-			tl.pause();
-			btn.textContent = "▶";
-		} else {
-			tl.play();
-			btn.textContent = "⏸";
-		}
-		playing = !playing;
-	});
-
-	scrubber.addEventListener("input", () => {
-		const fraction = scrubber.value / 1000;
-		tl.seek(tl.duration * fraction);
-	});
-
-	// Keep the scrubber in sync while the timeline is playing.
-	tl.onUpdate = function (self) {
-		scrubber.value = Math.round((self.currentTime / self.duration) * 1000);
-	};
-
-	tl.onComplete = function () {
-		playing = false;
-		btn.textContent = "▶";
-	};
 
 	bar.appendChild(btn);
 	bar.appendChild(scrubber);
 	el.appendChild(bar);
+
+	function syncBtn() {
+		btn.textContent = tl.paused ? "▶" : "⏸";
+	}
+
+	// Keep the scrubber in sync while the timeline is playing.
+	tl.onUpdate = function (self) {
+		scrubber.value = Math.round(self.iterationProgress * 1000);
+	};
+
+	tl.onComplete = function () {
+		scrubber.value = 0;
+		syncBtn();
+	};
+
+	btn.addEventListener("click", () => {
+		if (tl.paused) {
+			if (tl.completed) {
+				// Rewind before replaying; tl.play() alone does not reset position.
+				tl.seek(0);
+			}
+			tl.play();
+		} else {
+			tl.pause();
+		}
+		syncBtn();
+	});
+
+	scrubber.addEventListener("input", () => {
+		const fraction = scrubber.value / 1000;
+		tl.seek(tl.iterationDuration * fraction);
+
+		// Seeking to a mid-point after completion un-completes the timeline.
+		if (tl.completed) {
+			tl.completed = false;
+		}
+	});
 }
