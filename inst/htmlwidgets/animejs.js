@@ -41,7 +41,7 @@ function buildTimeline(el, config) {
 
 		// Per-segment overrides supplement the timeline defaults.
 		if (segment.duration != null) props.duration = segment.duration;
-		if (segment.easing != null) props.easing = segment.easing;
+		if (segment.ease != null) props.ease = segment.ease;
 		if (segment.delay != null) {
 			// If a stagger object is present, delay is encoded there; otherwise
 			// apply as a flat delay.
@@ -77,7 +77,7 @@ function buildTimeline(el, config) {
 function resolveStagger(s) {
 	const opts = {};
 	if (s.from != null) opts.from = s.from;
-	if (s.easing != null) opts.easing = s.easing;
+	if (s.ease != null) opts.ease = s.ease;
 	if (s.grid != null && s.grid.length === 2) {
 		opts.grid = s.grid;
 		if (s.axis != null) opts.axis = s.axis;

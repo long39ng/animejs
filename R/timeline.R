@@ -1,7 +1,7 @@
 #' Initialise an Anime.js timeline
 #'
 #' @param duration Default duration in milliseconds for all segments.
-#' @param easing Default easing for all segments.
+#' @param ease Default easing for all segments.
 #' @param loop Logical. Whether the timeline loops indefinitely.
 #' @param delay Default delay in milliseconds between segments.
 #' @param direction One of `"normal"`, `"reverse"`, `"alternate"`.
@@ -10,7 +10,7 @@
 #' @export
 anime_timeline <- function(
   duration = 1000,
-  easing = "easeInOutQuad",
+  ease = "easeInOutQuad",
   loop = FALSE,
   delay = 0,
   direction = "normal"
@@ -19,7 +19,7 @@ anime_timeline <- function(
     list(
       defaults = list(
         duration = duration,
-        easing = easing,
+        ease = ease,
         delay = delay,
         direction = direction
       ),
@@ -44,7 +44,7 @@ anime_timeline <- function(
 #' @param offset Timeline offset. `"+=N"` means N ms after the previous
 #'   segment ends; a bare number is an absolute position in ms.
 #' @param duration Overrides the timeline default for this segment.
-#' @param easing Overrides the timeline default for this segment.
+#' @param ease Overrides the timeline default for this segment.
 #' @param delay Overrides the timeline default for this segment.
 #' @param stagger An `anime_stagger` object for per-element delay offsets.
 #'
@@ -56,7 +56,7 @@ anime_add <- function(
   props,
   offset = "+=0",
   duration = NULL,
-  easing = NULL,
+  ease = NULL,
   delay = NULL,
   stagger = NULL
 ) {
@@ -70,8 +70,8 @@ anime_add <- function(
   if (!is.null(duration)) {
     segment$duration <- duration
   }
-  if (!is.null(easing)) {
-    segment$easing <- easing
+  if (!is.null(ease)) {
+    segment$ease <- ease
   }
   if (!is.null(delay)) {
     segment$delay <- delay

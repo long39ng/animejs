@@ -10,7 +10,7 @@ anime_add(
   props,
   offset = "+=0",
   duration = NULL,
-  easing = NULL,
+  ease = NULL,
   delay = NULL,
   stagger = NULL
 )
@@ -29,7 +29,7 @@ segment ends; a bare number is an absolute position in ms.}
 
 \item{duration}{Overrides the timeline default for this segment.}
 
-\item{easing}{Overrides the timeline default for this segment.}
+\item{ease}{Overrides the timeline default for this segment.}
 
 \item{delay}{Overrides the timeline default for this segment.}
 

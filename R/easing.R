@@ -1,7 +1,7 @@
 #' Built-in Anime.js v4 easing identifiers
 #'
 #' A character vector of all named easing functions supported by Anime.js v4.
-#' Pass any element as the `easing` argument to [anime_timeline()],
+#' Pass any element as the `ease` argument to [anime_timeline()],
 #' [anime_add()], or [anime_playback()]. For parametric easings use
 #' [anime_easing_bezier()] or [anime_easing_spring()].
 #'

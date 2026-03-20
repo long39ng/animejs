@@ -32,8 +32,8 @@ test_that("to_js_props() passes through a plain numeric scalar unchanged", {
 })
 
 test_that("to_js_props() passes through a plain character scalar unchanged", {
-  result <- to_js_props(list(easing = "linear"))
-  expect_equal(result$easing, "linear")
+  result <- to_js_props(list(ease = "linear"))
+  expect_equal(result$ease, "linear")
 })
 
 # to_js_props() -- length-2 numeric vector treated as from/to -------------
@@ -60,7 +60,7 @@ test_that("timeline_to_json_config() returns a list", {
     list(
       defaults = list(
         duration = 1000,
-        easing = "linear",
+        ease = "linear",
         delay = 0,
         direction = "normal"
       ),
@@ -79,7 +79,7 @@ test_that("timeline_to_json_config() preserves defaults", {
     list(
       defaults = list(
         duration = 800,
-        easing = "easeOutElastic",
+        ease = "easeOutElastic",
         delay = 0,
         direction = "normal"
       ),
@@ -91,7 +91,7 @@ test_that("timeline_to_json_config() preserves defaults", {
   )
   result <- timeline_to_json_config(tl)
   expect_equal(result$defaults$duration, 800)
-  expect_equal(result$defaults$easing, "easeOutElastic")
+  expect_equal(result$defaults$ease, "easeOutElastic")
 })
 
 test_that("timeline_to_json_config() preserves loop", {
@@ -99,7 +99,7 @@ test_that("timeline_to_json_config() preserves loop", {
     list(
       defaults = list(
         duration = 1000,
-        easing = "linear",
+        ease = "linear",
         delay = 0,
         direction = "normal"
       ),
@@ -120,7 +120,7 @@ test_that("timeline_to_json_config() round-trips through JSON without data loss"
     list(
       defaults = list(
         duration = 1000,
-        easing = "linear",
+        ease = "linear",
         delay = 0,
         direction = "normal"
       ),
@@ -151,7 +151,7 @@ test_that("timeline_to_json_config() includes optional playback fields when pres
     list(
       defaults = list(
         duration = 1000,
-        easing = "linear",
+        ease = "linear",
         delay = 0,
         direction = "normal"
       ),

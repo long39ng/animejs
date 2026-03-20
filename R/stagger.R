@@ -9,7 +9,7 @@
 #' @param grid Integer vector of length 2 (`c(rows, cols)`) for 2D grid
 #'   stagger.
 #' @param axis One of `"x"`, `"y"`. Used together with `grid`.
-#' @param easing Easing applied to the stagger distribution itself.
+#' @param ease Easing applied to the stagger distribution itself.
 #'
 #' @return An `anime_stagger` object.
 #'
@@ -23,10 +23,10 @@ anime_stagger <- function(
   from = "first",
   grid = NULL,
   axis = NULL,
-  easing = NULL
+  ease = NULL
 ) {
   structure(
-    list(value = value, from = from, grid = grid, axis = axis, easing = easing),
+    list(value = value, from = from, grid = grid, axis = axis, ease = ease),
     class = "anime_stagger"
   )
 }

@@ -13,7 +13,7 @@ test_that("anime_stagger() defaults are correct", {
   expect_equal(s$from, "first")
   expect_null(s$grid)
   expect_null(s$axis)
-  expect_null(s$easing)
+  expect_null(s$ease)
 })
 
 test_that("anime_stagger() stores all parameters when provided", {
@@ -22,12 +22,12 @@ test_that("anime_stagger() stores all parameters when provided", {
     from = "center",
     grid = c(3L, 4L),
     axis = "x",
-    easing = "linear"
+    ease = "linear"
   )
   expect_equal(s$from, "center")
   expect_equal(s$grid, c(3L, 4L))
   expect_equal(s$axis, "x")
-  expect_equal(s$easing, "linear")
+  expect_equal(s$ease, "linear")
 })
 
 test_that("stagger_to_js() produces correct list for simple stagger", {
@@ -53,7 +53,7 @@ test_that("stagger_to_js() includes grid and axis when provided", {
 })
 
 test_that("stagger_to_js() includes easing when provided", {
-  s <- anime_stagger(100, easing = "easeInQuad")
+  s <- anime_stagger(100, ease = "easeInQuad")
   result <- stagger_to_js(s)
-  expect_equal(result$easing, "easeInQuad")
+  expect_equal(result$ease, "easeInQuad")
 })

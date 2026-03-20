@@ -6,7 +6,7 @@
 \usage{
 anime_timeline(
   duration = 1000,
-  easing = "easeInOutQuad",
+  ease = "easeInOutQuad",
   loop = FALSE,
   delay = 0,
   direction = "normal"
@@ -15,7 +15,7 @@ anime_timeline(
 \arguments{
 \item{duration}{Default duration in milliseconds for all segments.}
 
-\item{easing}{Default easing for all segments.}
+\item{ease}{Default easing for all segments.}
 
 \item{loop}{Logical. Whether the timeline loops indefinitely.}
 

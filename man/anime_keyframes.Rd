@@ -29,6 +29,7 @@ anime_add(
 
 # Form 2: per-keyframe lists with optional ease and duration overrides
 anime_add(
+  anime_timeline(),
   selector = ".circle",
   props = list(
     opacity = anime_keyframes(

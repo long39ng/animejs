@@ -12,7 +12,7 @@ ANIME_EASINGS
 }
 \description{
 A character vector of all named easing functions supported by Anime.js v4.
-Pass any element as the \code{easing} argument to \code{\link[=anime_timeline]{anime_timeline()}},
+Pass any element as the \code{ease} argument to \code{\link[=anime_timeline]{anime_timeline()}},
 \code{\link[=anime_add]{anime_add()}}, or \code{\link[=anime_playback]{anime_playback()}}. For parametric easings use
 \code{\link[=anime_easing_bezier]{anime_easing_bezier()}} or \code{\link[=anime_easing_spring]{anime_easing_spring()}}.
 }

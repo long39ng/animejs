@@ -21,8 +21,8 @@ timeline_to_json_config <- function(timeline) {
     if (!is.null(seg$duration)) {
       out$duration <- seg$duration
     }
-    if (!is.null(seg$easing)) {
-      out$easing <- seg$easing
+    if (!is.null(seg$ease)) {
+      out$ease <- seg$ease
     }
     if (!is.null(seg$delay)) {
       out$delay <- seg$delay
@@ -121,8 +121,8 @@ stagger_to_js <- function(stagger) {
   if (!is.null(stagger$axis)) {
     out$axis <- stagger$axis
   }
-  if (!is.null(stagger$easing)) {
-    out$easing <- stagger$easing
+  if (!is.null(stagger$ease)) {
+    out$ease <- stagger$ease
   }
 
   out

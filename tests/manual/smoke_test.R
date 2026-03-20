@@ -14,7 +14,7 @@ svg_src <- '
 
 anime_timeline(
   duration = 800,
-  easing = "easeOutElastic",
+  ease = "easeOutElastic",
   loop = TRUE
 ) |>
   # 1. anime_from_to: staggered entrance of circles
@@ -45,7 +45,7 @@ anime_timeline(
     selector = anime_target_class("bar"),
     props = list(width = anime_from_to(0, 120, unit = "px")),
     stagger = anime_stagger(100, from = "first"),
-    easing = "easeOutCubic",
+    ease = "easeOutCubic",
     offset = "+=0"
   ) |>
   # 4. Playback controls + autoplay

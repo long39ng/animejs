@@ -4,7 +4,7 @@
 \alias{anime_stagger}
 \title{Create a stagger configuration for per-element delay offsets}
 \usage{
-anime_stagger(value, from = "first", grid = NULL, axis = NULL, easing = NULL)
+anime_stagger(value, from = "first", grid = NULL, axis = NULL, ease = NULL)
 }
 \arguments{
 \item{value}{Numeric. Base delay in milliseconds between each element.}
@@ -17,7 +17,7 @@ stagger.}
 
 \item{axis}{One of \code{"x"}, \code{"y"}. Used together with \code{grid}.}
 
-\item{easing}{Easing applied to the stagger distribution itself.}
+\item{ease}{Easing applied to the stagger distribution itself.}
 }
 \value{
 An \code{anime_stagger} object.
