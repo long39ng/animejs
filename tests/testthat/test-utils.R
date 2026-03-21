@@ -61,8 +61,7 @@ test_that("timeline_to_json_config() returns a list", {
       defaults = list(
         duration = 1000,
         ease = "linear",
-        delay = 0,
-        direction = "normal"
+        delay = 0
       ),
       loop = FALSE,
       segments = list(),
@@ -80,8 +79,7 @@ test_that("timeline_to_json_config() preserves defaults", {
       defaults = list(
         duration = 800,
         ease = "outElastic",
-        delay = 0,
-        direction = "normal"
+        delay = 0
       ),
       loop = FALSE,
       segments = list(),
@@ -100,8 +98,7 @@ test_that("timeline_to_json_config() preserves loop", {
       defaults = list(
         duration = 1000,
         ease = "linear",
-        delay = 0,
-        direction = "normal"
+        delay = 0
       ),
       loop = TRUE,
       segments = list(),
@@ -121,8 +118,7 @@ test_that("timeline_to_json_config() round-trips through JSON without data loss"
       defaults = list(
         duration = 1000,
         ease = "linear",
-        delay = 0,
-        direction = "normal"
+        delay = 0
       ),
       loop = FALSE,
       segments = list(
@@ -152,13 +148,12 @@ test_that("timeline_to_json_config() includes optional playback fields when pres
       defaults = list(
         duration = 1000,
         ease = "linear",
-        delay = 0,
-        direction = "normal"
+        delay = 0
       ),
       loop = FALSE,
       autoplay = FALSE,
       controls = TRUE,
-      direction = "alternate",
+      alternate = TRUE,
       segments = list(),
       events = list()
     ),

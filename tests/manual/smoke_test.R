@@ -52,7 +52,7 @@ anime_timeline(
   anime_playback(
     autoplay = TRUE,
     loop = TRUE,
-    direction = "alternate",
+    alternate = TRUE,
     controls = TRUE
   ) |>
   anime_render(svg = svg_src)

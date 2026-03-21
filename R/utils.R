@@ -49,8 +49,11 @@ timeline_to_json_config <- function(timeline) {
   if (!is.null(timeline$controls)) {
     config$controls <- timeline$controls
   }
-  if (!is.null(timeline$direction)) {
-    config$direction <- timeline$direction
+  if (isTRUE(timeline$reversed)) {
+    config$reversed <- TRUE
+  }
+  if (isTRUE(timeline$alternate)) {
+    config$alternate <- TRUE
   }
 
   config

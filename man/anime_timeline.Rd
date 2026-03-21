@@ -4,24 +4,17 @@
 \alias{anime_timeline}
 \title{Initialise an Anime.js timeline}
 \usage{
-anime_timeline(
-  duration = 1000,
-  ease = anime_easing(),
-  loop = FALSE,
-  delay = 0,
-  direction = "normal"
-)
+anime_timeline(duration = 1000, ease = anime_easing(), delay = 0, loop = FALSE)
 }
 \arguments{
 \item{duration}{Default duration in milliseconds for all segments.}
 
 \item{ease}{Default easing for all segments.}
 
-\item{loop}{Logical. Whether the timeline loops indefinitely.}
-
 \item{delay}{Default delay in milliseconds between segments.}
 
-\item{direction}{One of \code{"normal"}, \code{"reverse"}, \code{"alternate"}.}
+\item{loop}{Logical or integer. \code{FALSE} for no looping, \code{TRUE} for infinite
+looping, or a positive integer for a fixed number of iterations.}
 }
 \value{
 An \code{anime_timeline} object.

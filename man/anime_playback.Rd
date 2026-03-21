@@ -8,7 +8,8 @@ anime_playback(
   timeline,
   autoplay = TRUE,
   loop = FALSE,
-  direction = c("normal", "reverse", "alternate"),
+  reversed = FALSE,
+  alternate = FALSE,
   controls = FALSE
 )
 }
@@ -17,17 +18,23 @@ anime_playback(
 
 \item{autoplay}{Logical. Start playing immediately on load.}
 
-\item{loop}{Logical. Whether the timeline loops indefinitely.}
+\item{loop}{Logical or integer. \code{FALSE} for no looping, \code{TRUE} for infinite
+looping, or a positive integer for a fixed number of iterations.}
 
-\item{direction}{One of \code{"normal"}, \code{"reverse"}, \code{"alternate"}.}
+\item{reversed}{Logical. Play the timeline in reverse from the end.}
+
+\item{alternate}{Logical. Alternate direction on each iteration (requires
+\code{loop} to be \code{TRUE} or a positive integer to have any visible effect).}
 
 \item{controls}{Logical. Inject a play/pause/seek control bar into the
 widget container.}
 }
 \value{
-The modified \code{anime_timeline} object (visibly).
+The modified \code{anime_timeline} object.
 }
 \description{
 Sets autoplay, loop, direction, and optional controls UI on an
-\code{anime_timeline}.
+\code{anime_timeline}. Calling this function overwrites any playback settings
+already on the timeline (including the \code{loop} value set in
+\code{\link[=anime_timeline]{anime_timeline()}}).
 }

@@ -70,7 +70,9 @@ function buildTimeline(el, config) {
 	const tl = anime.createTimeline({
 		defaults: defaults,
 		loop: config.loop ?? false,
-		autoplay: config.autoplay ?? false,
+		autoplay: config.autoplay ?? true,
+		reversed: config.reversed ?? false,
+		alternate: config.alternate ?? false,
 	});
 
 	for (const segment of config.segments || []) {

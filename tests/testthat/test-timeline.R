@@ -8,13 +8,11 @@ test_that("anime_timeline() stores defaults correctly", {
     duration = 500,
     ease = "linear",
     loop = TRUE,
-    delay = 100,
-    direction = "reverse"
+    delay = 100
   )
   expect_equal(tl$defaults$duration, 500)
   expect_equal(tl$defaults$ease, "linear")
   expect_equal(tl$defaults$delay, 100)
-  expect_equal(tl$defaults$direction, "reverse")
   expect_true(tl$loop)
 })
 

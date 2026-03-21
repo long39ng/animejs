@@ -1,38 +1,32 @@
-test_that("anime_playback() sets autoplay on the timeline", {
-  tl <- anime_timeline()
-  result <- anime_playback(tl, autoplay = FALSE)
-  expect_false(result$autoplay)
+test_that("anime_playback() sets autoplay, loop, controls", {
+  tl <- anime_timeline() |>
+    anime_playback(autoplay = TRUE, loop = TRUE, controls = TRUE)
 
-  result2 <- anime_playback(tl, autoplay = TRUE)
-  expect_true(result2$autoplay)
+  expect_true(tl$autoplay)
+  expect_true(tl$loop)
+  expect_true(tl$controls)
 })
 
-test_that("anime_playback() sets loop on the timeline", {
-  tl <- anime_timeline()
-  result <- anime_playback(tl, loop = TRUE)
-  expect_true(result$loop)
+test_that("anime_playback() sets reversed and alternate flags", {
+  tl_rev <- anime_timeline() |> anime_playback(reversed = TRUE)
+  expect_true(tl_rev$reversed)
+  expect_false(isTRUE(tl_rev$alternate))
+
+  tl_alt <- anime_timeline() |> anime_playback(alternate = TRUE, loop = TRUE)
+  expect_true(tl_alt$alternate)
+  expect_false(isTRUE(tl_alt$reversed))
 })
 
-test_that("anime_playback() sets direction on the timeline", {
-  tl <- anime_timeline()
-  for (dir in c("normal", "reverse", "alternate")) {
-    result <- anime_playback(tl, direction = dir)
-    expect_equal(result$direction, dir)
-  }
-})
+test_that("timeline_to_json_config() emits reversed/alternate only when TRUE", {
+  tl_plain <- anime_timeline() |> anime_playback()
+  cfg_plain <- timeline_to_json_config(tl_plain)
+  expect_null(cfg_plain$reversed)
+  expect_null(cfg_plain$alternate)
 
-test_that("anime_playback() rejects invalid direction values", {
-  tl <- anime_timeline()
-  expect_error(
-    anime_playback(tl, direction = "sideways"),
-    regexp = "direction"
-  )
-})
-
-test_that("anime_playback() sets controls on the timeline", {
-  tl <- anime_timeline()
-  result <- anime_playback(tl, controls = TRUE)
-  expect_true(result$controls)
+  tl_rev <- anime_timeline() |> anime_playback(reversed = TRUE)
+  cfg_rev <- timeline_to_json_config(tl_rev)
+  expect_true(cfg_rev$reversed)
+  expect_null(cfg_rev$alternate)
 })
 
 test_that("anime_playback() preserves existing timeline segments and events", {

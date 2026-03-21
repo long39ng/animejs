@@ -2,26 +2,23 @@
 #'
 #' @param duration Default duration in milliseconds for all segments.
 #' @param ease Default easing for all segments.
-#' @param loop Logical. Whether the timeline loops indefinitely.
 #' @param delay Default delay in milliseconds between segments.
-#' @param direction One of `"normal"`, `"reverse"`, `"alternate"`.
+#' @inheritParams anime_playback
 #'
 #' @return An `anime_timeline` object.
 #' @export
 anime_timeline <- function(
   duration = 1000,
   ease = anime_easing(),
-  loop = FALSE,
   delay = 0,
-  direction = "normal"
+  loop = FALSE
 ) {
   structure(
     list(
       defaults = list(
         duration = duration,
         ease = ease,
-        delay = delay,
-        direction = direction
+        delay = delay
       ),
       loop = loop,
       segments = list(),
