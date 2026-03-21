@@ -1,0 +1,96 @@
+# animejs
+
+The goal of animejs is to …
+
+## Installation
+
+You can install the development version of animejs from
+[GitHub](https://github.com/) with:
+
+``` r
+# install.packages("pak")
+pak::pak("long39ng/animejs")
+```
+
+# Package index
+
+## Timeline
+
+Initialise and build an Anime.js animation timeline.
+
+- [`anime_timeline()`](https://long39ng.github.io/animejs/reference/anime_timeline.md)
+  : Initialise an Anime.js timeline
+- [`anime_add()`](https://long39ng.github.io/animejs/reference/anime_add.md)
+  : Add an animation segment to a timeline
+
+## Property Animations
+
+Describe how individual CSS or SVG properties change over time.
+
+- [`anime_from_to()`](https://long39ng.github.io/animejs/reference/anime_from_to.md)
+  : Specify a from/to property range
+- [`anime_keyframes()`](https://long39ng.github.io/animejs/reference/anime_keyframes.md)
+  : Specify per-property keyframes for an animation
+
+## Stagger
+
+Distribute animation start times across multiple elements.
+
+- [`anime_stagger()`](https://long39ng.github.io/animejs/reference/anime_stagger.md)
+  : Create a stagger configuration for per-element delay offsets
+
+## Easing
+
+Construct easing specifications for timeline defaults and per-segment
+overrides.
+
+- [`anime_easing()`](https://long39ng.github.io/animejs/reference/anime_easing.md)
+  [`anime_easing_elastic()`](https://long39ng.github.io/animejs/reference/anime_easing.md)
+  [`anime_easing_back()`](https://long39ng.github.io/animejs/reference/anime_easing.md)
+  [`anime_easing_bezier()`](https://long39ng.github.io/animejs/reference/anime_easing.md)
+  [`anime_easing_steps()`](https://long39ng.github.io/animejs/reference/anime_easing.md)
+  [`anime_easing_spring()`](https://long39ng.github.io/animejs/reference/anime_easing.md)
+  : Easing constructors
+
+## Target Selectors
+
+Build CSS selector strings that identify the elements to animate.
+
+- [`anime_target_class()`](https://long39ng.github.io/animejs/reference/anime_target_class.md)
+  : Target elements by CSS class
+- [`anime_target_css()`](https://long39ng.github.io/animejs/reference/anime_target_css.md)
+  : Target elements by an arbitrary CSS selector
+- [`anime_target_id()`](https://long39ng.github.io/animejs/reference/anime_target_id.md)
+  : Target SVG or HTML elements by a data-animejs-id attribute
+- [`anime_target_layer()`](https://long39ng.github.io/animejs/reference/anime_target_layer.md)
+  : Target all data elements belonging to a ggplot2 layer
+
+## Events
+
+Attach JavaScript callbacks to timeline lifecycle events.
+
+- [`anime_on()`](https://long39ng.github.io/animejs/reference/anime_on.md)
+  : Attach a JavaScript callback to a timeline event
+
+## Playback
+
+Control looping, direction, and interactive UI controls.
+
+- [`anime_playback()`](https://long39ng.github.io/animejs/reference/anime_playback.md)
+  : Configure timeline playback
+
+## Rendering
+
+Serialise a timeline specification and produce an htmlwidget.
+
+- [`anime_render()`](https://long39ng.github.io/animejs/reference/anime_render.md)
+  : Render an anime_timeline as an htmlwidget
+- [`animejs_widget()`](https://long39ng.github.io/animejs/reference/animejs_widget.md)
+  : Create a bare animejs htmlwidget
+
+# Articles
+
+### All vignettes
+
+- [Introduction to
+  animejs](https://long39ng.github.io/animejs/articles/animejs.md):
