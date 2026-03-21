@@ -3,6 +3,8 @@
 
 # animejs
 
+![](man/figures/README-rowing.gif)
+
 <!-- badges: start -->
 
 [![R-CMD-check](https://github.com/long39ng/animejs/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/long39ng/animejs/actions/workflows/R-CMD-check.yaml)

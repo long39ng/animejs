@@ -9,6 +9,8 @@
 *.Rcheck/
 inst/doc
 docs
+/doc/
+/Meta/
 
 # Node
 node_modules/
