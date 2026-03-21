@@ -44,7 +44,7 @@ anime_timeline(
   loop = TRUE
 ) |>
   anime_add(
-    selector = anime_target_class("circle"),
+    selector = anime_target_css("circle"),
     props = list(
       translateY = anime_from_to(-80, 0),
       opacity = anime_from_to(0, 1)
