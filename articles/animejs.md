@@ -40,7 +40,11 @@ svg_src <- '
 </svg>
 '
 
-anime_timeline(duration = 800, ease = anime_easing_elastic()) |>
+anime_timeline(
+  duration = 800,
+  ease = anime_easing_elastic(),
+  loop = TRUE
+) |>
   anime_add(
     selector = anime_target_class("circle"),
     props = list(
@@ -74,7 +78,7 @@ tl <- anime_timeline(
 ```
 
 [`anime_add()`](https://long39ng.github.io/animejs/reference/anime_add.md)
-appends one segment — a set of property animations applied to a CSS
+appends one segment – a set of property animations applied to a CSS
 selector. The `offset` argument positions the segment on the timeline:
 `"+=0"` (default) starts immediately after the previous segment;
 `"+=200"` inserts a 200 ms gap.
