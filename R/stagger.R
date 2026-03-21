@@ -14,8 +14,14 @@
 #' @return An `anime_stagger` object.
 #'
 #' @examples
+#' # Simple linear stagger, 100 ms between elements
 #' anime_stagger(100)
-#' anime_stagger(200, from = "center", grid = c(3L, 4L), axis = "x")
+#'
+#' # Stagger from centre outward
+#' anime_stagger(200, from = "center")
+#'
+#' # 2-D grid stagger along the x axis
+#' anime_stagger(50, grid = c(3, 4), axis = "x")
 #'
 #' @export
 anime_stagger <- function(
@@ -25,6 +31,20 @@ anime_stagger <- function(
   axis = NULL,
   ease = NULL
 ) {
+  if (is.character(from)) {
+    from <- rlang::arg_match(from, c("first", "last", "center"))
+  } else if (is.numeric(from)) {
+    if (length(from) != 1L || from < 0 || from != floor(from)) {
+      rlang::abort(
+        "`from` must be one of \"first\", \"last\", \"center\", or a non-negative integer index."
+      )
+    }
+  } else {
+    rlang::abort(
+      "`from` must be a character string or a non-negative integer index."
+    )
+  }
+
   structure(
     list(value = value, from = from, grid = grid, axis = axis, ease = ease),
     class = "anime_stagger"

@@ -1,0 +1,57 @@
+url: https://long39ng.github.io/animejs/
+
+template:
+  bootstrap: 5
+
+reference:
+  - title: Timeline
+    desc: >
+      Initialise and build an Anime.js animation timeline.
+    contents:
+      - anime_timeline
+      - anime_add
+
+  - title: Property Animations
+    desc: >
+      Describe how individual CSS or SVG properties change over time.
+    contents:
+      - anime_from_to
+      - anime_keyframes
+
+  - title: Stagger
+    desc: >
+      Distribute animation start times across multiple elements.
+    contents:
+      - anime_stagger
+
+  - title: Easing
+    desc: >
+      Construct easing specifications for timeline defaults and per-segment
+      overrides.
+    contents:
+      - starts_with("anime_easing")
+
+  - title: Target Selectors
+    desc: >
+      Build CSS selector strings that identify the elements to animate.
+    contents:
+      - starts_with("anime_target")
+
+  - title: Events
+    desc: >
+      Attach JavaScript callbacks to timeline lifecycle events.
+    contents:
+      - anime_on
+
+  - title: Playback
+    desc: >
+      Control looping, direction, and interactive UI controls.
+    contents:
+      - anime_playback
+
+  - title: Rendering
+    desc: >
+      Serialise a timeline specification and produce an htmlwidget.
+    contents:
+      - anime_render
+      - animejs_widget

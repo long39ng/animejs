@@ -42,3 +42,12 @@ The modified \code{anime_timeline} object.
 Pipe-friendly. Each call appends one segment: a set of CSS property
 animations applied to a target selector.
 }
+\examples{
+anime_timeline() |>
+  anime_add(
+    selector = anime_target_class("circle"),
+    props    = list(opacity = anime_from_to(0, 1)),
+    duration = 600
+  )
+
+}

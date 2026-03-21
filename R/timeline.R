@@ -5,6 +5,9 @@
 #' @param delay Default delay in milliseconds between segments.
 #' @inheritParams anime_playback
 #'
+#' @examples
+#' anime_timeline(duration = 800, ease = anime_easing())
+#'
 #' @return An `anime_timeline` object.
 #' @export
 anime_timeline <- function(
@@ -44,6 +47,14 @@ anime_timeline <- function(
 #' @param ease Overrides the timeline default for this segment.
 #' @param delay Overrides the timeline default for this segment.
 #' @param stagger An `anime_stagger` object for per-element delay offsets.
+#'
+#' @examples
+#' anime_timeline() |>
+#'   anime_add(
+#'     selector = anime_target_class("circle"),
+#'     props    = list(opacity = anime_from_to(0, 1)),
+#'     duration = 600
+#'   )
 #'
 #' @return The modified `anime_timeline` object.
 #' @export

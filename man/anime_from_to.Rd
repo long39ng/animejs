@@ -17,8 +17,10 @@ anime_from_to(from, to, unit = "")
 An \code{anime_from_to} object.
 }
 \description{
-A convenience wrapper over a plain two-element vector. Prefer this form when
-the intent should be explicit or when a CSS unit suffix is required.
+Convenience constructor for a two-value property animation that runs from
+\code{from} to \code{to}. An optional CSS unit suffix is concatenated into both
+values during serialisation (e.g. \code{100} with \code{unit = "px"} becomes
+\code{"100px"}).
 }
 \examples{
 anime_from_to(0, 1)

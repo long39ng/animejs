@@ -22,3 +22,7 @@ An \code{anime_timeline} object.
 \description{
 Initialise an Anime.js timeline
 }
+\examples{
+anime_timeline(duration = 800, ease = anime_easing())
+
+}

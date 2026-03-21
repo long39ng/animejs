@@ -14,9 +14,7 @@ A CSS selector string of the form \code{"[data-animejs-id='<id>']"}.
 }
 \description{
 The primary mechanism for targeting individual elements annotated by
-\code{svg_annotate()} (in \code{gganime}) or by hand. Scoping to the widget
-container is handled by the JavaScript binding; this function returns a
-bare attribute selector.
+\code{svg_annotate()} (in \code{gganime}) or by hand.
 }
 \examples{
 anime_target_id("c1")

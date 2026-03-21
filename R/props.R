@@ -1,4 +1,7 @@
-#' Specify per-property keyframes for `anime_add()`
+#' Specify per-property keyframes for an animation
+#'
+#' Constructs a keyframes object for use in the `props` argument of
+#' [anime_add()]. Each positional argument is one keyframe.
 #'
 #' @param ... Keyframe values. Either bare numeric values, or lists each with
 #'   a `$to` key and optional `$ease` and `$duration` overrides.
@@ -6,7 +9,7 @@
 #' @return An `anime_keyframes` object.
 #'
 #' @examples
-#' # Form 1: bare numeric keyframe values
+#' # Bare numeric keyframe values
 #' anime_add(
 #'   anime_timeline(),
 #'   selector = ".circle",
@@ -16,7 +19,7 @@
 #'   )
 #' )
 #'
-#' # Form 2: per-keyframe lists with optional ease and duration overrides
+#' # Per-keyframe lists with optional ease and duration overrides
 #' anime_add(
 #'   anime_timeline(),
 #'   selector = ".circle",
@@ -36,8 +39,10 @@ anime_keyframes <- function(...) {
 
 #' Specify a from/to property range
 #'
-#' A convenience wrapper over a plain two-element vector. Prefer this form when
-#' the intent should be explicit or when a CSS unit suffix is required.
+#' Convenience constructor for a two-value property animation that runs from
+#' `from` to `to`. An optional CSS unit suffix is concatenated into both
+#' values during serialisation (e.g. `100` with `unit = "px"` becomes
+#' `"100px"`).
 #'
 #' @param from Numeric. Starting value.
 #' @param to Numeric. Ending value.

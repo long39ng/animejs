@@ -27,7 +27,13 @@ When applied to a multi-element selector, Anime.js distributes animation
 start times across elements according to the stagger value.
 }
 \examples{
+# Simple linear stagger, 100 ms between elements
 anime_stagger(100)
-anime_stagger(200, from = "center", grid = c(3L, 4L), axis = "x")
+
+# Stagger from centre outward
+anime_stagger(200, from = "center")
+
+# 2-D grid stagger along the x axis
+anime_stagger(50, grid = c(3, 4), axis = "x")
 
 }

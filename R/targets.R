@@ -1,9 +1,7 @@
 #' Target SVG or HTML elements by a data-animejs-id attribute
 #'
 #' The primary mechanism for targeting individual elements annotated by
-#' `svg_annotate()` (in `gganime`) or by hand. Scoping to the widget
-#' container is handled by the JavaScript binding; this function returns a
-#' bare attribute selector.
+#' `svg_annotate()` (in `gganime`) or by hand.
 #'
 #' @param id Character scalar. Value of the `data-animejs-id` attribute.
 #'

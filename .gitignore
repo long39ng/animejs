@@ -21,3 +21,5 @@ inst/htmlwidgets/lib/anime.esm.min.js
 # OS
 .DS_Store
 Thumbs.db
+inst/doc
+docs

@@ -2,7 +2,7 @@
 % Please edit documentation in R/props.R
 \name{anime_keyframes}
 \alias{anime_keyframes}
-\title{Specify per-property keyframes for \code{anime_add()}}
+\title{Specify per-property keyframes for an animation}
 \usage{
 anime_keyframes(...)
 }
@@ -14,10 +14,11 @@ a \verb{$to} key and optional \verb{$ease} and \verb{$duration} overrides.}
 An \code{anime_keyframes} object.
 }
 \description{
-Specify per-property keyframes for \code{anime_add()}
+Constructs a keyframes object for use in the \code{props} argument of
+\code{\link[=anime_add]{anime_add()}}. Each positional argument is one keyframe.
 }
 \examples{
-# Form 1: bare numeric keyframe values
+# Bare numeric keyframe values
 anime_add(
   anime_timeline(),
   selector = ".circle",
@@ -27,7 +28,7 @@ anime_add(
   )
 )
 
-# Form 2: per-keyframe lists with optional ease and duration overrides
+# Per-keyframe lists with optional ease and duration overrides
 anime_add(
   anime_timeline(),
   selector = ".circle",
