@@ -1,0 +1,339 @@
+# Animating a Rowing Stroke with animejs
+
+## The rowing stroke
+
+A complete stroke has two phases.
+
+**Drive** (fast, ~800 ms): starting from the *catch* — knees bent, body
+forward, arms extended toward the flywheel — the rower pushes with the
+legs, swings the body back, and pulls the handle to the chest. The seat
+slides away from the flywheel.
+
+**Recovery** (slower, ~900 ms): arms extend first, then the body rocks
+forward, and finally the legs bend to return the seat to the catch
+position.
+
+The animation loops these two phases continuously.
+
+## 1. The machine frame
+
+The machine is made of static SVG elements. The flywheel sits on the
+left; a monorail extends to the right; a foot stretcher is fixed partway
+along the rail.
+
+``` r
+machine_frame <- r"(
+  <!-- Rail -->
+  <line x1="58" y1="175" x2="400" y2="175"
+        stroke="#64748b" stroke-width="4" stroke-linecap="round"/>
+
+  <!-- Rail support legs -->
+  <line x1="120" y1="175" x2="120" y2="192"
+        stroke="#64748b" stroke-width="3"/>
+  <line x1="340" y1="175" x2="340" y2="192"
+        stroke="#64748b" stroke-width="3"/>
+
+  <!-- Flywheel housing -->
+  <circle cx="88" cy="150" r="30"
+          fill="none" stroke="#64748b" stroke-width="3.5"/>
+
+  <!-- Flywheel spokes -->
+  <line x1="88" y1="120" x2="88" y2="180"
+        stroke="#94a3b8" stroke-width="1.5"/>
+  <line x1="58" y1="150" x2="118" y2="150"
+        stroke="#94a3b8" stroke-width="1.5"/>
+  <line x1="67" y1="129" x2="109" y2="171"
+        stroke="#94a3b8" stroke-width="1.5"/>
+  <line x1="109" y1="129" x2="67"  y2="171"
+        stroke="#94a3b8" stroke-width="1.5"/>
+
+  <!-- Foot stretcher -->
+  <line x1="192" y1="157" x2="196" y2="175"
+        stroke="#64748b" stroke-width="3.5" stroke-linecap="round"/>
+  <line x1="184" y1="157" x2="200" y2="157"
+        stroke="#64748b" stroke-width="3.5" stroke-linecap="round"/>
+)"
+```
+
+## 2. The rower
+
+All rower elements are drawn at the **catch** position. This is the
+baseline from which animejs computes transitions; the SVG coordinates
+encode catch geometry directly, so no initial CSS transform is required
+on any element.
+
+The rower is broken into six elements. Each carries a `data-animejs-id`
+attribute so the R timeline can target it by a selector produced by
+[`anime_target_id()`](https://long39ng.github.io/animejs/reference/anime_target_id.md).
+
+### 2.1 Seat
+
+The seat is a rounded rectangle that slides 95 px to the right during
+the drive (the leg push moves the seat away from the flywheel).
+
+``` r
+seat_svg <- r"(
+  <rect data-animejs-id="seat"
+        x="205" y="165" width="28" height="10" rx="3"
+        fill="#475569"/>
+)"
+```
+
+### 2.2 Leg
+
+A single line from the fixed foot (192, 175) to the hip at catch (219,
+165) represents the leg. Rather than a fully articulated shin and thigh,
+this schematic line communicates the leg extension clearly. Because
+animejs can animate SVG presentation attributes directly, the hip end of
+the line is animated by updating `x2` from 219 (catch) to 314 (finish)
+as the seat slides.
+
+``` r
+leg_svg <- r"(
+  <line data-animejs-id="leg"
+        x1="192" y1="175" x2="219" y2="165"
+        stroke="#1e293b" stroke-width="3.5" stroke-linecap="round"/>
+)"
+```
+
+### 2.3 Torso
+
+The torso is a 60 px line from the hip (219, 165) to the shoulder (193,
+111). As drawn, it leans 26° forward from vertical — the catch body
+angle. The `transform-origin` is pinned to the hip so that all CSS
+rotation pivots there.
+
+During the drive the hip translates 95 px right (`translateX`) and the
+body swings 41° clockwise (`rotate`), which brings it from −26° to +15°
+relative to vertical (a back lean at the finish). The head shares the
+same pivot and the same transform values.
+
+``` r
+torso_svg <- r"(
+  <line data-animejs-id="torso"
+        x1="219" y1="165" x2="193" y2="111"
+        stroke="#1e293b" stroke-width="4" stroke-linecap="round"
+        style="transform-origin: 219px 165px"/>
+)"
+```
+
+### 2.4 Head
+
+The head is a circle centred 12 px above the shoulder at catch (190,
+98). Like the torso, it pivots around the hip (219, 165) and receives
+identical `translateX` and `rotate` values, so it tracks the top of the
+torso exactly.
+
+``` r
+head_svg <- r"(
+  <circle data-animejs-id="head"
+          cx="190" cy="98" r="12"
+          fill="#1e293b"
+          style="transform-origin: 219px 165px"/>
+)"
+```
+
+### 2.5 Arms
+
+The arm is a 50 px line from the shoulder (193, 111) to the hands (150,
+135), which points toward the flywheel handle at the catch. At the
+finish the shoulder has moved to (330, 107) and the arms are pulled
+straight down to hip level.
+
+Three transforms compose the drive motion:
+
+- `rotate(-61)` — swings the arm counterclockwise from the
+  flywheel-reaching angle (~151° from horizontal) to pointing straight
+  down (90°), pivoting at the catch shoulder position.
+- `translateX(137)` — carries the shoulder from x = 193 to x = 330 as
+  the torso moves with the seat.
+- `translateY(-4)` — accounts for the small vertical rise of the
+  shoulder as the torso rotates back.
+
+CSS applies these right to left: rotate first, then translateY, then
+translateX. The net effect is that the shoulder lands precisely on the
+torso top at the finish.
+
+``` r
+arms_svg <- r"(
+  <line data-animejs-id="arms"
+        x1="193" y1="111" x2="150" y2="135"
+        stroke="#1e293b" stroke-width="3.5" stroke-linecap="round"
+        style="transform-origin: 193px 111px"/>
+)"
+```
+
+### 2.6 Handle
+
+The handle is a dashed line from the flywheel edge (118, 150) to the
+hands (150, 135) at catch. Like the leg, it is animated via SVG
+attribute animation: `x2` and `y2` track the hands from catch to finish
+and back.
+
+``` r
+handle_svg <- r"(
+  <line data-animejs-id="handle"
+        x1="118" y1="150" x2="150" y2="135"
+        stroke="#94a3b8" stroke-width="2.5"
+        stroke-dasharray="5 3" stroke-linecap="round"/>
+)"
+```
+
+### 2.7 Assembling the SVG
+
+``` r
+library(animejs)
+
+svg_src <- paste0(
+  '<svg viewBox="0 0 440 210" xmlns="http://www.w3.org/2000/svg">',
+  machine_frame,
+  seat_svg,
+  leg_svg,
+  torso_svg,
+  head_svg,
+  arms_svg,
+  handle_svg,
+  '</svg>'
+)
+```
+
+## 3. Building the timeline
+
+The timeline has two segments per loop: the drive and the recovery. Both
+segments target all six animated elements. Elements that use CSS
+transforms (`seat`, `torso`, `head`, `arms`) are targeted by
+[`anime_target_id()`](https://long39ng.github.io/animejs/reference/anime_target_id.md);
+elements animated via SVG attributes (`leg`, `handle`) receive separate
+[`anime_add()`](https://long39ng.github.io/animejs/reference/anime_add.md)
+calls with `x2`/`y2` props.
+
+### 3.1 Drive phase (catch → finish)
+
+The elements drawn at catch require no explicit `from` value — animejs
+reads their current state from the DOM. Only the target (finish) values
+are specified. The drive uses `anime_easing("Quart", "out")` for a
+forceful initial push that decelerates toward the finish.
+
+``` r
+tl <- anime_timeline(
+  duration = 800,
+  ease = anime_easing("Quart", "out"),
+  loop = TRUE
+) |>
+  # Seat slides right
+  anime_add(
+    selector = anime_target_id("seat"),
+    props = list(translateX = 95)
+  ) |>
+  # Hip end of leg moves right with the seat
+  anime_add(
+    selector = anime_target_id("leg"),
+    props = list(x2 = 314),
+    offset = 0 # starts at t = 0, same as seat
+  ) |>
+  # Torso: hip moves right, body swings to back lean
+  anime_add(
+    selector = anime_target_id("torso"),
+    props = list(translateX = 95, rotate = 41),
+    offset = 0
+  ) |>
+  # Head: identical transforms to torso (shares hip pivot)
+  anime_add(
+    selector = anime_target_id("head"),
+    props = list(translateX = 95, rotate = 41),
+    offset = 0
+  ) |>
+  # Arms: rotate from flywheel-reach to pulled-in, shoulder tracks torso top
+  anime_add(
+    selector = anime_target_id("arms"),
+    props = list(
+      translateX = 137,
+      translateY = -4,
+      rotate = -61
+    ),
+    offset = 0
+  ) |>
+  # Handle tracks the hands
+  anime_add(
+    selector = anime_target_id("handle"),
+    props = list(x2 = 330, y2 = 156),
+    offset = 0
+  )
+```
+
+### 3.2 Recovery phase (finish → catch)
+
+The recovery uses
+[`anime_from_to()`](https://long39ng.github.io/animejs/reference/anime_from_to.md)
+throughout to explicitly set both the finish value (from) and the catch
+value (to), since the DOM is now in the finish state. The recovery
+easing (`"inOut", "Sine"`) is smooth and symmetrical, reflecting the
+controlled, unhurried return.
+
+The recovery starts 100 ms after the drive ends, giving a brief pause at
+the finish position.
+
+``` r
+tl <- tl |>
+  anime_add(
+    selector = anime_target_id("seat"),
+    props = list(translateX = anime_from_to(95, 0)),
+    duration = 900,
+    ease = anime_easing("Sine", "inOut"),
+    offset = "+=100"
+  ) |>
+  anime_add(
+    selector = anime_target_id("leg"),
+    props = list(x2 = anime_from_to(314, 219)),
+    duration = 900,
+    ease = anime_easing("Sine", "inOut"),
+    offset = 900
+  ) |>
+  anime_add(
+    selector = anime_target_id("torso"),
+    props = list(
+      translateX = anime_from_to(95, 0),
+      rotate = anime_from_to(41, 0)
+    ),
+    duration = 900,
+    ease = anime_easing("Sine", "inOut"),
+    offset = 900
+  ) |>
+  anime_add(
+    selector = anime_target_id("head"),
+    props = list(
+      translateX = anime_from_to(95, 0),
+      rotate = anime_from_to(41, 0)
+    ),
+    duration = 900,
+    ease = anime_easing("Sine", "inOut"),
+    offset = 900
+  ) |>
+  anime_add(
+    selector = anime_target_id("arms"),
+    props = list(
+      translateX = anime_from_to(137, 0),
+      translateY = anime_from_to(-4, 0),
+      rotate = anime_from_to(-61, 0)
+    ),
+    duration = 900,
+    ease = anime_easing("Sine", "inOut"),
+    offset = 900
+  ) |>
+  anime_add(
+    selector = anime_target_id("handle"),
+    props = list(
+      x2 = anime_from_to(330, 150),
+      y2 = anime_from_to(156, 135)
+    ),
+    duration = 900,
+    ease = anime_easing("Sine", "inOut"),
+    offset = 900
+  )
+```
+
+## 4. Rendering
+
+``` r
+anime_render(tl, svg = svg_src)
+```

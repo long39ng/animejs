@@ -1,5 +1,7 @@
 # animejs
 
+![](reference/figures/README-rowing.gif)
+
 `animejs` provides R bindings to [Anime.js v4](https://animejs.com), a
 JavaScript animation library. It produces self-contained HTML widgets
 via [htmlwidgets](https://www.htmlwidgets.org) that render in browser
@@ -184,3 +186,5 @@ Serialise a timeline specification and produce an htmlwidget.
 
 - [Introduction to
   animejs](https://long39ng.github.io/animejs/articles/animejs.md):
+- [Animating a Rowing Stroke with
+  animejs](https://long39ng.github.io/animejs/articles/rowing-stroke.md):

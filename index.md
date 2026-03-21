@@ -1,5 +1,7 @@
 # animejs
 
+![](reference/figures/README-rowing.gif)
+
 `animejs` provides R bindings to [Anime.js v4](https://animejs.com), a
 JavaScript animation library. It produces self-contained HTML widgets
 via [htmlwidgets](https://www.htmlwidgets.org) that render in browser
