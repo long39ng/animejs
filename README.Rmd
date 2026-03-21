@@ -20,7 +20,9 @@ knitr::opts_chunk$set(
 [![Codecov test coverage](https://codecov.io/gh/long39ng/animejs/graph/badge.svg)](https://app.codecov.io/gh/long39ng/animejs)
 <!-- badges: end -->
 
-The goal of animejs is to ...
+`animejs` provides R bindings to [Anime.js v4](https://animejs.com), a JavaScript animation library. It produces self-contained HTML widgets via [htmlwidgets](https://www.htmlwidgets.org) that render in browser environments like RStudio Viewer, R Markdown documents, Quarto reports, and Shiny applications.
+
+The package is the low-level foundation for [`gganime`](https://github.com/long39ng/gganime), which implements a ggplot2 animation layer with gganimate API compatibility. `animejs` has no dependency on ggplot2 and is independently useful for animating any hand-authored or programmatically generated SVG.
 
 ## Installation
 
@@ -30,3 +32,54 @@ You can install the development version of animejs from [GitHub](https://github.
 # install.packages("pak")
 pak::pak("long39ng/animejs")
 ```
+
+## Usage
+
+Annotate SVG elements with a `data-animejs-id` attribute or a CSS class, then
+build a timeline in R and render it as a widget.
+
+```{r example, eval=FALSE}
+library(animejs)
+
+svg_src <- '
+<svg viewBox="0 0 400 200" xmlns="http://www.w3.org/2000/svg">
+  <circle data-animejs-id="c1" cx="50"  cy="100" r="20" fill="#4e79a7"/>
+  <circle data-animejs-id="c2" cx="120" cy="100" r="20" fill="#f28e2b"/>
+  <circle data-animejs-id="c3" cx="190" cy="100" r="20" fill="#e15759"/>
+</svg>
+'
+
+anime_timeline(
+  duration = 800,
+  ease = anime_easing_elastic(),
+  loop = TRUE
+) |>
+  anime_add(
+    selector = anime_target_class("circle"),
+    props = list(
+      translateY = anime_from_to(-80, 0),
+      opacity = anime_from_to(0, 1)
+    ),
+    stagger = anime_stagger(150, from = "first")
+  ) |>
+  anime_add(
+    selector = anime_target_id("c2"),
+    props = list(r = anime_from_to(20, 40)),
+    offset = "+=200"
+  ) |>
+  anime_render(svg = svg_src)
+```
+
+![Three circles animating into view with a staggered elastic entrance, followed by the middle circle expanding.](man/figures/README-example.gif)
+
+## Key concepts
+
+**Timeline.** `anime_timeline()` initialises a timeline with default `duration`, `ease`, and `delay`. `anime_add()` appends animation segments to it. Both are pipe-friendly and return the modified timeline visibly.
+
+**Properties.** `anime_from_to()` describes a two-value transition; `anime_keyframes()` describes a multi-step sequence. Both are passed inside the `props` list of `anime_add()`.
+
+**Stagger.** `anime_stagger()` distributes animation start times across the elements matched by a selector. Supports linear, centre-out, and 2-D grid distributions.
+
+**Easing.** All easing constructors return `anime_easing` objects serialised to Anime.js v4 strings. Parameterised families -- `anime_easing_elastic()`, `anime_easing_spring()`, `anime_easing_bezier()`, `anime_easing_steps()`, `anime_easing_back()` -- are also available.
+
+**Playback.** `anime_playback()` controls looping, direction, and an optional play/pause/scrub control bar injected into the widget.
