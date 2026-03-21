@@ -10,7 +10,7 @@
 #' @export
 anime_timeline <- function(
   duration = 1000,
-  ease = "easeInOutQuad",
+  ease = anime_easing(),
   loop = FALSE,
   delay = 0,
   direction = "normal"

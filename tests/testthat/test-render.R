@@ -26,7 +26,7 @@ test_that("anime_render() errors informatively on non-anime_timeline input", {
 test_that("anime_render() config round-trips through JSON correctly", {
   skip_if_not_installed("jsonlite")
 
-  tl <- anime_timeline(duration = 800, ease = "easeOutQuad") |>
+  tl <- anime_timeline(duration = 800, ease = "outQuad") |>
     anime_add(
       selector = anime_target_id("c1"),
       props = list(opacity = anime_from_to(0, 1)),
@@ -39,7 +39,7 @@ test_that("anime_render() config round-trips through JSON correctly", {
   parsed <- jsonlite::fromJSON(json, simplifyVector = FALSE)
 
   expect_equal(parsed$defaults$duration, 800)
-  expect_equal(parsed$defaults$ease, "easeOutQuad")
+  expect_equal(parsed$defaults$ease, "outQuad")
   expect_length(parsed$segments, 1L)
   expect_equal(parsed$segments[[1]]$selector, "[data-animejs-id='c1']")
 })

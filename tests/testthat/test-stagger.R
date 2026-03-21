@@ -53,7 +53,7 @@ test_that("stagger_to_js() includes grid and axis when provided", {
 })
 
 test_that("stagger_to_js() includes easing when provided", {
-  s <- anime_stagger(100, ease = "easeInQuad")
+  s <- anime_stagger(100, ease = "inQuad")
   result <- stagger_to_js(s)
-  expect_equal(result$ease, "easeInQuad")
+  expect_equal(result$ease, "inQuad")
 })

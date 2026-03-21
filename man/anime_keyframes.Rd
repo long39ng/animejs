@@ -34,7 +34,7 @@ anime_add(
   props = list(
     opacity = anime_keyframes(
       list(to = 0),
-      list(to = 1, ease = "easeOutQuad", duration = 400),
+      list(to = 1, ease = anime_easing("Cubic"), duration = 400),
       list(to = 0.5, ease = "linear", duration = 200)
     )
   )

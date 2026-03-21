@@ -11,7 +11,6 @@
 timeline_to_json_config <- function(timeline) {
   stopifnot(inherits(timeline, "anime_timeline"))
 
-  # Serialise each segment, converting any S3 property/stagger objects.
   segments <- lapply(timeline$segments, function(seg) {
     out <- list(
       selector = seg$selector,
@@ -22,7 +21,7 @@ timeline_to_json_config <- function(timeline) {
       out$duration <- seg$duration
     }
     if (!is.null(seg$ease)) {
-      out$ease <- seg$ease
+      out$ease <- easing_to_js(seg$ease)
     }
     if (!is.null(seg$delay)) {
       out$delay <- seg$delay
@@ -33,6 +32,10 @@ timeline_to_json_config <- function(timeline) {
     out
   })
 
+  if (!is.null(timeline$defaults$ease)) {
+    timeline$defaults$ease <- easing_to_js(timeline$defaults$ease)
+  }
+
   config <- list(
     defaults = timeline$defaults,
     loop = timeline$loop %||% FALSE,
@@ -40,7 +43,6 @@ timeline_to_json_config <- function(timeline) {
     events = timeline$events %||% list()
   )
 
-  # Optional playback fields — only included when explicitly set.
   if (!is.null(timeline$autoplay)) {
     config$autoplay <- timeline$autoplay
   }
@@ -126,6 +128,37 @@ stagger_to_js <- function(stagger) {
   }
 
   out
+}
+
+easing_to_js <- function(ease) {
+  if (is.character(ease)) {
+    return(ease)
+  }
+  if (!inherits(ease, "anime_easing")) {
+    rlang::abort(sprintf(
+      "`ease` must be an `anime_easing` object or a character string, not `%s`.",
+      class(ease)[[1L]]
+    ))
+  }
+
+  name <- ease$name
+  p <- ease$params
+
+  if (name %in% .EASING_SIMPLE) {
+    name
+  } else if (name %in% .EASING_ELASTIC) {
+    sprintf("%s(%s,%s)", name, p$amplitude, p$period)
+  } else if (name %in% .EASING_BACK) {
+    sprintf("%s(%s)", name, p$overshoot)
+  } else if (name == "steps") {
+    sprintf("steps(%d)", p$count)
+  } else if (name == "spring") {
+    sprintf("spring(%s,%s)", p$bounce, p$duration)
+  } else if (name == "cubicBezier") {
+    sprintf("cubicBezier(%s,%s,%s,%s)", p$x1, p$y1, p$x2, p$y2)
+  } else {
+    rlang::abort(sprintf("Unrecognised easing name: '%s'.", name))
+  }
 }
 
 #' Validate a duration or delay value

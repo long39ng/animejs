@@ -40,7 +40,7 @@ an SVG payload in an htmlwidget.
 }
 \examples{
 \dontrun{
-tl <- anime_timeline(duration = 800, ease = "easeOutElastic") |>
+tl <- anime_timeline(duration = 800) |>
   anime_add(selector = ".dot", props = list(opacity = c(0, 1)))
 svg <- '<svg viewBox="0 0 100 100"><circle class="dot" cx="50" cy="50" r="10"/></svg>'
 anime_render(tl, svg = svg)

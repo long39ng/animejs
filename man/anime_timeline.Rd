@@ -6,7 +6,7 @@
 \usage{
 anime_timeline(
   duration = 1000,
-  ease = "easeInOutQuad",
+  ease = anime_easing(),
   loop = FALSE,
   delay = 0,
   direction = "normal"

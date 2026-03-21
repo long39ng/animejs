@@ -15,7 +15,7 @@ test_that("anime_keyframes() stores bare numeric values as list elements", {
 test_that("anime_keyframes() stores list-based keyframes as list elements", {
   kf <- anime_keyframes(
     list(to = 0),
-    list(to = 1, ease = "easeOutQuad", duration = 400)
+    list(to = 1, ease = "outQuad", duration = 400)
   )
   expect_s3_class(kf, "anime_keyframes")
   expect_equal(kf[[1]]$to, 0)
@@ -25,10 +25,10 @@ test_that("anime_keyframes() stores list-based keyframes as list elements", {
 test_that("anime_keyframes() preserves optional ease and duration per keyframe", {
   kf <- anime_keyframes(
     list(to = 0),
-    list(to = 1, ease = "easeOutQuad", duration = 400),
+    list(to = 1, ease = "outQuad", duration = 400),
     list(to = 0.5, ease = "linear", duration = 200)
   )
-  expect_equal(kf[[2]]$ease, "easeOutQuad")
+  expect_equal(kf[[2]]$ease, "outQuad")
   expect_equal(kf[[2]]$duration, 400)
   expect_equal(kf[[3]]$ease, "linear")
   expect_equal(kf[[3]]$duration, 200)
@@ -37,23 +37,23 @@ test_that("anime_keyframes() preserves optional ease and duration per keyframe",
 test_that("to_js_props() passes list-based keyframes through with correct keys", {
   kf <- anime_keyframes(
     list(to = 0),
-    list(to = 1, ease = "easeOutQuad", duration = 400)
+    list(to = 1, ease = "outQuad", duration = 400)
   )
   result <- to_js_props(list(opacity = kf))
   expect_equal(result$opacity[[1]], list(to = 0))
   expect_equal(result$opacity[[2]]$to, 1)
-  expect_equal(result$opacity[[2]]$ease, "easeOutQuad")
+  expect_equal(result$opacity[[2]]$ease, "outQuad")
   expect_equal(result$opacity[[2]]$duration, 400)
 })
 
 test_that("to_js_props() handles mixed bare and list keyframes", {
   kf <- anime_keyframes(
     0,
-    list(to = 1, ease = "easeOutQuad")
+    list(to = 1, ease = "outQuad")
   )
   result <- to_js_props(list(opacity = kf))
   expect_equal(result$opacity[[1]], list(to = 0))
-  expect_equal(result$opacity[[2]]$ease, "easeOutQuad")
+  expect_equal(result$opacity[[2]]$ease, "outQuad")
 })
 
 # anime_from_to() ---------------------------------------------------------

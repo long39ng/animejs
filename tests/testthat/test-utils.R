@@ -79,7 +79,7 @@ test_that("timeline_to_json_config() preserves defaults", {
     list(
       defaults = list(
         duration = 800,
-        ease = "easeOutElastic",
+        ease = "outElastic",
         delay = 0,
         direction = "normal"
       ),
@@ -91,7 +91,7 @@ test_that("timeline_to_json_config() preserves defaults", {
   )
   result <- timeline_to_json_config(tl)
   expect_equal(result$defaults$duration, 800)
-  expect_equal(result$defaults$ease, "easeOutElastic")
+  expect_equal(result$defaults$ease, "outElastic")
 })
 
 test_that("timeline_to_json_config() preserves loop", {
