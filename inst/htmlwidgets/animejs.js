@@ -23,10 +23,49 @@ HTMLWidgets.widget({
 });
 
 // ---------------------------------------------------------------------------
+// resolveEasing
+// Converts a serialised easing string to the value Anime.js v4 expects.
+// Built-in names ("outQuad", "linear", etc.) are passed through as strings.
+// Parameterised easings ("cubicBezier(...)", "spring(...)", "steps(...)")
+// must be passed as the result of the corresponding anime.* function call;
+// Anime.js v4 does not parse these from strings.
+// ---------------------------------------------------------------------------
+function resolveEasing(str) {
+	if (!str || typeof str !== "string") return str;
+
+	const match = str.match(/^(\w+)\((.+)\)$/);
+	if (!match) return str; // plain built-in name
+
+	const fn = match[1];
+	const args = match[2].split(",").map(Number);
+
+	if (fn === "cubicBezier" && typeof anime.cubicBezier === "function") {
+		return anime.cubicBezier(...args);
+	}
+	if (fn === "spring" && typeof anime.spring === "function") {
+		return anime.spring(...args);
+	}
+	if (fn === "steps" && typeof anime.steps === "function") {
+		return anime.steps(...args);
+	}
+
+	console.warn("[animejs widget] unknown parameterised easing: " + str);
+	return str;
+}
+
+// ---------------------------------------------------------------------------
 // buildTimeline
 // ---------------------------------------------------------------------------
 function buildTimeline(el, config) {
-	const defaults = config.defaults || {};
+	// Shallow copy to avoid mutating the original config object when writing
+	// back defaults.ease next and corrupting the state on any subsequent
+	// renderValue call (e.g., in Shiny)
+	const defaults = Object.assign({}, config.defaults || {});
+
+	// Resolve any parameterised easing in the timeline defaults.
+	if (defaults.ease != null) {
+		defaults.ease = resolveEasing(defaults.ease);
+	}
 
 	const tl = anime.createTimeline({
 		defaults: defaults,
@@ -36,20 +75,12 @@ function buildTimeline(el, config) {
 
 	for (const segment of config.segments || []) {
 		const targets = el.querySelectorAll(segment.selector);
-
 		const props = Object.assign({}, segment.props);
 
-		// Per-segment overrides supplement the timeline defaults.
 		if (segment.duration != null) props.duration = segment.duration;
-		if (segment.ease != null) props.ease = segment.ease;
-		if (segment.delay != null) {
-			// If a stagger object is present, delay is encoded there; otherwise
-			// apply as a flat delay.
-			props.delay = segment.delay;
-		}
-		if (segment.stagger != null) {
-			props.delay = resolveStagger(segment.stagger);
-		}
+		if (segment.ease != null) props.ease = resolveEasing(segment.ease);
+		if (segment.delay != null) props.delay = segment.delay;
+		if (segment.stagger != null) props.delay = resolveStagger(segment.stagger);
 
 		tl.add(targets, props, segment.offset ?? "+=0");
 	}
