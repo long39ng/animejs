@@ -127,7 +127,23 @@ function attachControls(el, tl, autoplay) {
 	bar.className = "animejs-controls";
 
 	const btn = document.createElement("button");
-	btn.textContent = autoplay ? "⏸" : "▶";
+	btn.setAttribute("aria-label", autoplay ? "Pause" : "Play");
+
+	const ICON_PLAY = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+		<polygon points="3,1 14,8 3,15" fill="currentColor"/>
+	</svg>`;
+
+	const ICON_PAUSE = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+		<rect x="2"  y="1" width="4" height="14" fill="currentColor"/>
+		<rect x="10" y="1" width="4" height="14" fill="currentColor"/>
+	</svg>`;
+
+	function syncBtn() {
+		btn.innerHTML = tl.paused ? ICON_PLAY : ICON_PAUSE;
+		btn.setAttribute("aria-label", tl.paused ? "Play" : "Pause");
+	}
+
+	btn.innerHTML = autoplay ? ICON_PAUSE : ICON_PLAY;
 
 	const scrubber = document.createElement("input");
 	scrubber.type = "range";
@@ -138,10 +154,6 @@ function attachControls(el, tl, autoplay) {
 	bar.appendChild(btn);
 	bar.appendChild(scrubber);
 	el.appendChild(bar);
-
-	function syncBtn() {
-		btn.textContent = tl.paused ? "▶" : "⏸";
-	}
 
 	// Keep the scrubber in sync while the timeline is playing.
 	tl.onUpdate = function (self) {

@@ -4,7 +4,7 @@ dependencies:
     src: htmlwidgets/lib
     script: anime.esm.min.js
   - name: animejs-binding
-    version: 0.1.0
+    version: 0.1.1
     src: htmlwidgets
     script: animejs.js
     stylesheet: animejs.css
