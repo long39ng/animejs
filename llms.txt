@@ -8,16 +8,15 @@ via [htmlwidgets](https://www.htmlwidgets.org) that render in browser
 environments like RStudio Viewer, R Markdown documents, Quarto reports,
 and Shiny applications.
 
-The package is the low-level foundation for
-[`gganime`](https://github.com/long39ng/gganime), which implements a
-ggplot2 animation layer with gganimate API compatibility. `animejs` has
-no dependency on ggplot2 and is independently useful for animating any
-hand-authored or programmatically generated SVG.
-
 ## Installation
 
-You can install the development version of animejs from
-[GitHub](https://github.com/) with:
+You can install the released version of animejs from CRAN:
+
+``` r
+install.packages("animejs")
+```
+
+Or install the development version of animejs from GitHub with:
 
 ``` r
 # install.packages("pak")
@@ -74,8 +73,7 @@ followed by the middle circle expanding.
 [`anime_timeline()`](https://long39ng.github.io/animejs/reference/anime_timeline.md)
 initialises a timeline with default `duration`, `ease`, and `delay`.
 [`anime_add()`](https://long39ng.github.io/animejs/reference/anime_add.md)
-appends animation segments to it. Both are pipe-friendly and return the
-modified timeline visibly.
+appends animation segments to it.
 
 **Properties.**
 [`anime_from_to()`](https://long39ng.github.io/animejs/reference/anime_from_to.md)

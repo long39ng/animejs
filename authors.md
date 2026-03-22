@@ -10,12 +10,12 @@
 Source:
 [`DESCRIPTION`](https://github.com/long39ng/animejs/blob/main/DESCRIPTION)
 
-Nguyen L (2026). *animejs: R Bindings to the Anime.js JavaScript
-Animation Library*. R package version 0.1.0,
+Nguyen L (2026). *animejs: R Bindings to the 'Anime.js' Animation
+Library*. R package version 0.1.0,
 <https://github.com/long39ng/animejs>.
 
     @Manual{,
-      title = {animejs: R Bindings to the Anime.js JavaScript Animation Library},
+      title = {animejs: R Bindings to the 'Anime.js' Animation Library},
       author = {Long Nguyen},
       year = {2026},
       note = {R package version 0.1.0},

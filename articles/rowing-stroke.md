@@ -4,8 +4,8 @@
 
 A complete stroke has two phases.
 
-**Drive** (fast, ~800 ms): starting from the *catch* — knees bent, body
-forward, arms extended toward the flywheel — the rower pushes with the
+**Drive** (fast, ~800 ms): starting from the *catch* – knees bent, body
+forward, arms extended toward the flywheel – the rower pushes with the
 legs, swings the body back, and pulls the handle to the chest. The seat
 slides away from the flywheel.
 
@@ -99,7 +99,7 @@ leg_svg <- r"(
 ### 2.3 Torso
 
 The torso is a 60 px line from the hip (219, 165) to the shoulder (193,
-111). As drawn, it leans 26° forward from vertical — the catch body
+111). As drawn, it leans 26° forward from vertical – the catch body
 angle. The `transform-origin` is pinned to the hip so that all CSS
 rotation pivots there.
 
@@ -142,12 +142,12 @@ straight down to hip level.
 
 Three transforms compose the drive motion:
 
-- `rotate(-61)` — swings the arm counterclockwise from the
+- `rotate(-61)` – swings the arm counterclockwise from the
   flywheel-reaching angle (~151° from horizontal) to pointing straight
   down (90°), pivoting at the catch shoulder position.
-- `translateX(137)` — carries the shoulder from x = 193 to x = 330 as
+- `translateX(137)` – carries the shoulder from x = 193 to x = 330 as
   the torso moves with the seat.
-- `translateY(-4)` — accounts for the small vertical rise of the
+- `translateY(-4)` – accounts for the small vertical rise of the
   shoulder as the torso rotates back.
 
 CSS applies these right to left: rotate first, then translateY, then
@@ -209,7 +209,7 @@ calls with `x2`/`y2` props.
 
 ### 3.1 Drive phase (catch → finish)
 
-The elements drawn at catch require no explicit `from` value — animejs
+The elements drawn at catch require no explicit `from` value – animejs
 reads their current state from the DOM. Only the target (finish) values
 are specified. The drive uses `anime_easing("Quart", "out")` for a
 forceful initial push that decelerates toward the finish.
@@ -335,5 +335,7 @@ tl <- tl |>
 ## 4. Rendering
 
 ``` r
-anime_render(tl, svg = svg_src)
+tl |>
+  anime_playback(controls = TRUE) |>
+  anime_render(svg = svg_src, width = "360px")
 ```
