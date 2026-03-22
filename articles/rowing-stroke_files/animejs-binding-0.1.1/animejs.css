@@ -1,0 +1,20 @@
+/* Minimal stylesheet so the controls bar does not require inline styles to be safe */
+.animejs-controls {
+	box-sizing: border-box;
+	width: 100%;
+	display: flex;
+	gap: 8px;
+	padding: 4px 0;
+}
+
+.animejs-controls button {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	width: 32px;
+}
+
+.animejs-controls input[type="range"] {
+	flex: 1;
+	min-width: 0;
+}
