@@ -11,7 +11,7 @@
 #'   `timeline_to_json_config()`.
 #' @inheritParams htmlwidgets::createWidget
 #'
-#' @returns An object of class `c("animejs", "htmlwidget)`
+#' @return An object of class `c("animejs", "htmlwidget)`
 #' @export
 animejs_widget <- function(
   svg,
@@ -51,14 +51,14 @@ animejs_widget <- function(
 #' @export
 #'
 #' @examples
-#' \dontrun{
 #' tl <- anime_timeline(duration = 800) |>
 #'   anime_add(
 #'     selector = anime_target_class("dot"),
 #'     props = list(opacity = anime_from_to(0, 1))
 #'   )
 #' svg <- '<svg viewBox="0 0 100 100"><circle class="dot" cx="50" cy="50" r="10"/></svg>'
-#' anime_render(tl, svg)
+#' if (interactive()) {
+#'   anime_render(tl, svg)
 #' }
 anime_render <- function(
   timeline,

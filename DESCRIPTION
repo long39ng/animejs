@@ -1,12 +1,12 @@
 Package: animejs
-Title: R Bindings to the Anime.js JavaScript Animation Library
+Title: R Bindings to the 'Anime.js' Animation Library
 Version: 0.1.0
 Authors@R: 
     person("Long", "Nguyen", , "nguyen@dezim-institut.de", role = c("aut", "cre"),
            comment = c(ORCID = "0000-0001-8878-7386"))
-Description: Provides low-level R bindings to the Anime.js JavaScript
-    library (version 4), enabling the creation of browser-native SVG and
-    HTML animations via the htmlwidgets framework.
+Description: Provides low-level R bindings to the 'Anime.js' library
+    (<https://animejs.com>), enabling the creation of browser-native SVG
+    and HTML animations via the 'htmlwidgets' framework.
 License: MIT + file LICENSE
 URL: https://github.com/long39ng/animejs,
     https://long39ng.github.io/animejs/
@@ -17,6 +17,7 @@ Imports:
     htmlwidgets,
     rlang
 Suggests: 
+    htmltools,
     jsonlite,
     knitr,
     rmarkdown,

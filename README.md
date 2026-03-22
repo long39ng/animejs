@@ -7,6 +7,8 @@
 
 <!-- badges: start -->
 
+[![CRAN
+status](https://www.r-pkg.org/badges/version/animejs)](https://CRAN.R-project.org/package=animejs)
 [![R-CMD-check](https://github.com/long39ng/animejs/actions/workflows/R-CMD-check.yaml/badge.svg)](https://github.com/long39ng/animejs/actions/workflows/R-CMD-check.yaml)
 [![Codecov test
 coverage](https://codecov.io/gh/long39ng/animejs/graph/badge.svg)](https://app.codecov.io/gh/long39ng/animejs)
@@ -18,16 +20,15 @@ via [htmlwidgets](https://www.htmlwidgets.org) that render in browser
 environments like RStudio Viewer, R Markdown documents, Quarto reports,
 and Shiny applications.
 
-The package is the low-level foundation for
-[`gganime`](https://github.com/long39ng/gganime), which implements a
-ggplot2 animation layer with gganimate API compatibility. `animejs` has
-no dependency on ggplot2 and is independently useful for animating any
-hand-authored or programmatically generated SVG.
-
 ## Installation
 
-You can install the development version of animejs from
-[GitHub](https://github.com/) with:
+You can install the released version of animejs from CRAN:
+
+``` r
+install.packages("animejs")
+```
+
+Or install the development version of animejs from GitHub with:
 
 ``` r
 # install.packages("pak")

@@ -14,23 +14,23 @@
 #' @return The modified `anime_timeline` object.
 #'
 #' @examples
-#' \dontrun{
-#' svg_src <- '<svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
-#'   <circle class="circle" cx="100" cy="50" r="20" fill="#4e79a7"/>
-#' </svg>'
+#' if (interactive() && rlang::is_installed("htmltools")) {
+#'   svg_src <- '<svg viewBox="0 0 200 100" xmlns="http://www.w3.org/2000/svg">
+#'     <circle class="circle" cx="100" cy="50" r="20" fill="#4e79a7"/>
+#'   </svg>'
 #'
-#' widget <- anime_timeline(duration = 800) |>
-#'   anime_add(selector = ".circle", props = list(opacity = c(0, 1))) |>
-#'   anime_on("onComplete", "handleAnimationDone") |>
-#'   anime_render(svg = svg_src)
+#'   widget <- anime_timeline(duration = 800) |>
+#'     anime_add(selector = ".circle", props = list(opacity = c(0, 1))) |>
+#'     anime_on("onComplete", "handleAnimationDone") |>
+#'     anime_render(svg = svg_src)
 #'
-#' callback_js <- htmltools::tags$script(
-#'   "function handleAnimationDone() {
-#'     console.log('Animation complete.');
-#'   }"
-#' )
+#'   callback_js <- htmltools::tags$script(
+#'     "function handleAnimationDone() {
+#'       console.log('Animation complete.');
+#'     }"
+#'   )
 #'
-#' htmltools::browsable(htmltools::tagList(callback_js, widget))
+#'   htmltools::browsable(htmltools::tagList(callback_js, widget))
 #' }
 #'
 #' @export
