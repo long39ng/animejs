@@ -20,7 +20,7 @@
 anime_playback <- function(
   timeline,
   autoplay = TRUE,
-  loop = FALSE,
+  loop = NULL,
   reversed = FALSE,
   alternate = FALSE,
   controls = FALSE
@@ -32,7 +32,8 @@ anime_playback <- function(
   stopifnot(is.logical(controls), length(controls) == 1L)
 
   timeline$autoplay <- autoplay
-  timeline$loop <- loop
+  # Only overwrite timeline$loop if loop is explicitly set
+  timeline$loop <- loop %||% timeline$loop
   timeline$reversed <- reversed
   timeline$alternate <- alternate
   timeline$controls <- controls

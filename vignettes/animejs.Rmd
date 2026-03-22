@@ -32,7 +32,7 @@ The package has three conceptual layers:
 
 ## A minimal example
 
-Any SVG whose elements carry a `data-animejs-id` or CSS class can be targeted
+Any SVG whose elements can be identified by a valid CSS selector can be targeted
 directly.
 
 ```{r minimal}
@@ -64,7 +64,8 @@ anime_timeline(
     props = list(r = anime_from_to(20, 40)),
     offset = "+=200"
   ) |>
-  anime_render(svg = svg_src)
+  anime_playback(controls = TRUE) |>
+  anime_render(svg = svg_src, width = "360px")
 ```
 
 ## Timeline

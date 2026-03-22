@@ -83,8 +83,7 @@ expanding.</figcaption>
 
 **Timeline.** `anime_timeline()` initialises a timeline with default
 `duration`, `ease`, and `delay`. `anime_add()` appends animation
-segments to it. Both are pipe-friendly and return the modified timeline
-visibly.
+segments to it.
 
 **Properties.** `anime_from_to()` describes a two-value transition;
 `anime_keyframes()` describes a multi-step sequence. Both are passed

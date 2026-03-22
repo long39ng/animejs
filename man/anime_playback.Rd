@@ -7,7 +7,7 @@
 anime_playback(
   timeline,
   autoplay = TRUE,
-  loop = FALSE,
+  loop = NULL,
   reversed = FALSE,
   alternate = FALSE,
   controls = FALSE
