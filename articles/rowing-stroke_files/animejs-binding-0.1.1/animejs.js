@@ -129,11 +129,11 @@ function attachControls(el, tl, autoplay) {
 	const btn = document.createElement("button");
 	btn.setAttribute("aria-label", autoplay ? "Pause" : "Play");
 
-	const ICON_PLAY = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+	const ICON_PLAY = `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 16 16" aria-hidden="true">
 		<polygon points="3,1 14,8 3,15" fill="currentColor"/>
 	</svg>`;
 
-	const ICON_PAUSE = `<svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" viewBox="0 0 16 16" aria-hidden="true">
+	const ICON_PAUSE = `<svg xmlns="http://www.w3.org/2000/svg" width="12" height="12" viewBox="0 0 16 16" aria-hidden="true">
 		<rect x="2"  y="1" width="4" height="14" fill="currentColor"/>
 		<rect x="10" y="1" width="4" height="14" fill="currentColor"/>
 	</svg>`;

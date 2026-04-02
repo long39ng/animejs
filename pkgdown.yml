@@ -3,8 +3,9 @@ pkgdown: 2.2.0
 pkgdown_sha: ~
 articles:
   animejs: animejs.html
+  articles/dezim-logo: dezim-logo.html
   articles/rowing-stroke: rowing-stroke.html
-last_built: 2026-03-22T18:10Z
+last_built: 2026-04-02T14:11Z
 urls:
   reference: https://long39ng.github.io/animejs/reference
   article: https://long39ng.github.io/animejs/articles

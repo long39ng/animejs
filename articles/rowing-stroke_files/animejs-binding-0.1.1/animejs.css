@@ -12,6 +12,7 @@
 	align-items: center;
 	justify-content: center;
 	width: 32px;
+	border-radius: revert;
 }
 
 .animejs-controls input[type="range"] {
