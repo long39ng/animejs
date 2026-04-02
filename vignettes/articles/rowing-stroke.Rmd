@@ -1,10 +1,5 @@
 ---
 title: "Animating a Rowing Stroke with animejs"
-output: rmarkdown::html_vignette
-vignette: >
-  %\VignetteIndexEntry{Animating a Rowing Stroke with animejs}
-  %\VignetteEngine{knitr::rmarkdown}
-  %\VignetteEncoding{UTF-8}
 ---
 
 ```{r, include = FALSE}

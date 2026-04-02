@@ -55,3 +55,12 @@ reference:
     contents:
       - anime_render
       - animejs_widget
+
+articles:
+  - title: Examples
+    navbar: ~
+    contents:
+      - articles/rowing-stroke
+  - title: ~
+    contents:
+      - articles/dezim-logo

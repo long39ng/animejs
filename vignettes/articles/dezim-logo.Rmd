@@ -1,0 +1,160 @@
+---
+title: "Animating the DeZIM Institut Logo"
+---
+```{r setup, include = FALSE}
+knitr::opts_chunk$set(
+  collapse = TRUE,
+  comment = "#>"
+)
+```
+
+The [DeZIM](https://www.dezim-institut.de) (Deutsches Zentrum für
+Integration- und Migrationsforschung) logo consists of four overlapping
+circles with Venn-style colour blending, five white letterforms, a vertical
+divider, and a typographic block to the right. The animation reveals each
+element in a choreographed sequence: the four circles scale in left to right,
+the shared lens regions fade in, the letterforms follow with a stagger, the
+divider grows from its midpoint, and the text settles in from a slight
+rightward offset.
+
+## 1. SVG annotation
+
+The original SVG carries no animation identifiers. The code below uses `sub()`
+to inject `data-animejs-id` attributes on the five individually targeted
+elements and to prepend initial-state CSS rules to the existing
+`<defs><style>` block. Elements animated as groups are reached via class
+selectors.
+
+```{r annotate}
+library(animejs)
+
+svg_raw <- paste0(
+  readLines(
+    "https://www.dezim-institut.de/_assets/03ba20435fb0f29076b2967fa9a28b23/Images/logo-dezim.svg",
+    warn = FALSE
+  ),
+  collapse = "\n"
+)
+
+svg_annotated <- svg_raw |>
+  sub(
+    pattern = "<defs><style>",
+    replacement = paste0(
+      "<defs><style>",
+      ".anim-circle{opacity:0;transform:scale(0)}",
+      ".anim-divider{opacity:0;transform:scaleY(0)}",
+      ".e{opacity:0}",
+      ".f,.j,.l{opacity:0}",
+      ".i{opacity:0;transform:translateX(10px)}"
+    ),
+    fixed = TRUE
+  ) |>
+  sub(
+    pattern = '<path class="d"',
+    replacement = '<path data-animejs-id="circle-teal" class="d anim-circle" style="transform-origin:49.5px 49.5px"',
+    fixed = TRUE
+  ) |>
+  sub(
+    pattern = '<path class="h"',
+    replacement = '<path data-animejs-id="circle-amber" class="h anim-circle" style="transform-origin:89.1px 49.5px"',
+    fixed = TRUE
+  ) |>
+  sub(
+    pattern = '<path class="k"',
+    replacement = '<path data-animejs-id="circle-red" class="k anim-circle" style="transform-origin:148.5px 49.5px"',
+    fixed = TRUE
+  ) |>
+  sub(
+    pattern = '<path class="g" d="M234',
+    replacement = '<path data-animejs-id="circle-orange" class="g anim-circle" style="transform-origin:218px 49.5px" d="M234',
+    fixed = TRUE
+  ) |>
+  sub(
+    pattern = '<path class="g" d="M253',
+    replacement = '<path data-animejs-id="divider" class="g anim-divider" style="transform-origin:253.15px 49.5px" d="M253',
+    fixed = TRUE
+  )
+```
+
+## 2. Timeline
+
+```{r timeline}
+tl <- anime_timeline() |>
+  # Four circles scale in from their geometric centres, left to right.
+  # anime_easing_back() produces a brief overshoot that reinforces the
+  # circular geometry of the icon.
+  anime_add(
+    selector = anime_target_id("circle-teal"),
+    props = list(opacity = anime_from_to(0, 1), scale = anime_from_to(0, 1)),
+    duration = 700,
+    ease = anime_easing_back("out"),
+    offset = 0
+  ) |>
+  anime_add(
+    selector = anime_target_id("circle-amber"),
+    props = list(opacity = anime_from_to(0, 1), scale = anime_from_to(0, 1)),
+    duration = 700,
+    ease = anime_easing_back("out"),
+    offset = 200
+  ) |>
+  anime_add(
+    selector = anime_target_id("circle-red"),
+    props = list(opacity = anime_from_to(0, 1), scale = anime_from_to(0, 1)),
+    duration = 700,
+    ease = anime_easing_back("out"),
+    offset = 400
+  ) |>
+  anime_add(
+    selector = anime_target_id("circle-orange"),
+    props = list(opacity = anime_from_to(0, 1), scale = anime_from_to(0, 1)),
+    duration = 700,
+    ease = anime_easing_back("out"),
+    offset = 600
+  ) |>
+  # Venn lens regions fade in once all four circles are present.
+  anime_add(
+    selector = anime_target_css(".f, .j, .l"),
+    props = list(opacity = anime_from_to(0, 1)),
+    duration = 400,
+    ease = anime_easing("Quad", "out"),
+    offset = 900
+  ) |>
+  # White letterforms (D, E, Z, I, M) fade in left to right with a stagger.
+  # The five .e paths appear in left-to-right DOM order, so the default
+  # stagger direction ("first") matches the reading direction of the letters.
+  anime_add(
+    selector = anime_target_css(".e"),
+    props = list(opacity = anime_from_to(0, 1)),
+    duration = 400,
+    ease = anime_easing("Quad", "out"),
+    stagger = anime_stagger(80),
+    offset = 1050
+  ) |>
+  # Divider line grows from its vertical midpoint.
+  anime_add(
+    selector = anime_target_id("divider"),
+    props = list(opacity = anime_from_to(0, 1), scaleY = anime_from_to(0, 1)),
+    duration = 500,
+    ease = anime_easing("Expo", "out"),
+    offset = 1300
+  ) |>
+  # Text block fades in and settles leftward from a 10 px rightward offset.
+  anime_add(
+    selector = anime_target_css(".i"),
+    props = list(
+      opacity = anime_from_to(0, 1),
+      translateX = anime_from_to(10, 0)
+    ),
+    duration = 700,
+    ease = anime_easing("Quad", "out"),
+    offset = 1600
+  )
+```
+
+## 3. Render
+
+```{r render}
+tl |>
+  anime_playback(autoplay = TRUE, loop = TRUE, controls = TRUE) |>
+  anime_render(svg_annotated, width = 520, height = 120)
+```
