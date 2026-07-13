@@ -34,6 +34,20 @@ test_that("anime_keyframes() preserves optional ease and duration per keyframe",
   expect_equal(kf[[3]]$duration, 200)
 })
 
+test_that("anime_keyframes() accepts anime_easing objects per keyframe", {
+  kf <- anime_keyframes(
+    list(to = 0),
+    list(to = 1, ease = anime_easing("Cubic"))
+  )
+  expect_s3_class(kf[[2]]$ease, "anime_easing")
+})
+
+test_that("anime_keyframes() rejects malformed keyframes", {
+  expect_snapshot(error = TRUE, anime_keyframes(list(from = 0)))
+  expect_snapshot(error = TRUE, anime_keyframes(0, c(1, 2)))
+  expect_snapshot(error = TRUE, anime_keyframes(list(to = 1, ease = 42)))
+})
+
 test_that("to_js_props() passes list-based keyframes through with correct keys", {
   kf <- anime_keyframes(
     list(to = 0),
@@ -70,9 +84,14 @@ test_that("anime_from_to() stores from, to, and unit", {
   expect_equal(ft$unit, "px")
 })
 
-test_that("anime_from_to() defaults unit to empty string", {
+test_that("anime_from_to() defaults unit to empty string and ease to NULL", {
   ft <- anime_from_to(0, 1)
   expect_equal(ft$unit, "")
+  expect_null(ft$ease)
+})
+
+test_that("anime_from_to() validates ease", {
+  expect_snapshot(error = TRUE, anime_from_to(0, 1, ease = 42))
 })
 
 test_that("to_js_props() converts anime_from_to to a from/to list", {
@@ -87,4 +106,15 @@ test_that("to_js_props() embeds unit into value strings for anime_from_to", {
   result <- to_js_props(list(x = ft))
   expect_equal(result$x$from, "0px")
   expect_equal(result$x$to, "100px")
+})
+
+test_that("to_js_props() keeps numeric values numeric when unit is empty or NULL", {
+  expect_identical(
+    to_js_props(list(x = anime_from_to(0, 100)))$x,
+    list(from = 0, to = 100)
+  )
+  expect_identical(
+    to_js_props(list(x = anime_from_to(0, 100, unit = NULL)))$x,
+    list(from = 0, to = 100)
+  )
 })

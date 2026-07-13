@@ -17,7 +17,7 @@ anime_easing_back(direction = "out", overshoot = 1.70158)
 
 anime_easing_bezier(x1, y1, x2, y2)
 
-anime_easing_steps(count)
+anime_easing_steps(count, from_start = FALSE)
 
 anime_easing_spring(bounce = 0.5, duration = 628)
 }
@@ -29,7 +29,7 @@ anime_easing_spring(bounce = 0.5, duration = 628)
 "in", "out", "inOut", "outIn".}
 
 \item{amplitude, period}{\strong{(Elastic easing)} Numeric. Overshoot amplitude
-and oscillation period.}
+in [1, 10] and oscillation period in (0, 2].}
 
 \item{overshoot}{\strong{(Back easing)} Numeric. Overshoot amount.}
 
@@ -37,6 +37,10 @@ and oscillation period.}
 second control point. \code{x1} and \code{x2} must be in [0, 1].}
 
 \item{count}{\strong{(Steps easing)} Positive integer. Number of discrete steps.}
+
+\item{from_start}{\strong{(Steps easing)} Logical. If \code{TRUE}, the value jumps at
+the start of each step instead of the end (CSS \code{jump-start} vs
+\code{jump-end}).}
 
 \item{bounce}{\strong{(Spring easing)} Number in [-1, 1]. Controls bounciness.
 Values from 0 to 1 produce bouncy curves; values below 0 produce
@@ -50,8 +54,17 @@ An \code{anime_easing} object.
 }
 \description{
 A family of constructors for Anime.js v4 easing specifications. Each
-returns an \code{anime_easing} object that serialises to the correct JS string
-inside \code{\link[=anime_timeline]{anime_timeline()}}, \code{\link[=anime_add]{anime_add()}}, or \code{\link[=anime_playback]{anime_playback()}}.
+returns an \code{anime_easing} object that serialises to the corresponding
+Anime.js v4 easing inside \code{\link[=anime_timeline]{anime_timeline()}}, \code{\link[=anime_add]{anime_add()}},
+\code{\link[=anime_animate]{anime_animate()}}, or \code{\link[=anime_playback]{anime_playback()}}.
+}
+\details{
+Plain Anime.js v4 easing name strings (e.g. \code{"inOutSine"},
+\code{"outElastic(1,0.3)"}) are also accepted wherever an \code{anime_easing} object
+is expected. Note that Anime.js v4 has removed the string syntax for
+\code{cubicBezier()}, \code{steps()}, and spring easings; use the constructors below
+for those, and the widget reconstructs the corresponding function calls in
+JavaScript.
 }
 \examples{
 anime_easing("linear")
@@ -67,6 +80,7 @@ anime_easing_bezier(0.4, 0, 0.2, 1)
 anime_easing_bezier(0.68, -0.55, 0.265, 1.55)
 
 anime_easing_steps(10)
+anime_easing_steps(5, from_start = TRUE)
 
 anime_easing_spring()
 anime_easing_spring(bounce = 0.65, duration = 350)

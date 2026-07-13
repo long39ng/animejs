@@ -7,15 +7,18 @@
 anime_keyframes(...)
 }
 \arguments{
-\item{...}{Keyframe values. Either bare numeric values, or lists each with
-a \verb{$to} key and optional \verb{$ease} and \verb{$duration} overrides.}
+\item{...}{<\code{\link[rlang:dyn-dots]{dynamic-dots}}> Keyframe values. Either bare
+atomic values, or lists each with a \verb{$to} key and optional \verb{$ease},
+\verb{$duration}, and \verb{$delay} overrides. \verb{$ease} accepts an \code{anime_easing}
+object or an Anime.js easing name string.}
 }
 \value{
 An \code{anime_keyframes} object.
 }
 \description{
 Constructs a keyframes object for use in the \code{props} argument of
-\code{\link[=anime_add]{anime_add()}}. Each positional argument is one keyframe.
+\code{\link[=anime_add]{anime_add()}} or \code{\link[=anime_animate]{anime_animate()}}. Each positional argument is one
+keyframe.
 }
 \examples{
 # Bare numeric keyframe values

@@ -4,14 +4,18 @@
 \alias{anime_from_to}
 \title{Specify a from/to property range}
 \usage{
-anime_from_to(from, to, unit = "")
+anime_from_to(from, to, unit = "", ease = NULL)
 }
 \arguments{
 \item{from}{Numeric. Starting value.}
 
 \item{to}{Numeric. Ending value.}
 
-\item{unit}{Character. Optional CSS unit suffix, e.g. \code{"px"}, \code{"\%"}, \code{"deg"}.}
+\item{unit}{Character. Optional CSS unit suffix, e.g. \code{"px"}, \code{"\%"},
+\code{"deg"}.}
+
+\item{ease}{Optional easing override for this property alone, an
+\code{anime_easing} object or an Anime.js easing name string.}
 }
 \value{
 An \code{anime_from_to} object.
@@ -25,5 +29,6 @@ values during serialisation (e.g. \code{100} with \code{unit = "px"} becomes
 \examples{
 anime_from_to(0, 1)
 anime_from_to(0, 360, unit = "deg")
+anime_from_to(0, 1, ease = anime_easing_spring())
 
 }

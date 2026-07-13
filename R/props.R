@@ -1,10 +1,13 @@
 #' Specify per-property keyframes for an animation
 #'
 #' Constructs a keyframes object for use in the `props` argument of
-#' [anime_add()]. Each positional argument is one keyframe.
+#' [anime_add()] or [anime_animate()]. Each positional argument is one
+#' keyframe.
 #'
-#' @param ... Keyframe values. Either bare numeric values, or lists each with
-#'   a `$to` key and optional `$ease` and `$duration` overrides.
+#' @param ... <[`dynamic-dots`][rlang::dyn-dots]> Keyframe values. Either bare
+#'   atomic values, or lists each with a `$to` key and optional `$ease`,
+#'   `$duration`, and `$delay` overrides. `$ease` accepts an `anime_easing`
+#'   object or an Anime.js easing name string.
 #'
 #' @return An `anime_keyframes` object.
 #'
@@ -34,7 +37,24 @@
 #'
 #' @export
 anime_keyframes <- function(...) {
-  structure(list(...), class = "anime_keyframes")
+  frames <- rlang::list2(...)
+  for (i in seq_along(frames)) {
+    frame <- frames[[i]]
+    if (rlang::is_scalar_atomic(frame)) {
+      next
+    }
+    if (!is.list(frame) || is.null(frame$to)) {
+      cli::cli_abort(
+        c(
+          "Each keyframe must be a bare atomic value or a list with a
+           {.field to} element.",
+          x = "Keyframe {i} is {.obj_type_friendly {frame}}."
+        )
+      )
+    }
+    check_ease(frame$ease, arg = "ease")
+  }
+  structure(frames, class = "anime_keyframes")
 }
 
 #' Specify a from/to property range
@@ -46,15 +66,28 @@ anime_keyframes <- function(...) {
 #'
 #' @param from Numeric. Starting value.
 #' @param to Numeric. Ending value.
-#' @param unit Character. Optional CSS unit suffix, e.g. `"px"`, `"%"`, `"deg"`.
+#' @param unit Character. Optional CSS unit suffix, e.g. `"px"`, `"%"`,
+#'   `"deg"`.
+#' @param ease Optional easing override for this property alone, an
+#'   `anime_easing` object or an Anime.js easing name string.
 #'
 #' @return An `anime_from_to` object.
 #'
 #' @examples
 #' anime_from_to(0, 1)
 #' anime_from_to(0, 360, unit = "deg")
+#' anime_from_to(0, 1, ease = anime_easing_spring())
 #'
 #' @export
-anime_from_to <- function(from, to, unit = "") {
-  structure(list(from = from, to = to, unit = unit), class = "anime_from_to")
+anime_from_to <- function(from, to, unit = "", ease = NULL) {
+  rlang::check_required(from)
+  rlang::check_required(to)
+  if (!is.null(unit)) {
+    check_string(unit, "unit")
+  }
+  check_ease(ease)
+  structure(
+    list(from = from, to = to, unit = unit, ease = ease),
+    class = "anime_from_to"
+  )
 }
