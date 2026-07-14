@@ -2,20 +2,20 @@
 % Please edit documentation in R/targets.R
 \name{anime_target_layer}
 \alias{anime_target_layer}
-\title{Target all data elements belonging to a ggplot2 layer}
+\title{Target elements by a data-layer attribute}
 \usage{
 anime_target_layer(layer_index)
 }
 \arguments{
-\item{layer_index}{Integer scalar. 1-based index of the ggplot2 layer.}
+\item{layer_index}{Integer scalar. 1-based index of the layer.}
 }
 \value{
 A CSS selector string of the form \code{"[data-layer='<layer_index>']"}.
 }
 \description{
-Produces an attribute selector matching the \code{data-layer} attribute injected
-by \code{gganime}'s SVG annotation pipeline. Exposed for power users who compose
-\code{animejs} timelines against annotated ggplot2 SVG output directly.
+Produces an attribute selector matching a \code{data-layer} attribute, a
+convention used by SVG annotation pipelines that tag all data elements
+belonging to one plot layer (e.g. ggplot2 layers) with their layer index.
 }
 \examples{
 anime_target_layer(1L)

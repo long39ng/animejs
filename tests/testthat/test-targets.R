@@ -13,25 +13,35 @@ test_that("anime_target_layer() returns a data-layer attribute selector", {
   expect_equal(anime_target_layer(2L), "[data-layer='2']")
 })
 
-test_that("anime_target_css() is an identity function", {
+test_that("anime_target_css() passes selectors through unchanged", {
   expect_equal(anime_target_css(".my-class > rect"), ".my-class > rect")
   expect_equal(anime_target_css("circle"), "circle")
 })
 
-test_that("anime_target_id() rejects non-character input", {
-  expect_error(anime_target_id(1L), class = "rlang_error")
-  expect_error(anime_target_id(NULL), class = "rlang_error")
+test_that("anime_target_id() rejects non-string input", {
+  expect_snapshot(error = TRUE, anime_target_id(1L))
+  expect_snapshot(error = TRUE, anime_target_id(NULL))
+  expect_snapshot(error = TRUE, anime_target_id(character(0L)))
+  expect_snapshot(error = TRUE, anime_target_id(c("a", "b")))
 })
 
-test_that("anime_target_id() rejects length-0 character input", {
-  expect_error(anime_target_id(character(0L)), class = "rlang_error")
+test_that("anime_target_class() rejects non-string input", {
+  expect_snapshot(error = TRUE, anime_target_class(1L))
+  expect_snapshot(error = TRUE, anime_target_class(NULL))
+  expect_snapshot(error = TRUE, anime_target_class(c("a", "b")))
 })
 
-test_that("anime_target_class() rejects non-character input", {
-  expect_error(anime_target_class(1L), class = "rlang_error")
-  expect_error(anime_target_class(NULL), class = "rlang_error")
+test_that("anime_target_class() rejects a leading dot with a hint", {
+  expect_snapshot(error = TRUE, anime_target_class(".circle"))
 })
 
-test_that("anime_target_class() rejects length-0 character input", {
-  expect_error(anime_target_class(character(0L)), class = "rlang_error")
+test_that("anime_target_layer() rejects non-count input", {
+  expect_snapshot(error = TRUE, anime_target_layer(0L))
+  expect_snapshot(error = TRUE, anime_target_layer(1.5))
+  expect_snapshot(error = TRUE, anime_target_layer("1"))
+})
+
+test_that("anime_target_css() rejects non-string input", {
+  expect_snapshot(error = TRUE, anime_target_css(NULL))
+  expect_snapshot(error = TRUE, anime_target_css(c(".a", ".b")))
 })

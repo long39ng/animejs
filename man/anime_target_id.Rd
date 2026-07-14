@@ -13,8 +13,8 @@ anime_target_id(id)
 A CSS selector string of the form \code{"[data-animejs-id='<id>']"}.
 }
 \description{
-The primary mechanism for targeting individual elements annotated by
-\code{svg_annotate()} (in \code{gganime}) or by hand.
+The primary mechanism for targeting individual elements annotated with a
+\code{data-animejs-id} attribute, by hand or by an upstream SVG annotation tool.
 }
 \examples{
 anime_target_id("c1")
