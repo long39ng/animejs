@@ -2,21 +2,16 @@
 % Please edit documentation in R/animejs.R
 \name{anime_render}
 \alias{anime_render}
-\title{Render an anime_timeline as an htmlwidget}
+\title{Render an animation or timeline as an htmlwidget}
 \usage{
-anime_render(
-  timeline,
-  svg = NULL,
-  width = NULL,
-  height = NULL,
-  elementId = NULL
-)
+anime_render(x, svg = NULL, width = NULL, height = NULL, elementId = NULL)
 }
 \arguments{
-\item{timeline}{An \code{anime_timeline} object produced by \code{\link[=anime_timeline]{anime_timeline()}}.}
+\item{x}{An \code{anime_timeline} object produced by \code{\link[=anime_timeline]{anime_timeline()}}, or an
+\code{anime_animation} object produced by \code{\link[=anime_animate]{anime_animate()}}.}
 
 \item{svg}{Character. Raw SVG markup to embed in the widget. If \code{NULL}, an
-empty string is used (the timeline will animate against existing DOM
+empty string is used (the animation will run against existing DOM
 content -- advanced use only).}
 
 \item{width}{Fixed width for widget (in css units). The default is
@@ -35,8 +30,8 @@ needs to explicitly discover and interact with a specific widget instance.}
 An object of class \code{c("animejs", "htmlwidget")}.
 }
 \description{
-Selialises an \code{\link[=anime_timeline]{anime_timeline()}} object to JSON and wraps it together with
-an SVG payload in an htmlwidget.
+Serialises an \code{\link[=anime_timeline]{anime_timeline()}} or \code{\link[=anime_animate]{anime_animate()}} object to JSON and
+wraps it together with an SVG payload in an htmlwidget.
 }
 \examples{
 tl <- anime_timeline(duration = 800) |>

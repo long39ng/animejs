@@ -18,9 +18,16 @@ test_that("anime_render() passes svg content through to x$svg", {
   expect_equal(widget$x$svg, svg)
 })
 
-test_that("anime_render() errors informatively on non-anime_timeline input", {
-  expect_error(anime_render(list()), regexp = "anime_timeline")
-  expect_error(anime_render("not a timeline"), regexp = "anime_timeline")
+test_that("anime_render() renders anime_animation objects", {
+  anim <- anime_animate(selector = ".dot", props = list(opacity = c(0, 1)))
+  widget <- anime_render(anim)
+  expect_s3_class(widget, "animejs")
+  expect_identical(widget$x$config$kind, "animation")
+})
+
+test_that("anime_render() errors informatively on unsupported input", {
+  expect_snapshot(error = TRUE, anime_render(list()))
+  expect_snapshot(error = TRUE, anime_render("not a timeline"))
 })
 
 test_that("anime_render() config round-trips through JSON correctly", {
@@ -38,6 +45,7 @@ test_that("anime_render() config round-trips through JSON correctly", {
   json <- jsonlite::toJSON(config, auto_unbox = TRUE)
   parsed <- jsonlite::fromJSON(json, simplifyVector = FALSE)
 
+  expect_equal(parsed$kind, "timeline")
   expect_equal(parsed$defaults$duration, 800)
   expect_equal(parsed$defaults$ease, "outQuad")
   expect_length(parsed$segments, 1L)
@@ -87,6 +95,58 @@ test_that("anime_render() config serialises anime_keyframes to array of {to} obj
   expect_equal(kfs[[1]]$to, 0)
   expect_equal(kfs[[2]]$to, -30)
   expect_equal(kfs[[3]]$to, 0)
+})
+
+test_that("anime_render() config serialises keyframe-level easing", {
+  skip_if_not_installed("jsonlite")
+
+  tl <- anime_timeline() |>
+    anime_add(
+      selector = anime_target_class("dot"),
+      props = list(
+        translateY = anime_keyframes(
+          list(to = -30, ease = anime_easing_spring()),
+          list(to = 0, ease = "outQuad")
+        )
+      )
+    )
+  widget <- anime_render(tl)
+
+  json <- jsonlite::toJSON(widget$x$config, auto_unbox = TRUE)
+  parsed <- jsonlite::fromJSON(json, simplifyVector = FALSE)
+
+  kfs <- parsed$segments[[1]]$props$translateY
+  expect_equal(
+    kfs[[1]]$ease,
+    list(type = "spring", bounce = 0.5, duration = 628)
+  )
+  expect_equal(kfs[[2]]$ease, "outQuad")
+})
+
+test_that("anime_render() config serialises segment and stagger easing", {
+  skip_if_not_installed("jsonlite")
+
+  tl <- anime_timeline() |>
+    anime_add(
+      selector = anime_target_class("dot"),
+      props = list(opacity = anime_from_to(0, 1)),
+      ease = anime_easing_bezier(0.4, 0, 0.2, 1),
+      stagger = anime_stagger(100, ease = anime_easing_steps(4))
+    )
+  widget <- anime_render(tl)
+
+  json <- jsonlite::toJSON(widget$x$config, auto_unbox = TRUE)
+  parsed <- jsonlite::fromJSON(json, simplifyVector = FALSE)
+
+  segment <- parsed$segments[[1]]
+  expect_equal(
+    segment$ease,
+    list(type = "cubicBezier", args = list(0.4, 0, 0.2, 1))
+  )
+  expect_equal(
+    segment$stagger$ease,
+    list(type = "steps", count = 4, fromStart = FALSE)
+  )
 })
 
 test_that("anime_render() config serialises anime_stagger with from omitted when 'first'", {

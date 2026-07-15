@@ -4,29 +4,36 @@
 #' it is the final rendering step called by [anime_render()].
 #'
 #' @param svg Character. Raw SVG markup to embed in the widget. If `NULL`, an
-#'   empty string is used (the timeline will animate against existing DOM
+#'   empty string is used (the animation will run against existing DOM
 #'   content -- advanced use only).
-#' @param timeline_config List. A serialisable timeline specification produced
-#'   by [anime_timeline()] and its modifiers, then passed through
-#'   `timeline_to_json_config()`.
+#' @param config List. A serialisable animation specification produced by
+#'   [anime_timeline()] or [anime_animate()] and their modifiers, then
+#'   serialised by [anime_render()].
 #' @inheritParams htmlwidgets::createWidget
 #'
-#' @return An object of class `c("animejs", "htmlwidget)`
+#' @return An object of class `c("animejs", "htmlwidget")`.
 #' @export
 animejs_widget <- function(
   svg,
-  timeline_config,
+  config,
   width = NULL,
   height = NULL,
   elementId = NULL
 ) {
   svg <- svg %||% ""
-  stopifnot(is.character(svg), length(svg) == 1L)
-  stopifnot(is.list(timeline_config))
+  check_string(svg, "svg")
+  if (!is.list(config)) {
+    cli::cli_abort(
+      c(
+        "{.arg config} must be a list.",
+        x = "You supplied {.obj_type_friendly {config}}."
+      )
+    )
+  }
 
   x <- list(
     svg = svg,
-    config = timeline_config
+    config = config
   )
 
   htmlwidgets::createWidget(
@@ -39,12 +46,13 @@ animejs_widget <- function(
   )
 }
 
-#' Render an anime_timeline as an htmlwidget
+#' Render an animation or timeline as an htmlwidget
 #'
-#' Selialises an [anime_timeline()] object to JSON and wraps it together with
-#' an SVG payload in an htmlwidget.
+#' Serialises an [anime_timeline()] or [anime_animate()] object to JSON and
+#' wraps it together with an SVG payload in an htmlwidget.
 #'
-#' @param timeline An `anime_timeline` object produced by [anime_timeline()].
+#' @param x An `anime_timeline` object produced by [anime_timeline()], or an
+#'   `anime_animation` object produced by [anime_animate()].
 #' @inheritParams animejs_widget
 #'
 #' @return An object of class `c("animejs", "htmlwidget")`.
@@ -61,27 +69,23 @@ animejs_widget <- function(
 #'   anime_render(tl, svg)
 #' }
 anime_render <- function(
-  timeline,
+  x,
   svg = NULL,
   width = NULL,
   height = NULL,
   elementId = NULL
 ) {
-  if (!inherits(timeline, "anime_timeline")) {
-    rlang::abort(
-      paste0(
-        "`timeline` must be an `anime_timeline` object, not ",
-        class(timeline)[[1L]],
-        "."
-      )
-    )
-  }
+  check_anime_object(x)
 
-  config <- timeline_to_json_config(timeline)
+  config <- if (inherits(x, "anime_timeline")) {
+    timeline_to_json_config(x)
+  } else {
+    animation_to_json_config(x)
+  }
 
   animejs_widget(
     svg = svg %||% "",
-    timeline_config = config,
+    config = config,
     width = width,
     height = height,
     elementId = elementId

@@ -4,22 +4,16 @@
 \alias{animejs_widget}
 \title{Create a bare animejs htmlwidget}
 \usage{
-animejs_widget(
-  svg,
-  timeline_config,
-  width = NULL,
-  height = NULL,
-  elementId = NULL
-)
+animejs_widget(svg, config, width = NULL, height = NULL, elementId = NULL)
 }
 \arguments{
 \item{svg}{Character. Raw SVG markup to embed in the widget. If \code{NULL}, an
-empty string is used (the timeline will animate against existing DOM
+empty string is used (the animation will run against existing DOM
 content -- advanced use only).}
 
-\item{timeline_config}{List. A serialisable timeline specification produced
-by \code{\link[=anime_timeline]{anime_timeline()}} and its modifiers, then passed through
-\code{timeline_to_json_config()}.}
+\item{config}{List. A serialisable animation specification produced by
+\code{\link[=anime_timeline]{anime_timeline()}} or \code{\link[=anime_animate]{anime_animate()}} and their modifiers, then
+serialised by \code{\link[=anime_render]{anime_render()}}.}
 
 \item{width}{Fixed width for widget (in css units). The default is
 \code{NULL}, which results in intelligent automatic sizing based on the
@@ -34,7 +28,7 @@ automatically generated one). Useful if you have other JavaScript that
 needs to explicitly discover and interact with a specific widget instance.}
 }
 \value{
-An object of class \verb{c("animejs", "htmlwidget)}
+An object of class \code{c("animejs", "htmlwidget")}.
 }
 \description{
 This is the low-level constructor. Most users will not call this directly;
