@@ -22,6 +22,14 @@ test_that("anime_timeline() initialises segments and events as empty lists", {
   expect_identical(tl$events, list())
 })
 
+test_that("anime_timeline() validates its inputs", {
+  expect_snapshot(error = TRUE, anime_timeline(duration = "fast"))
+  expect_snapshot(error = TRUE, anime_timeline(duration = -1))
+  expect_snapshot(error = TRUE, anime_timeline(delay = c(100, 200)))
+  expect_snapshot(error = TRUE, anime_timeline(ease = 42))
+  expect_snapshot(error = TRUE, anime_timeline(loop = 1.5))
+})
+
 test_that("anime_add() appends a segment with correct fields", {
   tl <- anime_timeline() |>
     anime_add(selector = ".circle", props = list(opacity = c(0, 1)))
@@ -54,11 +62,26 @@ test_that("anime_add() omits segment-level overrides when NULL", {
   expect_null(seg$delay)
 })
 
-test_that("anime_add() throws an informative error for non-anime_timeline input", {
-  expect_error(
-    anime_add(list(), selector = ".x", props = list()),
-    class = "simpleError"
-  )
+test_that("anime_add() validates its inputs", {
+  tl <- anime_timeline()
+  expect_snapshot(error = TRUE, {
+    anime_add(list(), selector = ".x", props = list(opacity = 1))
+  })
+  expect_snapshot(error = TRUE, {
+    anime_add(tl, selector = 1, props = list(opacity = 1))
+  })
+  expect_snapshot(error = TRUE, {
+    anime_add(tl, selector = ".x", props = list(1))
+  })
+  expect_snapshot(error = TRUE, {
+    anime_add(tl, selector = ".x", props = list(opacity = 1), duration = -1)
+  })
+  expect_snapshot(error = TRUE, {
+    anime_add(tl, selector = ".x", props = list(opacity = 1), ease = 42)
+  })
+  expect_snapshot(error = TRUE, {
+    anime_add(tl, selector = ".x", props = list(opacity = 1), stagger = 100)
+  })
 })
 
 test_that("pipe chaining accumulates multiple segments", {

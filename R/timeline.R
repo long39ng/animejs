@@ -1,9 +1,11 @@
 #' Initialise an Anime.js timeline
 #'
 #' @param duration Default duration in milliseconds for all segments.
-#' @param ease Default easing for all segments.
+#' @param ease Default easing for all segments, an `anime_easing` object or an
+#'   Anime.js easing name string.
 #' @param delay Default delay in milliseconds between segments.
-#' @inheritParams anime_playback
+#' @param loop Logical or positive integer. `FALSE` for no looping, `TRUE` for
+#'   infinite looping, or a fixed number of iterations.
 #'
 #' @examples
 #' anime_timeline(duration = 800, ease = anime_easing())
@@ -16,6 +18,11 @@ anime_timeline <- function(
   delay = 0,
   loop = FALSE
 ) {
+  validate_duration(duration, "duration")
+  check_ease(ease)
+  validate_duration(delay, "delay")
+  check_loop(loop)
+
   structure(
     list(
       defaults = list(
@@ -40,8 +47,9 @@ anime_timeline <- function(
 #' @param selector CSS selector string identifying the SVG/HTML elements to
 #'   animate. Use `anime_target_*()` helpers to construct selectors.
 #' @param props A named list of property animations. Values may be scalars,
-#'   two-element vectors (from/to), or `anime_keyframes()` objects.
-#' @param offset Timeline offset. `"+=N"` means N ms after the previous
+#'   two-element numeric vectors (from/to), [anime_from_to()] objects, or
+#'   [anime_keyframes()] objects.
+#' @param offset Timeline position. `"+=N"` means N ms after the previous
 #'   segment ends; a bare number is an absolute position in ms.
 #' @param duration Overrides the timeline default for this segment.
 #' @param ease Overrides the timeline default for this segment.
@@ -68,7 +76,25 @@ anime_add <- function(
   delay = NULL,
   stagger = NULL
 ) {
-  stopifnot(inherits(timeline, "anime_timeline"))
+  if (!inherits(timeline, "anime_timeline")) {
+    cli::cli_abort(
+      c(
+        "{.arg timeline} must be an {.cls anime_timeline} object.",
+        x = "You supplied {.obj_type_friendly {timeline}}.",
+        i = "Create one with {.fn anime_timeline}."
+      )
+    )
+  }
+  check_string(selector, "selector")
+  check_props(props)
+  if (!is.null(duration)) {
+    validate_duration(duration, "duration")
+  }
+  check_ease(ease)
+  if (!is.null(delay)) {
+    validate_duration(delay, "delay")
+  }
+  check_stagger(stagger)
 
   segment <- list(
     selector = selector,

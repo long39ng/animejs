@@ -22,9 +22,10 @@ anime_add(
 animate. Use \verb{anime_target_*()} helpers to construct selectors.}
 
 \item{props}{A named list of property animations. Values may be scalars,
-two-element vectors (from/to), or \code{anime_keyframes()} objects.}
+two-element numeric vectors (from/to), \code{\link[=anime_from_to]{anime_from_to()}} objects, or
+\code{\link[=anime_keyframes]{anime_keyframes()}} objects.}
 
-\item{offset}{Timeline offset. \code{"+=N"} means N ms after the previous
+\item{offset}{Timeline position. \code{"+=N"} means N ms after the previous
 segment ends; a bare number is an absolute position in ms.}
 
 \item{duration}{Overrides the timeline default for this segment.}

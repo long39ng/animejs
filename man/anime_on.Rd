@@ -2,31 +2,28 @@
 % Please edit documentation in R/events.R
 \name{anime_on}
 \alias{anime_on}
-\title{Attach a JavaScript callback to a timeline event}
+\title{Attach a JavaScript callback to an animation event}
 \usage{
-anime_on(
-  timeline,
-  event = c("onBegin", "onUpdate", "onComplete", "onLoop"),
-  callback
-)
+anime_on(x, event, callback)
 }
 \arguments{
-\item{timeline}{An \code{anime_timeline} object.}
+\item{x}{An \code{anime_timeline} or \code{anime_animation} object.}
 
-\item{event}{One of \code{"onBegin"}, \code{"onUpdate"}, \code{"onComplete"},
-\code{"onLoop"}, matching the Anime.js v4 timeline callback API.}
+\item{event}{One of
+"onBegin", "onBeforeUpdate", "onUpdate", "onRender", "onLoop", "onPause", "onComplete",
+matching the Anime.js v4 callback API.}
 
 \item{callback}{Character scalar. Name of the global JS function to invoke.}
 }
 \value{
-The modified \code{anime_timeline} object.
+The modified object.
 }
 \description{
 The callback must be the name of a globally scoped JavaScript function
 already present on the page, for example one injected via
 \code{htmltools::tags$script()}. At render time the JavaScript binding resolves
 the name to \code{window[callback]} and attaches it to the corresponding
-Anime.js timeline hook.
+Anime.js callback.
 }
 \examples{
 if (interactive() && rlang::is_installed("htmltools")) {

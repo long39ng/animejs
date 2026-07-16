@@ -1,17 +1,28 @@
-#' Attach a JavaScript callback to a timeline event
+.ANIME_EVENTS <- c(
+  "onBegin",
+  "onBeforeUpdate",
+  "onUpdate",
+  "onRender",
+  "onLoop",
+  "onPause",
+  "onComplete"
+)
+
+#' Attach a JavaScript callback to an animation event
 #'
 #' The callback must be the name of a globally scoped JavaScript function
 #' already present on the page, for example one injected via
 #' `htmltools::tags$script()`. At render time the JavaScript binding resolves
 #' the name to `window[callback]` and attaches it to the corresponding
-#' Anime.js timeline hook.
+#' Anime.js callback.
 #'
-#' @param timeline An `anime_timeline` object.
-#' @param event One of `"onBegin"`, `"onUpdate"`, `"onComplete"`,
-#'   `"onLoop"`, matching the Anime.js v4 timeline callback API.
+#' @param x An `anime_timeline` or `anime_animation` object.
+#' @param event One of
+#'   `r paste0(paste0('"', .ANIME_EVENTS, '"'), collapse = ", ")`,
+#'   matching the Anime.js v4 callback API.
 #' @param callback Character scalar. Name of the global JS function to invoke.
 #'
-#' @return The modified `anime_timeline` object.
+#' @return The modified object.
 #'
 #' @examples
 #' if (interactive() && rlang::is_installed("htmltools")) {
@@ -34,13 +45,10 @@
 #' }
 #'
 #' @export
-anime_on <- function(
-  timeline,
-  event = c("onBegin", "onUpdate", "onComplete", "onLoop"),
-  callback
-) {
-  stopifnot(inherits(timeline, "anime_timeline"))
-  event <- rlang::arg_match(event)
-  timeline$events[[event]] <- callback
-  timeline
+anime_on <- function(x, event, callback) {
+  check_anime_object(x)
+  event <- rlang::arg_match(event, .ANIME_EVENTS)
+  check_string(callback, "callback")
+  x$events[[event]] <- callback
+  x
 }

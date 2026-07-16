@@ -2,26 +2,33 @@
 % Please edit documentation in R/playback.R
 \name{anime_playback}
 \alias{anime_playback}
-\title{Configure timeline playback}
+\title{Configure animation playback}
 \usage{
 anime_playback(
-  timeline,
-  autoplay = TRUE,
+  x,
+  autoplay = NULL,
   loop = NULL,
-  reversed = FALSE,
-  alternate = FALSE,
-  controls = FALSE
+  loop_delay = NULL,
+  playback_rate = NULL,
+  reversed = NULL,
+  alternate = NULL,
+  controls = NULL
 )
 }
 \arguments{
-\item{timeline}{An \code{anime_timeline} object.}
+\item{x}{An \code{anime_timeline} or \code{anime_animation} object.}
 
 \item{autoplay}{Logical. Start playing immediately on load.}
 
-\item{loop}{Logical or integer. \code{FALSE} for no looping, \code{TRUE} for infinite
-looping, or a positive integer for a fixed number of iterations.}
+\item{loop}{Logical or positive integer. \code{FALSE} for no looping, \code{TRUE} for
+infinite looping, or a fixed number of iterations.}
 
-\item{reversed}{Logical. Play the timeline in reverse from the end.}
+\item{loop_delay}{Numeric. Delay in milliseconds between iterations.}
+
+\item{playback_rate}{Numeric. Playback speed multiplier (1 is normal
+speed).}
+
+\item{reversed}{Logical. Play in reverse from the end.}
 
 \item{alternate}{Logical. Alternate direction on each iteration (requires
 \code{loop} to be \code{TRUE} or a positive integer to have any visible effect).}
@@ -30,11 +37,15 @@ looping, or a positive integer for a fixed number of iterations.}
 widget container.}
 }
 \value{
-The modified \code{anime_timeline} object.
+The modified \code{anime_timeline} or \code{anime_animation} object.
 }
 \description{
-Sets autoplay, loop, direction, and optional controls UI on an
-\code{anime_timeline}. Calling this function overwrites any playback settings
-already on the timeline (including the \code{loop} value set in
-\code{\link[=anime_timeline]{anime_timeline()}}).
+Sets autoplay, looping, direction, speed, and optional controls UI on an
+\code{anime_timeline} or \code{anime_animation}. Arguments left as \code{NULL} keep the
+settings already stored on the object.
+}
+\examples{
+anime_timeline() |>
+  anime_playback(loop = TRUE, alternate = TRUE, controls = TRUE)
+
 }

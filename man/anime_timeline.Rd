@@ -9,12 +9,13 @@ anime_timeline(duration = 1000, ease = anime_easing(), delay = 0, loop = FALSE)
 \arguments{
 \item{duration}{Default duration in milliseconds for all segments.}
 
-\item{ease}{Default easing for all segments.}
+\item{ease}{Default easing for all segments, an \code{anime_easing} object or an
+Anime.js easing name string.}
 
 \item{delay}{Default delay in milliseconds between segments.}
 
-\item{loop}{Logical or integer. \code{FALSE} for no looping, \code{TRUE} for infinite
-looping, or a positive integer for a fixed number of iterations.}
+\item{loop}{Logical or positive integer. \code{FALSE} for no looping, \code{TRUE} for
+infinite looping, or a fixed number of iterations.}
 }
 \value{
 An \code{anime_timeline} object.
