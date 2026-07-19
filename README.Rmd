@@ -81,12 +81,14 @@ anime_timeline(
 
 ## Key concepts
 
-**Timeline.** `anime_timeline()` initialises a timeline with default `duration`, `ease`, and `delay`. `anime_add()` appends animation segments to it.
+**Animations.** `anime_animate()` creates a single animation, mirroring Anime.js v4's `animate()`. `anime_timeline()` initialises a timeline with default `duration`, `ease`, and `delay`; `anime_add()` appends animation segments to it.
 
-**Properties.** `anime_from_to()` describes a two-value transition; `anime_keyframes()` describes a multi-step sequence. Both are passed inside the `props` list of `anime_add()`.
+**Properties.** `anime_from_to()` describes a two-value transition; `anime_keyframes()` describes a multi-step sequence. Both are passed inside the `props` list of `anime_add()` or `anime_animate()`.
 
 **Stagger.** `anime_stagger()` distributes animation start times across the elements matched by a selector. Supports linear, centre-out, and 2-D grid distributions.
 
-**Easing.** All easing constructors return `anime_easing` objects serialised to Anime.js v4 strings. Parameterised families -- `anime_easing_elastic()`, `anime_easing_spring()`, `anime_easing_bezier()`, `anime_easing_steps()`, `anime_easing_back()` -- are also available.
+**Easing.** All easing constructors return `anime_easing` objects mapped onto their Anime.js v4 equivalents. Parameterised families -- `anime_easing_elastic()`, `anime_easing_spring()`, `anime_easing_bezier()`, `anime_easing_steps()`, `anime_easing_back()` -- are also available.
 
-**Playback.** `anime_playback()` controls looping, direction, and an optional play/pause/scrub control bar injected into the widget.
+**Playback.** `anime_playback()` controls looping, direction, speed, and an optional play/pause/scrub control bar injected into the widget.
+
+**Shiny.** `animejsOutput()` and `renderAnimejs()` embed widgets in Shiny applications.

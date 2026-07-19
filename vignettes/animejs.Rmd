@@ -23,7 +23,8 @@ R Markdown documents, Quarto reports, and Shiny applications.
 
 The package has three conceptual layers:
 
-1. **Timeline** -- `anime_timeline()` and `anime_add()` accumulate an animation
+1. **Animations** -- `anime_animate()` describes a single animation;
+   `anime_timeline()` and `anime_add()` accumulate a multi-segment animation
    specification in R.
 2. **Properties** -- `anime_from_to()` and `anime_keyframes()` describe how
    individual CSS/SVG properties move over time.
@@ -68,7 +69,29 @@ anime_timeline(
   anime_render(svg = svg_src, width = "360px")
 ```
 
-## Timeline
+## Single animations
+
+`anime_animate()` is the R equivalent of Anime.js v4's
+`animate(targets, parameters)`: one set of property animations applied to one
+selector, without a timeline.
+
+```{r animate}
+anime_animate(
+  selector = anime_target_css("circle"),
+  props = list(
+    translateY = anime_from_to(-60, 0),
+    opacity = anime_from_to(0, 1)
+  ),
+  ease = anime_easing_spring(),
+  stagger = anime_stagger(120)
+) |>
+  anime_render(svg = svg_src, width = "360px")
+```
+
+Single animations support the same playback modifiers, event callbacks, and
+rendering options as timelines.
+
+## Timelines
 
 `anime_timeline()` initialises an animation timeline. The `duration`, `ease`,
 and `delay` arguments set defaults that apply to every segment; individual
@@ -92,18 +115,19 @@ inserts a 200 ms gap.
 ### From/to
 
 `anime_from_to()` is the simplest property descriptor: a start value and an
-end value.
+end value, with an optional CSS unit and per-property easing override.
 
 ```{r from_to, eval = FALSE}
 anime_from_to(0, 1) # opacity: 0 → 1
 anime_from_to(0, 100, "px") # translateX: "0px" → "100px"
+anime_from_to(0, 1, ease = anime_easing_spring()) # per-property easing
 ```
 
 ### Keyframes
 
-`anime_keyframes()` accepts two or more positional values. Bare numerics are
-used as `to` values; named lists may additionally specify `ease` and `duration`
-per keyframe.
+`anime_keyframes()` accepts two or more positional values. Bare values are
+used as `to` values; lists may additionally specify `ease`, `duration`, and
+`delay` per keyframe.
 
 ```{r keyframes, eval = FALSE}
 # Bare numeric keyframes
@@ -113,14 +137,15 @@ anime_keyframes(0, 1, 0.5)
 anime_keyframes(
   list(to = 0),
   list(to = 1, ease = "outQuad", duration = 400),
-  list(to = 0.5, ease = "inCubic")
+  list(to = 0.5, ease = anime_easing_bezier(0.4, 0, 0.2, 1))
 )
 ```
 
 ## Staggering
 
 `anime_stagger()` distributes animation start times across the elements matched
-by the selector. It is passed to the `stagger` argument of `anime_add()`.
+by the selector. It is passed to the `stagger` argument of `anime_add()` or
+`anime_animate()`.
 
 ```{r stagger, eval = FALSE}
 anime_add(
@@ -131,31 +156,47 @@ anime_add(
 )
 ```
 
-For two-dimensional grid layouts, supply `grid = c(rows, cols)` and optionally
-`axis = "x"` or `axis = "y"`.
+The `start` argument adds a base delay before the staggered delays, and
+`reversed = TRUE` reverses the stagger order. For two-dimensional grid
+layouts, supply `grid = c(rows, cols)` and optionally `axis = "x"` or
+`axis = "y"`.
 
 ## Easing
 
-All easing constructors return `anime_easing` objects.
+All easing constructors return `anime_easing` objects that map onto their
+Anime.js v4 equivalents:
 
-| Constructor                  | Example result        |
-|------------------------------|-----------------------|
-| `anime_easing("Quad", "out")` | `"outQuad"`          |
-| `anime_easing_elastic()`      | `"outElastic(1,0.3)"` |
-| `anime_easing_spring()`       | `"spring(0.5,628)"`  |
-| `anime_easing_bezier(0.4, 0, 0.2, 1)` | `"cubicBezier(0.4,0,0.2,1)"` |
-| `anime_easing_steps(10)`      | `"steps(10)"`        |
+| Constructor                           | Anime.js v4 equivalent            |
+|---------------------------------------|-----------------------------------|
+| `anime_easing("Quad", "out")`         | `"outQuad"`                       |
+| `anime_easing_elastic()`              | `"outElastic(1,0.3)"`             |
+| `anime_easing_back()`                 | `"outBack(1.70158)"`              |
+| `anime_easing_spring()`               | `spring({bounce: .5, duration: 628})` |
+| `anime_easing_bezier(0.4, 0, 0.2, 1)` | `cubicBezier(0.4, 0, 0.2, 1)`     |
+| `anime_easing_steps(10)`              | `steps(10)`                       |
 
-Plain Anime.js v4 easing name strings (e.g. `"inOutSine"`) are also accepted
-wherever an `anime_easing` object is expected.
+Plain Anime.js v4 easing name strings (e.g. `"inOutSine"`,
+`"outElastic(1,0.3)"`) are also accepted wherever an `anime_easing` object is
+expected. Note that Anime.js v4 has removed the string syntax for cubic
+bezier, steps, and spring easings -- the R constructors handle this
+automatically by reconstructing the corresponding function calls in
+JavaScript.
 
 ## Playback
 
-`anime_playback()` sets looping, direction, and UI controls:
+`anime_playback()` sets looping, direction, speed, and UI controls on a
+timeline or single animation. Arguments left as `NULL` keep the settings
+already stored on the object.
 
 ```{r playback, eval = FALSE}
 tl |>
-  anime_playback(loop = TRUE, alternate = TRUE, controls = TRUE) |>
+  anime_playback(
+    loop = TRUE,
+    loop_delay = 250,
+    alternate = TRUE,
+    playback_rate = 1.5,
+    controls = TRUE
+  ) |>
   anime_render(svg = svg_src)
 ```
 
@@ -164,8 +205,8 @@ the widget.
 
 ## Event callbacks
 
-`anime_on()` registers a global JavaScript function as a timeline lifecycle
-callback. Inject the function into the page via `htmltools::tags$script()`.
+`anime_on()` registers a global JavaScript function as a lifecycle callback.
+Inject the function into the page via `htmltools::tags$script()`.
 
 ```{r events, eval = FALSE}
 tl |>
@@ -173,7 +214,35 @@ tl |>
   anime_render(svg = svg_src)
 ```
 
-Valid events are `"onBegin"`, `"onUpdate"`, `"onComplete"`, and `"onLoop"`.
+Valid events are `"onBegin"`, `"onBeforeUpdate"`, `"onUpdate"`, `"onRender"`,
+`"onLoop"`, `"onPause"`, and `"onComplete"`, matching the Anime.js v4
+callback API.
+
+## Shiny
+
+`animejsOutput()` and `renderAnimejs()` embed widgets in Shiny applications:
+
+```{r shiny, eval = FALSE}
+library(shiny)
+
+ui <- fluidPage(
+  sliderInput("duration", "Duration (ms)", 200, 2000, 800),
+  animejsOutput("anim", height = "200px")
+)
+
+server <- function(input, output, session) {
+  output$anim <- renderAnimejs({
+    anime_animate(
+      selector = anime_target_css("circle"),
+      props = list(opacity = anime_from_to(0, 1)),
+      duration = input$duration
+    ) |>
+      anime_render(svg = svg_src)
+  })
+}
+
+shinyApp(ui, server)
+```
 
 ## Saving widget output
 

@@ -8,13 +8,13 @@
 \description{
 \code{animejs} provides a pipe-friendly R interface to
 \href{https://animejs.com/}{Anime.js v4}, a JavaScript animation library.
-Timelines are authored in R and serialised to JSON; the htmlwidgets
+Animations are authored in R and serialised to JSON; the htmlwidgets
 infrastructure renders them in a browser environment.
 
 The central workflow is:
 \enumerate{
-\item Create a timeline with \code{\link[=anime_timeline]{anime_timeline()}}.
-\item Add animation segments with \code{\link[=anime_add]{anime_add()}}.
+\item Create a single animation with \code{\link[=anime_animate]{anime_animate()}}, or a timeline with
+\code{\link[=anime_timeline]{anime_timeline()}} and add segments to it with \code{\link[=anime_add]{anime_add()}}.
 \item Configure playback with \code{\link[=anime_playback]{anime_playback()}} and attach event callbacks
 with \code{\link[=anime_on]{anime_on()}}.
 \item Render to an htmlwidget with \code{\link[=anime_render]{anime_render()}}.
@@ -24,10 +24,11 @@ Property values are specified via \code{\link[=anime_from_to]{anime_from_to()}} 
 Per-element delay offsets are specified via \code{\link[=anime_stagger]{anime_stagger()}}.
 Easing functions are specified via the \verb{anime_easing_*()} family.
 Target selectors are constructed via the \verb{anime_target_*()} family.
+In Shiny applications, use \code{\link[=animejsOutput]{animejsOutput()}} and \code{\link[=renderAnimejs]{renderAnimejs()}}.
 }
 \section{Package options}{
 
-None currently. All configuration is per-timeline.
+None currently. All configuration is per-animation.
 }
 
 \seealso{
@@ -41,6 +42,11 @@ Useful links:
 }
 \author{
 \strong{Maintainer}: Long Nguyen \email{nguyen@dezim-institut.de} (\href{https://orcid.org/0000-0001-8878-7386}{ORCID})
+
+Authors:
+\itemize{
+  \item Long Nguyen \email{nguyen@dezim-institut.de} (\href{https://orcid.org/0000-0001-8878-7386}{ORCID})
+}
 
 }
 \keyword{internal}

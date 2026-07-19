@@ -4,10 +4,12 @@ template:
   bootstrap: 5
 
 reference:
-  - title: Timeline
+  - title: Animations & Timelines
     desc: >
-      Initialise and build an Anime.js animation timeline.
+      Create a single animation, or initialise and build an animation
+      timeline.
     contents:
+      - anime_animate
       - anime_timeline
       - anime_add
 
@@ -51,10 +53,16 @@ reference:
 
   - title: Rendering
     desc: >
-      Serialise a timeline specification and produce an htmlwidget.
+      Serialise an animation specification and produce an htmlwidget.
     contents:
       - anime_render
       - animejs_widget
+
+  - title: Shiny
+    desc: >
+      Use animejs widgets in Shiny applications.
+    contents:
+      - animejs-shiny
 
 articles:
   - title: Examples
