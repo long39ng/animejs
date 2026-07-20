@@ -8,7 +8,7 @@
 ## Citation
 
 Source:
-[`DESCRIPTION`](https://github.com/long39ng/animejs/blob/main/DESCRIPTION)
+[`DESCRIPTION`](https://github.com/long39ng/animejs/blob/v1.0.0/DESCRIPTION)
 
 Nguyen L (2026). *animejs: R Bindings to the 'Anime.js' Animation
 Library*. R package version 1.0.0,
