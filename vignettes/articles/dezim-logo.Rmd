@@ -29,10 +29,7 @@ selectors.
 library(animejs)
 
 svg_raw <- paste0(
-  readLines(
-    "https://www.dezim-institut.de/_assets/03ba20435fb0f29076b2967fa9a28b23/Images/logo-dezim.svg",
-    warn = FALSE
-  ),
+  readLines("logo-dezim.svg", warn = FALSE),
   collapse = "\n"
 )
 
