@@ -13,12 +13,14 @@ and Shiny applications.
 You can install the released version of animejs from CRAN:
 
 ``` r
+
 install.packages("animejs")
 ```
 
 Or install the development version of animejs from GitHub with:
 
 ``` r
+
 # install.packages("pak")
 pak::pak("long39ng/animejs")
 ```
@@ -29,6 +31,7 @@ Annotate SVG elements with a `data-animejs-id` attribute or a CSS class,
 then build a timeline in R and render it as a widget.
 
 ``` r
+
 library(animejs)
 
 svg_src <- '
@@ -69,9 +72,11 @@ followed by the middle circle expanding.
 
 ## Key concepts
 
-**Timeline.**
+**Animations.**
+[`anime_animate()`](https://long39ng.github.io/animejs/reference/anime_animate.md)
+creates a single animation, mirroring Anime.js v4’s `animate()`.
 [`anime_timeline()`](https://long39ng.github.io/animejs/reference/anime_timeline.md)
-initialises a timeline with default `duration`, `ease`, and `delay`.
+initialises a timeline with default `duration`, `ease`, and `delay`;
 [`anime_add()`](https://long39ng.github.io/animejs/reference/anime_add.md)
 appends animation segments to it.
 
@@ -81,15 +86,17 @@ describes a two-value transition;
 [`anime_keyframes()`](https://long39ng.github.io/animejs/reference/anime_keyframes.md)
 describes a multi-step sequence. Both are passed inside the `props` list
 of
-[`anime_add()`](https://long39ng.github.io/animejs/reference/anime_add.md).
+[`anime_add()`](https://long39ng.github.io/animejs/reference/anime_add.md)
+or
+[`anime_animate()`](https://long39ng.github.io/animejs/reference/anime_animate.md).
 
 **Stagger.**
 [`anime_stagger()`](https://long39ng.github.io/animejs/reference/anime_stagger.md)
 distributes animation start times across the elements matched by a
 selector. Supports linear, centre-out, and 2-D grid distributions.
 
-**Easing.** All easing constructors return `anime_easing` objects
-serialised to Anime.js v4 strings. Parameterised families –
+**Easing.** All easing constructors return `anime_easing` objects mapped
+onto their Anime.js v4 equivalents. Parameterised families –
 [`anime_easing_elastic()`](https://long39ng.github.io/animejs/reference/anime_easing.md),
 [`anime_easing_spring()`](https://long39ng.github.io/animejs/reference/anime_easing.md),
 [`anime_easing_bezier()`](https://long39ng.github.io/animejs/reference/anime_easing.md),
@@ -99,5 +106,11 @@ serialised to Anime.js v4 strings. Parameterised families –
 
 **Playback.**
 [`anime_playback()`](https://long39ng.github.io/animejs/reference/anime_playback.md)
-controls looping, direction, and an optional play/pause/scrub control
-bar injected into the widget.
+controls looping, direction, speed, and an optional play/pause/scrub
+control bar injected into the widget.
+
+**Shiny.**
+[`animejsOutput()`](https://long39ng.github.io/animejs/reference/animejs-shiny.md)
+and
+[`renderAnimejs()`](https://long39ng.github.io/animejs/reference/animejs-shiny.md)
+embed widgets in Shiny applications.

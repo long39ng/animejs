@@ -18,13 +18,11 @@ initial-state CSS rules to the existing `<defs><style>` block. Elements
 animated as groups are reached via class selectors.
 
 ``` r
+
 library(animejs)
 
 svg_raw <- paste0(
-  readLines(
-    "https://www.dezim-institut.de/_assets/03ba20435fb0f29076b2967fa9a28b23/Images/logo-dezim.svg",
-    warn = FALSE
-  ),
+  readLines("logo-dezim.svg", warn = FALSE),
   collapse = "\n"
 )
 
@@ -71,6 +69,7 @@ svg_annotated <- svg_raw |>
 ## 2. Timeline
 
 ``` r
+
 tl <- anime_timeline() |>
   # Four circles scale in from their geometric centres, left to right.
   # anime_easing_back() produces a brief overshoot that reinforces the
@@ -146,6 +145,7 @@ tl <- anime_timeline() |>
 ## 3. Render
 
 ``` r
+
 tl |>
   anime_playback(autoplay = TRUE, loop = TRUE, controls = TRUE) |>
   anime_render(svg_annotated, width = 520, height = 120)

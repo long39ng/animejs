@@ -1,9 +1,9 @@
-# Target all data elements belonging to a ggplot2 layer
+# Target elements by a data-layer attribute
 
-Produces an attribute selector matching the `data-layer` attribute
-injected by `gganime`'s SVG annotation pipeline. Exposed for power users
-who compose `animejs` timelines against annotated ggplot2 SVG output
-directly.
+Produces an attribute selector matching a `data-layer` attribute, a
+convention used by SVG annotation pipelines that tag all data elements
+belonging to one plot layer (e.g. ggplot2 layers) with their layer
+index.
 
 ## Usage
 
@@ -15,7 +15,7 @@ anime_target_layer(layer_index)
 
 - layer_index:
 
-  Integer scalar. 1-based index of the ggplot2 layer.
+  Integer scalar. 1-based index of the layer.
 
 ## Value
 

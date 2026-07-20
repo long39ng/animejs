@@ -13,12 +13,14 @@ and Shiny applications.
 You can install the released version of animejs from CRAN:
 
 ``` r
+
 install.packages("animejs")
 ```
 
 Or install the development version of animejs from GitHub with:
 
 ``` r
+
 # install.packages("pak")
 pak::pak("long39ng/animejs")
 ```
@@ -29,6 +31,7 @@ Annotate SVG elements with a `data-animejs-id` attribute or a CSS class,
 then build a timeline in R and render it as a widget.
 
 ``` r
+
 library(animejs)
 
 svg_src <- '
@@ -69,9 +72,11 @@ followed by the middle circle expanding.
 
 ## Key concepts
 
-**Timeline.**
+**Animations.**
+[`anime_animate()`](https://long39ng.github.io/animejs/reference/anime_animate.md)
+creates a single animation, mirroring Anime.js v4’s `animate()`.
 [`anime_timeline()`](https://long39ng.github.io/animejs/reference/anime_timeline.md)
-initialises a timeline with default `duration`, `ease`, and `delay`.
+initialises a timeline with default `duration`, `ease`, and `delay`;
 [`anime_add()`](https://long39ng.github.io/animejs/reference/anime_add.md)
 appends animation segments to it.
 
@@ -81,15 +86,17 @@ describes a two-value transition;
 [`anime_keyframes()`](https://long39ng.github.io/animejs/reference/anime_keyframes.md)
 describes a multi-step sequence. Both are passed inside the `props` list
 of
-[`anime_add()`](https://long39ng.github.io/animejs/reference/anime_add.md).
+[`anime_add()`](https://long39ng.github.io/animejs/reference/anime_add.md)
+or
+[`anime_animate()`](https://long39ng.github.io/animejs/reference/anime_animate.md).
 
 **Stagger.**
 [`anime_stagger()`](https://long39ng.github.io/animejs/reference/anime_stagger.md)
 distributes animation start times across the elements matched by a
 selector. Supports linear, centre-out, and 2-D grid distributions.
 
-**Easing.** All easing constructors return `anime_easing` objects
-serialised to Anime.js v4 strings. Parameterised families –
+**Easing.** All easing constructors return `anime_easing` objects mapped
+onto their Anime.js v4 equivalents. Parameterised families –
 [`anime_easing_elastic()`](https://long39ng.github.io/animejs/reference/anime_easing.md),
 [`anime_easing_spring()`](https://long39ng.github.io/animejs/reference/anime_easing.md),
 [`anime_easing_bezier()`](https://long39ng.github.io/animejs/reference/anime_easing.md),
@@ -99,15 +106,24 @@ serialised to Anime.js v4 strings. Parameterised families –
 
 **Playback.**
 [`anime_playback()`](https://long39ng.github.io/animejs/reference/anime_playback.md)
-controls looping, direction, and an optional play/pause/scrub control
-bar injected into the widget.
+controls looping, direction, speed, and an optional play/pause/scrub
+control bar injected into the widget.
+
+**Shiny.**
+[`animejsOutput()`](https://long39ng.github.io/animejs/reference/animejs-shiny.md)
+and
+[`renderAnimejs()`](https://long39ng.github.io/animejs/reference/animejs-shiny.md)
+embed widgets in Shiny applications.
 
 # Package index
 
-## Timeline
+## Animations & Timelines
 
-Initialise and build an Anime.js animation timeline.
+Create a single animation, or initialise and build an animation
+timeline.
 
+- [`anime_animate()`](https://long39ng.github.io/animejs/reference/anime_animate.md)
+  : Create a single Anime.js animation
 - [`anime_timeline()`](https://long39ng.github.io/animejs/reference/anime_timeline.md)
   : Initialise an Anime.js timeline
 - [`anime_add()`](https://long39ng.github.io/animejs/reference/anime_add.md)
@@ -153,30 +169,38 @@ Build CSS selector strings that identify the elements to animate.
 - [`anime_target_id()`](https://long39ng.github.io/animejs/reference/anime_target_id.md)
   : Target SVG or HTML elements by a data-animejs-id attribute
 - [`anime_target_layer()`](https://long39ng.github.io/animejs/reference/anime_target_layer.md)
-  : Target all data elements belonging to a ggplot2 layer
+  : Target elements by a data-layer attribute
 
 ## Events
 
 Attach JavaScript callbacks to timeline lifecycle events.
 
 - [`anime_on()`](https://long39ng.github.io/animejs/reference/anime_on.md)
-  : Attach a JavaScript callback to a timeline event
+  : Attach a JavaScript callback to an animation event
 
 ## Playback
 
 Control looping, direction, and interactive UI controls.
 
 - [`anime_playback()`](https://long39ng.github.io/animejs/reference/anime_playback.md)
-  : Configure timeline playback
+  : Configure animation playback
 
 ## Rendering
 
-Serialise a timeline specification and produce an htmlwidget.
+Serialise an animation specification and produce an htmlwidget.
 
 - [`anime_render()`](https://long39ng.github.io/animejs/reference/anime_render.md)
-  : Render an anime_timeline as an htmlwidget
+  : Render an animation or timeline as an htmlwidget
 - [`animejs_widget()`](https://long39ng.github.io/animejs/reference/animejs_widget.md)
   : Create a bare animejs htmlwidget
+
+## Shiny
+
+Use animejs widgets in Shiny applications.
+
+- [`animejsOutput()`](https://long39ng.github.io/animejs/reference/animejs-shiny.md)
+  [`renderAnimejs()`](https://long39ng.github.io/animejs/reference/animejs-shiny.md)
+  : Shiny bindings for animejs
 
 # Articles
 

@@ -16,7 +16,8 @@ anime_timeline(duration = 1000, ease = anime_easing(), delay = 0, loop = FALSE)
 
 - ease:
 
-  Default easing for all segments.
+  Default easing for all segments, an `anime_easing` object or an
+  Anime.js easing name string.
 
 - delay:
 
@@ -24,8 +25,8 @@ anime_timeline(duration = 1000, ease = anime_easing(), delay = 0, loop = FALSE)
 
 - loop:
 
-  Logical or integer. `FALSE` for no looping, `TRUE` for infinite
-  looping, or a positive integer for a fixed number of iterations.
+  Logical or positive integer. `FALSE` for no looping, `TRUE` for
+  infinite looping, or a fixed number of iterations.
 
 ## Value
 

@@ -1,10 +1,11 @@
 # Easing constructors
 
 A family of constructors for Anime.js v4 easing specifications. Each
-returns an `anime_easing` object that serialises to the correct JS
-string inside
+returns an `anime_easing` object that serialises to the corresponding
+Anime.js v4 easing inside
 [`anime_timeline()`](https://long39ng.github.io/animejs/reference/anime_timeline.md),
 [`anime_add()`](https://long39ng.github.io/animejs/reference/anime_add.md),
+[`anime_animate()`](https://long39ng.github.io/animejs/reference/anime_animate.md),
 or
 [`anime_playback()`](https://long39ng.github.io/animejs/reference/anime_playback.md).
 
@@ -19,7 +20,7 @@ anime_easing_back(direction = "out", overshoot = 1.70158)
 
 anime_easing_bezier(x1, y1, x2, y2)
 
-anime_easing_steps(count)
+anime_easing_steps(count, from_start = FALSE)
 
 anime_easing_spring(bounce = 0.5, duration = 628)
 ```
@@ -37,8 +38,8 @@ anime_easing_spring(bounce = 0.5, duration = 628)
 
 - amplitude, period:
 
-  **(Elastic easing)** Numeric. Overshoot amplitude and oscillation
-  period.
+  **(Elastic easing)** Numeric. Overshoot amplitude in \[1, 10\] and
+  oscillation period in (0, 2\].
 
 - overshoot:
 
@@ -52,6 +53,11 @@ anime_easing_spring(bounce = 0.5, duration = 628)
 - count:
 
   **(Steps easing)** Positive integer. Number of discrete steps.
+
+- from_start:
+
+  **(Steps easing)** Logical. If `TRUE`, the value jumps at the start of
+  each step instead of the end (CSS `jump-start` vs `jump-end`).
 
 - bounce:
 
@@ -67,6 +73,15 @@ anime_easing_spring(bounce = 0.5, duration = 628)
 ## Value
 
 An `anime_easing` object.
+
+## Details
+
+Plain Anime.js v4 easing name strings (e.g. `"inOutSine"`,
+`"outElastic(1,0.3)"`) are also accepted wherever an `anime_easing`
+object is expected. Note that Anime.js v4 has removed the string syntax
+for `cubicBezier()`, `steps()`, and spring easings; use the constructors
+below for those, and the widget reconstructs the corresponding function
+calls in JavaScript.
 
 ## Examples
 
@@ -190,6 +205,23 @@ anime_easing_steps(10)
 #> $params
 #> $params$count
 #> [1] 10
+#> 
+#> $params$from_start
+#> [1] FALSE
+#> 
+#> 
+#> attr(,"class")
+#> [1] "anime_easing"
+anime_easing_steps(5, from_start = TRUE)
+#> $name
+#> [1] "steps"
+#> 
+#> $params
+#> $params$count
+#> [1] 5
+#> 
+#> $params$from_start
+#> [1] TRUE
 #> 
 #> 
 #> attr(,"class")

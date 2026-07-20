@@ -7,13 +7,7 @@ directly; it is the final rendering step called by
 ## Usage
 
 ``` r
-animejs_widget(
-  svg,
-  timeline_config,
-  width = NULL,
-  height = NULL,
-  elementId = NULL
-)
+animejs_widget(svg, config, width = NULL, height = NULL, elementId = NULL)
 ```
 
 ## Arguments
@@ -21,15 +15,17 @@ animejs_widget(
 - svg:
 
   Character. Raw SVG markup to embed in the widget. If `NULL`, an empty
-  string is used (the timeline will animate against existing DOM content
-  – advanced use only).
+  string is used (the animation will run against existing DOM content –
+  advanced use only).
 
-- timeline_config:
+- config:
 
-  List. A serialisable timeline specification produced by
+  List. A serialisable animation specification produced by
   [`anime_timeline()`](https://long39ng.github.io/animejs/reference/anime_timeline.md)
-  and its modifiers, then passed through
-  [`timeline_to_json_config()`](https://long39ng.github.io/animejs/reference/timeline_to_json_config.md).
+  or
+  [`anime_animate()`](https://long39ng.github.io/animejs/reference/anime_animate.md)
+  and their modifiers, then serialised by
+  [`anime_render()`](https://long39ng.github.io/animejs/reference/anime_render.md).
 
 - width:
 
@@ -52,4 +48,4 @@ animejs_widget(
 
 ## Value
 
-An object of class `c("animejs", "htmlwidget)`
+An object of class `c("animejs", "htmlwidget")`.

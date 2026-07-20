@@ -1,9 +1,12 @@
 # Package index
 
-## Timeline
+## Animations & Timelines
 
-Initialise and build an Anime.js animation timeline.
+Create a single animation, or initialise and build an animation
+timeline.
 
+- [`anime_animate()`](https://long39ng.github.io/animejs/reference/anime_animate.md)
+  : Create a single Anime.js animation
 - [`anime_timeline()`](https://long39ng.github.io/animejs/reference/anime_timeline.md)
   : Initialise an Anime.js timeline
 - [`anime_add()`](https://long39ng.github.io/animejs/reference/anime_add.md)
@@ -49,27 +52,35 @@ Build CSS selector strings that identify the elements to animate.
 - [`anime_target_id()`](https://long39ng.github.io/animejs/reference/anime_target_id.md)
   : Target SVG or HTML elements by a data-animejs-id attribute
 - [`anime_target_layer()`](https://long39ng.github.io/animejs/reference/anime_target_layer.md)
-  : Target all data elements belonging to a ggplot2 layer
+  : Target elements by a data-layer attribute
 
 ## Events
 
 Attach JavaScript callbacks to timeline lifecycle events.
 
 - [`anime_on()`](https://long39ng.github.io/animejs/reference/anime_on.md)
-  : Attach a JavaScript callback to a timeline event
+  : Attach a JavaScript callback to an animation event
 
 ## Playback
 
 Control looping, direction, and interactive UI controls.
 
 - [`anime_playback()`](https://long39ng.github.io/animejs/reference/anime_playback.md)
-  : Configure timeline playback
+  : Configure animation playback
 
 ## Rendering
 
-Serialise a timeline specification and produce an htmlwidget.
+Serialise an animation specification and produce an htmlwidget.
 
 - [`anime_render()`](https://long39ng.github.io/animejs/reference/anime_render.md)
-  : Render an anime_timeline as an htmlwidget
+  : Render an animation or timeline as an htmlwidget
 - [`animejs_widget()`](https://long39ng.github.io/animejs/reference/animejs_widget.md)
   : Create a bare animejs htmlwidget
+
+## Shiny
+
+Use animejs widgets in Shiny applications.
+
+- [`animejsOutput()`](https://long39ng.github.io/animejs/reference/animejs-shiny.md)
+  [`renderAnimejs()`](https://long39ng.github.io/animejs/reference/animejs-shiny.md)
+  : Shiny bindings for animejs

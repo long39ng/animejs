@@ -8,7 +8,7 @@ both values during serialisation (e.g. `100` with `unit = "px"` becomes
 ## Usage
 
 ``` r
-anime_from_to(from, to, unit = "")
+anime_from_to(from, to, unit = "", ease = NULL)
 ```
 
 ## Arguments
@@ -24,6 +24,11 @@ anime_from_to(from, to, unit = "")
 - unit:
 
   Character. Optional CSS unit suffix, e.g. `"px"`, `"%"`, `"deg"`.
+
+- ease:
+
+  Optional easing override for this property alone, an `anime_easing`
+  object or an Anime.js easing name string.
 
 ## Value
 
@@ -42,6 +47,9 @@ anime_from_to(0, 1)
 #> $unit
 #> [1] ""
 #> 
+#> $ease
+#> NULL
+#> 
 #> attr(,"class")
 #> [1] "anime_from_to"
 anime_from_to(0, 360, unit = "deg")
@@ -53,6 +61,36 @@ anime_from_to(0, 360, unit = "deg")
 #> 
 #> $unit
 #> [1] "deg"
+#> 
+#> $ease
+#> NULL
+#> 
+#> attr(,"class")
+#> [1] "anime_from_to"
+anime_from_to(0, 1, ease = anime_easing_spring())
+#> $from
+#> [1] 0
+#> 
+#> $to
+#> [1] 1
+#> 
+#> $unit
+#> [1] ""
+#> 
+#> $ease
+#> $name
+#> [1] "spring"
+#> 
+#> $params
+#> $params$bounce
+#> [1] 0.5
+#> 
+#> $params$duration
+#> [1] 628
+#> 
+#> 
+#> attr(,"class")
+#> [1] "anime_easing"
 #> 
 #> attr(,"class")
 #> [1] "anime_from_to"

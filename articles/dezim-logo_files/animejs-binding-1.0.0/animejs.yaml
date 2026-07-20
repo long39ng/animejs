@@ -1,0 +1,10 @@
+dependencies:
+  - name: anime
+    version: 4.5.0
+    src: htmlwidgets/lib
+    script: anime.esm.min.js
+  - name: animejs-binding
+    version: 1.0.0
+    src: htmlwidgets
+    script: animejs.js
+    stylesheet: animejs.css

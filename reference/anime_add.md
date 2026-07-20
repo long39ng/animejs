@@ -32,14 +32,16 @@ anime_add(
 - props:
 
   A named list of property animations. Values may be scalars,
-  two-element vectors (from/to), or
+  two-element numeric vectors (from/to),
+  [`anime_from_to()`](https://long39ng.github.io/animejs/reference/anime_from_to.md)
+  objects, or
   [`anime_keyframes()`](https://long39ng.github.io/animejs/reference/anime_keyframes.md)
   objects.
 
 - offset:
 
-  Timeline offset. `"+=N"` means N ms after the previous segment ends; a
-  bare number is an absolute position in ms.
+  Timeline position. `"+=N"` means N ms after the previous segment ends;
+  a bare number is an absolute position in ms.
 
 - duration:
 
@@ -106,6 +108,9 @@ anime_timeline() |>
 #> 
 #> $unit
 #> [1] ""
+#> 
+#> $ease
+#> NULL
 #> 
 #> attr(,"class")
 #> [1] "anime_from_to"

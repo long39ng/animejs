@@ -1,34 +1,32 @@
-# Render an anime_timeline as an htmlwidget
+# Render an animation or timeline as an htmlwidget
 
-Selialises an
+Serialises an
 [`anime_timeline()`](https://long39ng.github.io/animejs/reference/anime_timeline.md)
+or
+[`anime_animate()`](https://long39ng.github.io/animejs/reference/anime_animate.md)
 object to JSON and wraps it together with an SVG payload in an
 htmlwidget.
 
 ## Usage
 
 ``` r
-anime_render(
-  timeline,
-  svg = NULL,
-  width = NULL,
-  height = NULL,
-  elementId = NULL
-)
+anime_render(x, svg = NULL, width = NULL, height = NULL, elementId = NULL)
 ```
 
 ## Arguments
 
-- timeline:
+- x:
 
   An `anime_timeline` object produced by
-  [`anime_timeline()`](https://long39ng.github.io/animejs/reference/anime_timeline.md).
+  [`anime_timeline()`](https://long39ng.github.io/animejs/reference/anime_timeline.md),
+  or an `anime_animation` object produced by
+  [`anime_animate()`](https://long39ng.github.io/animejs/reference/anime_animate.md).
 
 - svg:
 
   Character. Raw SVG markup to embed in the widget. If `NULL`, an empty
-  string is used (the timeline will animate against existing DOM content
-  – advanced use only).
+  string is used (the animation will run against existing DOM content –
+  advanced use only).
 
 - width:
 

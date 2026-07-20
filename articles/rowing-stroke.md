@@ -22,6 +22,7 @@ left; a monorail extends to the right; a foot stretcher is fixed partway
 along the rail.
 
 ``` r
+
 machine_frame <- r"(
   <!-- Rail -->
   <line x1="58" y1="175" x2="400" y2="175"
@@ -72,6 +73,7 @@ The seat is a rounded rectangle that slides 95 px to the right during
 the drive (the leg push moves the seat away from the flywheel).
 
 ``` r
+
 seat_svg <- r"(
   <rect data-animejs-id="seat"
         x="205" y="165" width="28" height="10" rx="3"
@@ -89,6 +91,7 @@ the line is animated by updating `x2` from 219 (catch) to 314 (finish)
 as the seat slides.
 
 ``` r
+
 leg_svg <- r"(
   <line data-animejs-id="leg"
         x1="192" y1="175" x2="219" y2="165"
@@ -109,6 +112,7 @@ relative to vertical (a back lean at the finish). The head shares the
 same pivot and the same transform values.
 
 ``` r
+
 torso_svg <- r"(
   <line data-animejs-id="torso"
         x1="219" y1="165" x2="193" y2="111"
@@ -125,6 +129,7 @@ identical `translateX` and `rotate` values, so it tracks the top of the
 torso exactly.
 
 ``` r
+
 head_svg <- r"(
   <circle data-animejs-id="head"
           cx="190" cy="98" r="12"
@@ -155,6 +160,7 @@ translateX. The net effect is that the shoulder lands precisely on the
 torso top at the finish.
 
 ``` r
+
 arms_svg <- r"(
   <line data-animejs-id="arms"
         x1="193" y1="111" x2="150" y2="135"
@@ -171,6 +177,7 @@ attribute animation: `x2` and `y2` track the hands from catch to finish
 and back.
 
 ``` r
+
 handle_svg <- r"(
   <line data-animejs-id="handle"
         x1="118" y1="150" x2="150" y2="135"
@@ -182,6 +189,7 @@ handle_svg <- r"(
 ### 2.7 Assembling the SVG
 
 ``` r
+
 library(animejs)
 
 svg_src <- paste0(
@@ -215,6 +223,7 @@ are specified. The drive uses `anime_easing("Quart", "out")` for a
 forceful initial push that decelerates toward the finish.
 
 ``` r
+
 tl <- anime_timeline(
   duration = 800,
   ease = anime_easing("Quart", "out"),
@@ -274,6 +283,7 @@ The recovery starts 100 ms after the drive ends, giving a brief pause at
 the finish position.
 
 ``` r
+
 tl <- tl |>
   anime_add(
     selector = anime_target_id("seat"),
@@ -335,6 +345,7 @@ tl <- tl |>
 ## 4. Rendering
 
 ``` r
+
 tl |>
   anime_playback(controls = TRUE) |>
   anime_render(svg = svg_src, width = "360px")

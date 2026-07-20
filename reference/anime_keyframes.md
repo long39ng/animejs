@@ -1,7 +1,9 @@
 # Specify per-property keyframes for an animation
 
 Constructs a keyframes object for use in the `props` argument of
-[`anime_add()`](https://long39ng.github.io/animejs/reference/anime_add.md).
+[`anime_add()`](https://long39ng.github.io/animejs/reference/anime_add.md)
+or
+[`anime_animate()`](https://long39ng.github.io/animejs/reference/anime_animate.md).
 Each positional argument is one keyframe.
 
 ## Usage
@@ -14,8 +16,10 @@ anime_keyframes(...)
 
 - ...:
 
-  Keyframe values. Either bare numeric values, or lists each with a
-  `$to` key and optional `$ease` and `$duration` overrides.
+  \<[`dynamic-dots`](https://rlang.r-lib.org/reference/dyn-dots.html)\>
+  Keyframe values. Either bare atomic values, or lists each with a `$to`
+  key and optional `$ease`, `$duration`, and `$delay` overrides. `$ease`
+  accepts an `anime_easing` object or an Anime.js easing name string.
 
 ## Value
 

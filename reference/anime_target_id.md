@@ -1,7 +1,8 @@
 # Target SVG or HTML elements by a data-animejs-id attribute
 
-The primary mechanism for targeting individual elements annotated by
-`svg_annotate()` (in `gganime`) or by hand.
+The primary mechanism for targeting individual elements annotated with a
+`data-animejs-id` attribute, by hand or by an upstream SVG annotation
+tool.
 
 ## Usage
 

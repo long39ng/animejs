@@ -7,8 +7,8 @@
 <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 <title>Introduction to animejs • animejs</title>
 <script src="../deps/jquery-3.6.0/jquery-3.6.0.min.js"></script><meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
-<link href="../deps/bootstrap-5.3.1/bootstrap.min.css" rel="stylesheet">
-<script src="../deps/bootstrap-5.3.1/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
+<link href="../deps/bootstrap-5.3.8/bootstrap.min.css" rel="stylesheet">
+<script src="../deps/bootstrap-5.3.8/bootstrap.bundle.min.js"></script><link href="../deps/font-awesome-6.5.2/css/all.min.css" rel="stylesheet">
 <link href="../deps/font-awesome-6.5.2/css/v4-shims.min.css" rel="stylesheet">
 <script src="../deps/headroom-0.11.0/headroom.min.js"></script><script src="../deps/headroom-0.11.0/jQuery.headroom.min.js"></script><script src="../deps/bootstrap-toc-1.0.1/bootstrap-toc.min.js"></script><script src="../deps/clipboard.js-2.0.11/clipboard.min.js"></script><script src="../deps/search-1.0.0/autocomplete.jquery.min.js"></script><script src="../deps/search-1.0.0/fuse.min.js"></script><script src="../deps/search-1.0.0/mark.min.js"></script><!-- pkgdown --><script src="../pkgdown.js"></script><meta property="og:title" content="Introduction to animejs">
 </head>
@@ -20,7 +20,7 @@
 
     <a class="navbar-brand me-2" href="../index.html">animejs</a>
 
-    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">0.1.1</small>
+    <small class="nav-text text-muted me-auto" data-bs-toggle="tooltip" data-bs-placement="bottom" title="">1.0.0</small>
 
 
     <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbar" aria-controls="navbar" aria-expanded="false" aria-label="Toggle navigation">
@@ -55,8 +55,8 @@
 
 
 
-<script src="animejs_files/htmlwidgets-1.6.4/htmlwidgets.js"></script><script src="animejs_files/anime-4.0.0/anime.esm.min.js"></script><link href="animejs_files/animejs-binding-0.1.1/animejs.css" rel="stylesheet">
-<script src="animejs_files/animejs-binding-0.1.1/animejs.js"></script><div class="row">
+<script src="animejs_files/htmlwidgets-1.6.4/htmlwidgets.js"></script><script src="animejs_files/anime-4.5.0/anime.esm.min.js"></script><link href="animejs_files/animejs-binding-1.0.0/animejs.css" rel="stylesheet">
+<script src="animejs_files/animejs-binding-1.0.0/animejs.js"></script><div class="row">
   <main id="main" class="col-md-9"><div class="page-header">
 
       <h1>Introduction to animejs</h1>
@@ -79,9 +79,10 @@ applications.</p>
 <p>The package has three conceptual layers:</p>
 <ol style="list-style-type: decimal">
 <li>
-<strong>Timeline</strong> – <code><a href="../reference/anime_timeline.html">anime_timeline()</a></code> and
-<code><a href="../reference/anime_add.html">anime_add()</a></code> accumulate an animation specification in
-R.</li>
+<strong>Animations</strong> – <code><a href="../reference/anime_animate.html">anime_animate()</a></code> describes
+a single animation; <code><a href="../reference/anime_timeline.html">anime_timeline()</a></code> and
+<code><a href="../reference/anime_add.html">anime_add()</a></code> accumulate a multi-segment animation
+specification in R.</li>
 <li>
 <strong>Properties</strong> – <code><a href="../reference/anime_from_to.html">anime_from_to()</a></code> and
 <code><a href="../reference/anime_keyframes.html">anime_keyframes()</a></code> describe how individual CSS/SVG
@@ -128,16 +129,37 @@ be targeted directly.</p>
 <span>  <span class="fu"><a href="../reference/anime_playback.html">anime_playback</a></span><span class="op">(</span>controls <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/anime_render.html">anime_render</a></span><span class="op">(</span>svg <span class="op">=</span> <span class="va">svg_src</span>, width <span class="op">=</span> <span class="st">"360px"</span><span class="op">)</span></span></code></pre></div>
 <div id="htmlwidget-ac96cb3ee4656e2e9ec3" style="width:360px;height:432.632880098888px;" class="animejs html-widget"></div>
-<script type="application/json" data-for="htmlwidget-ac96cb3ee4656e2e9ec3">{"x":{"svg":"\n<svg viewBox=\"0 0 400 200\" xmlns=\"http://www.w3.org/2000/svg\">\n  <circle data-animejs-id=\"c1\" cx=\"50\"  cy=\"100\" r=\"20\" fill=\"#4e79a7\"/>\n  <circle data-animejs-id=\"c2\" cx=\"120\" cy=\"100\" r=\"20\" fill=\"#f28e2b\"/>\n  <circle data-animejs-id=\"c3\" cx=\"190\" cy=\"100\" r=\"20\" fill=\"#e15759\"/>\n<\/svg>\n","config":{"defaults":{"duration":800,"ease":"outElastic(1,0.3)","delay":0},"loop":true,"segments":[{"selector":"circle","props":{"translateY":{"from":-80,"to":0},"opacity":{"from":0,"to":1}},"offset":"+=0","stagger":{"value":150}},{"selector":"[data-animejs-id='c2']","props":{"r":{"from":20,"to":40}},"offset":"+=200"}],"events":[],"autoplay":true,"controls":true}},"evals":[],"jsHooks":[]}</script>
+<script type="application/json" data-for="htmlwidget-ac96cb3ee4656e2e9ec3">{"x":{"svg":"\n<svg viewBox=\"0 0 400 200\" xmlns=\"http://www.w3.org/2000/svg\">\n  <circle data-animejs-id=\"c1\" cx=\"50\"  cy=\"100\" r=\"20\" fill=\"#4e79a7\"/>\n  <circle data-animejs-id=\"c2\" cx=\"120\" cy=\"100\" r=\"20\" fill=\"#f28e2b\"/>\n  <circle data-animejs-id=\"c3\" cx=\"190\" cy=\"100\" r=\"20\" fill=\"#e15759\"/>\n<\/svg>\n","config":{"kind":"timeline","defaults":{"duration":800,"ease":"outElastic(1,0.3)","delay":0},"loop":true,"segments":[{"selector":"circle","props":{"translateY":{"from":-80,"to":0},"opacity":{"from":0,"to":1}},"offset":"+=0","stagger":{"value":150}},{"selector":"[data-animejs-id='c2']","props":{"r":{"from":20,"to":40}},"offset":"+=200"}],"events":[],"controls":true}},"evals":[],"jsHooks":[]}</script>
 </div>
 <div class="section level2">
-<h2 id="timeline">Timeline<a class="anchor" aria-label="anchor" href="#timeline"></a>
+<h2 id="single-animations">Single animations<a class="anchor" aria-label="anchor" href="#single-animations"></a>
+</h2>
+<p><code><a href="../reference/anime_animate.html">anime_animate()</a></code> is the R equivalent of Anime.js v4’s
+<code>animate(targets, parameters)</code>: one set of property
+animations applied to one selector, without a timeline.</p>
+<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="fu"><a href="../reference/anime_animate.html">anime_animate</a></span><span class="op">(</span></span>
+<span>  selector <span class="op">=</span> <span class="fu"><a href="../reference/anime_target_css.html">anime_target_css</a></span><span class="op">(</span><span class="st">"circle"</span><span class="op">)</span>,</span>
+<span>  props <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span></span>
+<span>    translateY <span class="op">=</span> <span class="fu"><a href="../reference/anime_from_to.html">anime_from_to</a></span><span class="op">(</span><span class="op">-</span><span class="fl">60</span>, <span class="fl">0</span><span class="op">)</span>,</span>
+<span>    opacity <span class="op">=</span> <span class="fu"><a href="../reference/anime_from_to.html">anime_from_to</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span></span>
+<span>  <span class="op">)</span>,</span>
+<span>  ease <span class="op">=</span> <span class="fu"><a href="../reference/anime_easing.html">anime_easing_spring</a></span><span class="op">(</span><span class="op">)</span>,</span>
+<span>  stagger <span class="op">=</span> <span class="fu"><a href="../reference/anime_stagger.html">anime_stagger</a></span><span class="op">(</span><span class="fl">120</span><span class="op">)</span></span>
+<span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/anime_render.html">anime_render</a></span><span class="op">(</span>svg <span class="op">=</span> <span class="va">svg_src</span>, width <span class="op">=</span> <span class="st">"360px"</span><span class="op">)</span></span></code></pre></div>
+<div id="htmlwidget-e5c8c404fe174e4c81bd" style="width:360px;height:432.632880098888px;" class="animejs html-widget"></div>
+<script type="application/json" data-for="htmlwidget-e5c8c404fe174e4c81bd">{"x":{"svg":"\n<svg viewBox=\"0 0 400 200\" xmlns=\"http://www.w3.org/2000/svg\">\n  <circle data-animejs-id=\"c1\" cx=\"50\"  cy=\"100\" r=\"20\" fill=\"#4e79a7\"/>\n  <circle data-animejs-id=\"c2\" cx=\"120\" cy=\"100\" r=\"20\" fill=\"#f28e2b\"/>\n  <circle data-animejs-id=\"c3\" cx=\"190\" cy=\"100\" r=\"20\" fill=\"#e15759\"/>\n<\/svg>\n","config":{"kind":"animation","selector":"circle","props":{"translateY":{"from":-60,"to":0},"opacity":{"from":0,"to":1}},"loop":false,"events":[],"ease":{"type":"spring","bounce":0.5,"duration":628},"stagger":{"value":120},"autoplay":true}},"evals":[],"jsHooks":[]}</script><p>Single animations support the same playback modifiers, event
+callbacks, and rendering options as timelines.</p>
+</div>
+<div class="section level2">
+<h2 id="timelines">Timelines<a class="anchor" aria-label="anchor" href="#timelines"></a>
 </h2>
 <p><code><a href="../reference/anime_timeline.html">anime_timeline()</a></code> initialises an animation timeline. The
 <code>duration</code>, <code>ease</code>, and <code>delay</code>
 arguments set defaults that apply to every segment; individual segments
 may override them via <code><a href="../reference/anime_add.html">anime_add()</a></code>.</p>
-<div class="sourceCode" id="cb2"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tl</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/anime_timeline.html">anime_timeline</a></span><span class="op">(</span></span>
 <span>  duration <span class="op">=</span> <span class="fl">1000</span>,</span>
 <span>  ease <span class="op">=</span> <span class="fu"><a href="../reference/anime_easing.html">anime_easing</a></span><span class="op">(</span><span class="st">"Cubic"</span>, <span class="st">"inOut"</span><span class="op">)</span>,</span>
@@ -156,19 +178,21 @@ inserts a 200 ms gap.</p>
 <h3 id="fromto">From/to<a class="anchor" aria-label="anchor" href="#fromto"></a>
 </h3>
 <p><code><a href="../reference/anime_from_to.html">anime_from_to()</a></code> is the simplest property descriptor: a
-start value and an end value.</p>
-<div class="sourceCode" id="cb3"><pre class="downlit sourceCode r">
+start value and an end value, with an optional CSS unit and per-property
+easing override.</p>
+<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/anime_from_to.html">anime_from_to</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span> <span class="co"># opacity: 0 → 1</span></span>
-<span><span class="fu"><a href="../reference/anime_from_to.html">anime_from_to</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">100</span>, <span class="st">"px"</span><span class="op">)</span> <span class="co"># translateX: "0px" → "100px"</span></span></code></pre></div>
+<span><span class="fu"><a href="../reference/anime_from_to.html">anime_from_to</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">100</span>, <span class="st">"px"</span><span class="op">)</span> <span class="co"># translateX: "0px" → "100px"</span></span>
+<span><span class="fu"><a href="../reference/anime_from_to.html">anime_from_to</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, ease <span class="op">=</span> <span class="fu"><a href="../reference/anime_easing.html">anime_easing_spring</a></span><span class="op">(</span><span class="op">)</span><span class="op">)</span> <span class="co"># per-property easing</span></span></code></pre></div>
 </div>
 <div class="section level3">
 <h3 id="keyframes">Keyframes<a class="anchor" aria-label="anchor" href="#keyframes"></a>
 </h3>
 <p><code><a href="../reference/anime_keyframes.html">anime_keyframes()</a></code> accepts two or more positional values.
-Bare numerics are used as <code>to</code> values; named lists may
-additionally specify <code>ease</code> and <code>duration</code> per
-keyframe.</p>
-<div class="sourceCode" id="cb4"><pre class="downlit sourceCode r">
+Bare values are used as <code>to</code> values; lists may additionally
+specify <code>ease</code>, <code>duration</code>, and <code>delay</code>
+per keyframe.</p>
+<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="co"># Bare numeric keyframes</span></span>
 <span><span class="fu"><a href="../reference/anime_keyframes.html">anime_keyframes</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span>, <span class="fl">0.5</span><span class="op">)</span></span>
 <span></span>
@@ -176,7 +200,7 @@ keyframe.</p>
 <span><span class="fu"><a href="../reference/anime_keyframes.html">anime_keyframes</a></span><span class="op">(</span></span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>to <span class="op">=</span> <span class="fl">0</span><span class="op">)</span>,</span>
 <span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>to <span class="op">=</span> <span class="fl">1</span>, ease <span class="op">=</span> <span class="st">"outQuad"</span>, duration <span class="op">=</span> <span class="fl">400</span><span class="op">)</span>,</span>
-<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>to <span class="op">=</span> <span class="fl">0.5</span>, ease <span class="op">=</span> <span class="st">"inCubic"</span><span class="op">)</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>to <span class="op">=</span> <span class="fl">0.5</span>, ease <span class="op">=</span> <span class="fu"><a href="../reference/anime_easing.html">anime_easing_bezier</a></span><span class="op">(</span><span class="fl">0.4</span>, <span class="fl">0</span>, <span class="fl">0.2</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
 </div>
 </div>
@@ -185,26 +209,34 @@ keyframe.</p>
 </h2>
 <p><code><a href="../reference/anime_stagger.html">anime_stagger()</a></code> distributes animation start times across
 the elements matched by the selector. It is passed to the
-<code>stagger</code> argument of <code><a href="../reference/anime_add.html">anime_add()</a></code>.</p>
-<div class="sourceCode" id="cb5"><pre class="downlit sourceCode r">
+<code>stagger</code> argument of <code><a href="../reference/anime_add.html">anime_add()</a></code> or
+<code><a href="../reference/anime_animate.html">anime_animate()</a></code>.</p>
+<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="fu"><a href="../reference/anime_add.html">anime_add</a></span><span class="op">(</span></span>
 <span>  <span class="va">tl</span>,</span>
 <span>  selector <span class="op">=</span> <span class="st">".bar"</span>,</span>
 <span>  props <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>scaleY <span class="op">=</span> <span class="fu"><a href="../reference/anime_from_to.html">anime_from_to</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>,</span>
 <span>  stagger <span class="op">=</span> <span class="fu"><a href="../reference/anime_stagger.html">anime_stagger</a></span><span class="op">(</span><span class="fl">80</span>, from <span class="op">=</span> <span class="st">"center"</span><span class="op">)</span></span>
 <span><span class="op">)</span></span></code></pre></div>
-<p>For two-dimensional grid layouts, supply
+<p>The <code>start</code> argument adds a base delay before the
+staggered delays, and <code>reversed = TRUE</code> reverses the stagger
+order. For two-dimensional grid layouts, supply
 <code>grid = c(rows, cols)</code> and optionally <code>axis = "x"</code>
 or <code>axis = "y"</code>.</p>
 </div>
 <div class="section level2">
 <h2 id="easing">Easing<a class="anchor" aria-label="anchor" href="#easing"></a>
 </h2>
-<p>All easing constructors return <code>anime_easing</code> objects.</p>
+<p>All easing constructors return <code>anime_easing</code> objects that
+map onto their Anime.js v4 equivalents:</p>
 <table class="table">
+<colgroup>
+<col width="52%">
+<col width="47%">
+</colgroup>
 <thead><tr class="header">
 <th>Constructor</th>
-<th>Example result</th>
+<th>Anime.js v4 equivalent</th>
 </tr></thead>
 <tbody>
 <tr class="odd">
@@ -216,31 +248,45 @@ or <code>axis = "y"</code>.</p>
 <td><code>"outElastic(1,0.3)"</code></td>
 </tr>
 <tr class="odd">
-<td><code><a href="../reference/anime_easing.html">anime_easing_spring()</a></code></td>
-<td><code>"spring(0.5,628)"</code></td>
+<td><code><a href="../reference/anime_easing.html">anime_easing_back()</a></code></td>
+<td><code>"outBack(1.70158)"</code></td>
 </tr>
 <tr class="even">
-<td><code>anime_easing_bezier(0.4, 0, 0.2, 1)</code></td>
-<td><code>"cubicBezier(0.4,0,0.2,1)"</code></td>
+<td><code><a href="../reference/anime_easing.html">anime_easing_spring()</a></code></td>
+<td><code>spring({bounce: .5, duration: 628})</code></td>
 </tr>
 <tr class="odd">
+<td><code>anime_easing_bezier(0.4, 0, 0.2, 1)</code></td>
+<td><code>cubicBezier(0.4, 0, 0.2, 1)</code></td>
+</tr>
+<tr class="even">
 <td><code>anime_easing_steps(10)</code></td>
-<td><code>"steps(10)"</code></td>
+<td><code>steps(10)</code></td>
 </tr>
 </tbody>
 </table>
-<p>Plain Anime.js v4 easing name strings (e.g. <code>"inOutSine"</code>)
-are also accepted wherever an <code>anime_easing</code> object is
-expected.</p>
+<p>Plain Anime.js v4 easing name strings (e.g. <code>"inOutSine"</code>,
+<code>"outElastic(1,0.3)"</code>) are also accepted wherever an
+<code>anime_easing</code> object is expected. Note that Anime.js v4 has
+removed the string syntax for cubic bezier, steps, and spring easings –
+the R constructors handle this automatically by reconstructing the
+corresponding function calls in JavaScript.</p>
 </div>
 <div class="section level2">
 <h2 id="playback">Playback<a class="anchor" aria-label="anchor" href="#playback"></a>
 </h2>
-<p><code><a href="../reference/anime_playback.html">anime_playback()</a></code> sets looping, direction, and UI
-controls:</p>
-<div class="sourceCode" id="cb6"><pre class="downlit sourceCode r">
+<p><code><a href="../reference/anime_playback.html">anime_playback()</a></code> sets looping, direction, speed, and UI
+controls on a timeline or single animation. Arguments left as
+<code>NULL</code> keep the settings already stored on the object.</p>
+<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tl</span> <span class="op">|&gt;</span></span>
-<span>  <span class="fu"><a href="../reference/anime_playback.html">anime_playback</a></span><span class="op">(</span>loop <span class="op">=</span> <span class="cn">TRUE</span>, alternate <span class="op">=</span> <span class="cn">TRUE</span>, controls <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>  <span class="fu"><a href="../reference/anime_playback.html">anime_playback</a></span><span class="op">(</span></span>
+<span>    loop <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    loop_delay <span class="op">=</span> <span class="fl">250</span>,</span>
+<span>    alternate <span class="op">=</span> <span class="cn">TRUE</span>,</span>
+<span>    playback_rate <span class="op">=</span> <span class="fl">1.5</span>,</span>
+<span>    controls <span class="op">=</span> <span class="cn">TRUE</span></span>
+<span>  <span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/anime_render.html">anime_render</a></span><span class="op">(</span>svg <span class="op">=</span> <span class="va">svg_src</span><span class="op">)</span></span></code></pre></div>
 <p>Setting <code>controls = TRUE</code> injects a play/pause button and
 a scrub slider into the widget.</p>
@@ -249,21 +295,50 @@ a scrub slider into the widget.</p>
 <h2 id="event-callbacks">Event callbacks<a class="anchor" aria-label="anchor" href="#event-callbacks"></a>
 </h2>
 <p><code><a href="../reference/anime_on.html">anime_on()</a></code> registers a global JavaScript function as a
-timeline lifecycle callback. Inject the function into the page via
+lifecycle callback. Inject the function into the page via
 <code>htmltools::tags$script()</code>.</p>
-<div class="sourceCode" id="cb7"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">tl</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/anime_on.html">anime_on</a></span><span class="op">(</span><span class="st">"onComplete"</span>, <span class="st">"myOnCompleteHandler"</span><span class="op">)</span> <span class="op">|&gt;</span></span>
 <span>  <span class="fu"><a href="../reference/anime_render.html">anime_render</a></span><span class="op">(</span>svg <span class="op">=</span> <span class="va">svg_src</span><span class="op">)</span></span></code></pre></div>
-<p>Valid events are <code>"onBegin"</code>, <code>"onUpdate"</code>,
-<code>"onComplete"</code>, and <code>"onLoop"</code>.</p>
+<p>Valid events are <code>"onBegin"</code>,
+<code>"onBeforeUpdate"</code>, <code>"onUpdate"</code>,
+<code>"onRender"</code>, <code>"onLoop"</code>, <code>"onPause"</code>,
+and <code>"onComplete"</code>, matching the Anime.js v4 callback
+API.</p>
+</div>
+<div class="section level2">
+<h2 id="shiny">Shiny<a class="anchor" aria-label="anchor" href="#shiny"></a>
+</h2>
+<p><code><a href="../reference/animejs-shiny.html">animejsOutput()</a></code> and <code><a href="../reference/animejs-shiny.html">renderAnimejs()</a></code> embed
+widgets in Shiny applications:</p>
+<div class="sourceCode" id="cb9"><pre class="downlit sourceCode r">
+<code class="sourceCode R"><span><span class="kw"><a href="https://rdrr.io/r/base/library.html" class="external-link">library</a></span><span class="op">(</span><span class="va"><a href="https://shiny.posit.co/" class="external-link">shiny</a></span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">ui</span> <span class="op">&lt;-</span> <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/fluidPage.html" class="external-link">fluidPage</a></span><span class="op">(</span></span>
+<span>  <span class="fu"><a href="https://rdrr.io/pkg/shiny/man/sliderInput.html" class="external-link">sliderInput</a></span><span class="op">(</span><span class="st">"duration"</span>, <span class="st">"Duration (ms)"</span>, <span class="fl">200</span>, <span class="fl">2000</span>, <span class="fl">800</span><span class="op">)</span>,</span>
+<span>  <span class="fu"><a href="../reference/animejs-shiny.html">animejsOutput</a></span><span class="op">(</span><span class="st">"anim"</span>, height <span class="op">=</span> <span class="st">"200px"</span><span class="op">)</span></span>
+<span><span class="op">)</span></span>
+<span></span>
+<span><span class="va">server</span> <span class="op">&lt;-</span> <span class="kw">function</span><span class="op">(</span><span class="va">input</span>, <span class="va">output</span>, <span class="va">session</span><span class="op">)</span> <span class="op">{</span></span>
+<span>  <span class="va">output</span><span class="op">$</span><span class="va">anim</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/animejs-shiny.html">renderAnimejs</a></span><span class="op">(</span><span class="op">{</span></span>
+<span>    <span class="fu"><a href="../reference/anime_animate.html">anime_animate</a></span><span class="op">(</span></span>
+<span>      selector <span class="op">=</span> <span class="fu"><a href="../reference/anime_target_css.html">anime_target_css</a></span><span class="op">(</span><span class="st">"circle"</span><span class="op">)</span>,</span>
+<span>      props <span class="op">=</span> <span class="fu"><a href="https://rdrr.io/r/base/list.html" class="external-link">list</a></span><span class="op">(</span>opacity <span class="op">=</span> <span class="fu"><a href="../reference/anime_from_to.html">anime_from_to</a></span><span class="op">(</span><span class="fl">0</span>, <span class="fl">1</span><span class="op">)</span><span class="op">)</span>,</span>
+<span>      duration <span class="op">=</span> <span class="va">input</span><span class="op">$</span><span class="va">duration</span></span>
+<span>    <span class="op">)</span> <span class="op">|&gt;</span></span>
+<span>      <span class="fu"><a href="../reference/anime_render.html">anime_render</a></span><span class="op">(</span>svg <span class="op">=</span> <span class="va">svg_src</span><span class="op">)</span></span>
+<span>  <span class="op">}</span><span class="op">)</span></span>
+<span><span class="op">}</span></span>
+<span></span>
+<span><span class="fu"><a href="https://rdrr.io/pkg/shiny/man/shinyApp.html" class="external-link">shinyApp</a></span><span class="op">(</span><span class="va">ui</span>, <span class="va">server</span><span class="op">)</span></span></code></pre></div>
 </div>
 <div class="section level2">
 <h2 id="saving-widget-output">Saving widget output<a class="anchor" aria-label="anchor" href="#saving-widget-output"></a>
 </h2>
 <p>For reproducible documents the widget can be saved to a
 self-contained HTML file:</p>
-<div class="sourceCode" id="cb8"><pre class="downlit sourceCode r">
+<div class="sourceCode" id="cb10"><pre class="downlit sourceCode r">
 <code class="sourceCode R"><span><span class="va">widget</span> <span class="op">&lt;-</span> <span class="fu"><a href="../reference/anime_render.html">anime_render</a></span><span class="op">(</span><span class="va">tl</span>, svg <span class="op">=</span> <span class="va">svg_src</span><span class="op">)</span></span>
 <span><span class="fu">htmlwidgets</span><span class="fu">::</span><span class="fu"><a href="https://rdrr.io/pkg/htmlwidgets/man/saveWidget.html" class="external-link">saveWidget</a></span><span class="op">(</span><span class="va">widget</span>, <span class="st">"animation.html"</span>, selfcontained <span class="op">=</span> <span class="cn">TRUE</span><span class="op">)</span></span></code></pre></div>
 </div>
@@ -278,7 +353,7 @@ self-contained HTML file:</p>
 </div>
 
 <div class="pkgdown-footer-right">
-  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.0.</p>
+  <p>Site built with <a href="https://pkgdown.r-lib.org/" class="external-link">pkgdown</a> 2.2.1.</p>
 </div>
 
     </footer>

@@ -6,7 +6,15 @@ start times across elements according to the stagger value.
 ## Usage
 
 ``` r
-anime_stagger(value, from = "first", grid = NULL, axis = NULL, ease = NULL)
+anime_stagger(
+  value,
+  from = "first",
+  start = NULL,
+  reversed = FALSE,
+  grid = NULL,
+  axis = NULL,
+  ease = NULL
+)
 ```
 
 ## Arguments
@@ -20,6 +28,14 @@ anime_stagger(value, from = "first", grid = NULL, axis = NULL, ease = NULL)
   One of `"first"`, `"last"`, `"center"`, or a numeric index. Controls
   which element starts first.
 
+- start:
+
+  Numeric. Starting value added to every staggered delay.
+
+- reversed:
+
+  Logical. Reverse the stagger order.
+
 - grid:
 
   Integer vector of length 2 (`c(rows, cols)`) for 2D grid stagger.
@@ -30,7 +46,8 @@ anime_stagger(value, from = "first", grid = NULL, axis = NULL, ease = NULL)
 
 - ease:
 
-  Easing applied to the stagger distribution itself.
+  Easing applied to the stagger distribution itself, an `anime_easing`
+  object or an Anime.js easing name string.
 
 ## Value
 
@@ -46,6 +63,12 @@ anime_stagger(100)
 #> 
 #> $from
 #> [1] "first"
+#> 
+#> $start
+#> NULL
+#> 
+#> $reversed
+#> [1] FALSE
 #> 
 #> $grid
 #> NULL
@@ -67,6 +90,12 @@ anime_stagger(200, from = "center")
 #> $from
 #> [1] "center"
 #> 
+#> $start
+#> NULL
+#> 
+#> $reversed
+#> [1] FALSE
+#> 
 #> $grid
 #> NULL
 #> 
@@ -86,6 +115,12 @@ anime_stagger(50, grid = c(3, 4), axis = "x")
 #> 
 #> $from
 #> [1] "first"
+#> 
+#> $start
+#> NULL
+#> 
+#> $reversed
+#> [1] FALSE
 #> 
 #> $grid
 #> [1] 3 4

@@ -1,31 +1,27 @@
-# Attach a JavaScript callback to a timeline event
+# Attach a JavaScript callback to an animation event
 
 The callback must be the name of a globally scoped JavaScript function
 already present on the page, for example one injected via
 `htmltools::tags$script()`. At render time the JavaScript binding
 resolves the name to `window[callback]` and attaches it to the
-corresponding Anime.js timeline hook.
+corresponding Anime.js callback.
 
 ## Usage
 
 ``` r
-anime_on(
-  timeline,
-  event = c("onBegin", "onUpdate", "onComplete", "onLoop"),
-  callback
-)
+anime_on(x, event, callback)
 ```
 
 ## Arguments
 
-- timeline:
+- x:
 
-  An `anime_timeline` object.
+  An `anime_timeline` or `anime_animation` object.
 
 - event:
 
-  One of `"onBegin"`, `"onUpdate"`, `"onComplete"`, `"onLoop"`, matching
-  the Anime.js v4 timeline callback API.
+  One of "onBegin", "onBeforeUpdate", "onUpdate", "onRender", "onLoop",
+  "onPause", "onComplete", matching the Anime.js v4 callback API.
 
 - callback:
 
@@ -33,7 +29,7 @@ anime_on(
 
 ## Value
 
-The modified `anime_timeline` object.
+The modified object.
 
 ## Examples
 

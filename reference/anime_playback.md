@@ -1,28 +1,29 @@
-# Configure timeline playback
+# Configure animation playback
 
-Sets autoplay, loop, direction, and optional controls UI on an
-`anime_timeline`. Calling this function overwrites any playback settings
-already on the timeline (including the `loop` value set in
-[`anime_timeline()`](https://long39ng.github.io/animejs/reference/anime_timeline.md)).
+Sets autoplay, looping, direction, speed, and optional controls UI on an
+`anime_timeline` or `anime_animation`. Arguments left as `NULL` keep the
+settings already stored on the object.
 
 ## Usage
 
 ``` r
 anime_playback(
-  timeline,
-  autoplay = TRUE,
+  x,
+  autoplay = NULL,
   loop = NULL,
-  reversed = FALSE,
-  alternate = FALSE,
-  controls = FALSE
+  loop_delay = NULL,
+  playback_rate = NULL,
+  reversed = NULL,
+  alternate = NULL,
+  controls = NULL
 )
 ```
 
 ## Arguments
 
-- timeline:
+- x:
 
-  An `anime_timeline` object.
+  An `anime_timeline` or `anime_animation` object.
 
 - autoplay:
 
@@ -30,12 +31,20 @@ anime_playback(
 
 - loop:
 
-  Logical or integer. `FALSE` for no looping, `TRUE` for infinite
-  looping, or a positive integer for a fixed number of iterations.
+  Logical or positive integer. `FALSE` for no looping, `TRUE` for
+  infinite looping, or a fixed number of iterations.
+
+- loop_delay:
+
+  Numeric. Delay in milliseconds between iterations.
+
+- playback_rate:
+
+  Numeric. Playback speed multiplier (1 is normal speed).
 
 - reversed:
 
-  Logical. Play the timeline in reverse from the end.
+  Logical. Play in reverse from the end.
 
 - alternate:
 
@@ -49,4 +58,46 @@ anime_playback(
 
 ## Value
 
-The modified `anime_timeline` object.
+The modified `anime_timeline` or `anime_animation` object.
+
+## Examples
+
+``` r
+anime_timeline() |>
+  anime_playback(loop = TRUE, alternate = TRUE, controls = TRUE)
+#> $defaults
+#> $defaults$duration
+#> [1] 1000
+#> 
+#> $defaults$ease
+#> $name
+#> [1] "outQuad"
+#> 
+#> $params
+#> list()
+#> 
+#> attr(,"class")
+#> [1] "anime_easing"
+#> 
+#> $defaults$delay
+#> [1] 0
+#> 
+#> 
+#> $loop
+#> [1] TRUE
+#> 
+#> $segments
+#> list()
+#> 
+#> $events
+#> list()
+#> 
+#> $alternate
+#> [1] TRUE
+#> 
+#> $controls
+#> [1] TRUE
+#> 
+#> attr(,"class")
+#> [1] "anime_timeline"
+```

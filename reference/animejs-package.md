@@ -1,24 +1,25 @@
 # animejs: R Bindings to the Anime.js Animation Library
 
 `animejs` provides a pipe-friendly R interface to [Anime.js
-v4](https://animejs.com/), a JavaScript animation library. Timelines are
-authored in R and serialised to JSON; the htmlwidgets infrastructure
+v4](https://animejs.com/), a JavaScript animation library. Animations
+are authored in R and serialised to JSON; the htmlwidgets infrastructure
 renders them in a browser environment.
 
 The central workflow is:
 
-1.  Create a timeline with
-    [`anime_timeline()`](https://long39ng.github.io/animejs/reference/anime_timeline.md).
-
-2.  Add animation segments with
+1.  Create a single animation with
+    [`anime_animate()`](https://long39ng.github.io/animejs/reference/anime_animate.md),
+    or a timeline with
+    [`anime_timeline()`](https://long39ng.github.io/animejs/reference/anime_timeline.md)
+    and add segments to it with
     [`anime_add()`](https://long39ng.github.io/animejs/reference/anime_add.md).
 
-3.  Configure playback with
+2.  Configure playback with
     [`anime_playback()`](https://long39ng.github.io/animejs/reference/anime_playback.md)
     and attach event callbacks with
     [`anime_on()`](https://long39ng.github.io/animejs/reference/anime_on.md).
 
-4.  Render to an htmlwidget with
+3.  Render to an htmlwidget with
     [`anime_render()`](https://long39ng.github.io/animejs/reference/anime_render.md).
 
 Property values are specified via
@@ -28,11 +29,15 @@ and
 Per-element delay offsets are specified via
 [`anime_stagger()`](https://long39ng.github.io/animejs/reference/anime_stagger.md).
 Easing functions are specified via the `anime_easing_*()` family. Target
-selectors are constructed via the `anime_target_*()` family.
+selectors are constructed via the `anime_target_*()` family. In Shiny
+applications, use
+[`animejsOutput()`](https://long39ng.github.io/animejs/reference/animejs-shiny.md)
+and
+[`renderAnimejs()`](https://long39ng.github.io/animejs/reference/animejs-shiny.md).
 
 ## Package options
 
-None currently. All configuration is per-timeline.
+None currently. All configuration is per-animation.
 
 ## See also
 
@@ -48,3 +53,8 @@ Useful links:
 
 **Maintainer**: Long Nguyen <nguyen@dezim-institut.de>
 ([ORCID](https://orcid.org/0000-0001-8878-7386))
+
+Authors:
+
+- Long Nguyen <nguyen@dezim-institut.de>
+  ([ORCID](https://orcid.org/0000-0001-8878-7386))
