@@ -1,6 +1,6 @@
 dependencies:
   - name: anime
-    version: 4.3.6
+    version: 4.5.0
     src: htmlwidgets/lib
     script: anime.esm.min.js
   - name: animejs-binding
