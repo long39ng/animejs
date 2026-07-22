@@ -278,6 +278,8 @@ prop_value_to_js <- function(value) {
     from_to_to_js(value)
   } else if (inherits(value, "anime_keyframes")) {
     lapply(unclass(value), keyframe_to_js)
+  } else if (inherits(value, "anime_text")) {
+    text_to_js(value)
   } else if (is.numeric(value) && length(value) == 2L) {
     # Bare length-2 numeric vector: treat as from/to
     list(from = value[[1L]], to = value[[2L]])

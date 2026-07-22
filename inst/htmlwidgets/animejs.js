@@ -40,7 +40,10 @@ function resolveEase(spec) {
 
 	switch (spec.type) {
 		case "spring":
-			return anime.spring({ bounce: spec.bounce, duration: spec.duration });
+			return anime.spring({
+				bounce: spec.bounce,
+				duration: spec.duration,
+			});
 		case "cubicBezier":
 			return anime.cubicBezier(...spec.args);
 		case "steps":
@@ -58,12 +61,18 @@ function resolvePropEases(props) {
 	for (const [key, value] of Object.entries(props || {})) {
 		if (Array.isArray(value)) {
 			out[key] = value.map((keyframe) =>
-				keyframe && typeof keyframe === "object" && keyframe.ease != null
-					? Object.assign({}, keyframe, { ease: resolveEase(keyframe.ease) })
+				keyframe &&
+				typeof keyframe === "object" &&
+				keyframe.ease != null
+					? Object.assign({}, keyframe, {
+							ease: resolveEase(keyframe.ease),
+						})
 					: keyframe,
 			);
 		} else if (value && typeof value === "object" && value.ease != null) {
-			out[key] = Object.assign({}, value, { ease: resolveEase(value.ease) });
+			out[key] = Object.assign({}, value, {
+				ease: resolveEase(value.ease),
+			});
 		} else {
 			out[key] = value;
 		}
@@ -109,11 +118,51 @@ function resolveCallbacks(events) {
 			callbacks[event] = window[cbName];
 		} else {
 			console.warn(
-				"[animejs widget] event callback not found on window: " + cbName,
+				"[animejs widget] event callback not found on window: " +
+					cbName,
 			);
 		}
 	}
 	return callbacks;
+}
+
+// ---------------------------------------------------------------------------
+// Discrete text keyframes (anime_text)
+// A "text" prop is not a tween: its values are swapped into the target's
+// textContent as the segment advances. Split the tween props from the text
+// props so Anime.js never tries to interpolate the latter.
+// ---------------------------------------------------------------------------
+function splitTextProps(props) {
+	const tween = {};
+	const texts = [];
+	for (const [key, value] of Object.entries(props || {})) {
+		if (value && typeof value === "object" && value.type === "text") {
+			texts.push(value.values || []);
+		} else {
+			tween[key] = value;
+		}
+	}
+	return { tween, texts };
+}
+
+// A timeline timer whose onUpdate maps its own progress onto the value array
+// and writes the current value to each target's textContent. Adding it as a
+// timer (params with no target) also gives the segment its duration on the
+// timeline, so a text-only timeline still has length and scrubs correctly.
+function makeTextTimer(targets, values, duration) {
+	const n = values.length;
+	return {
+		duration: duration,
+		onUpdate: (self) => {
+			if (n === 0) return;
+			const p = self.iterationProgress ?? self.progress ?? 0;
+			const i = Math.min(Math.max(Math.floor(p * n), 0), n - 1);
+			const text = String(values[i]);
+			targets.forEach((target) => {
+				if (target.textContent !== text) target.textContent = text;
+			});
+		},
+	};
 }
 
 // ---------------------------------------------------------------------------
@@ -136,9 +185,26 @@ function buildTimeline(el, config) {
 		),
 	);
 
+	const defaultDuration = defaults.duration ?? 0;
+
 	for (const segment of config.segments || []) {
+		const { tween, texts } = splitTextProps(segment.props);
+		const position = segment.offset ?? "+=0";
 		const targets = el.querySelectorAll(segment.selector);
-		tl.add(targets, tweenParams(segment), segment.offset ?? "+=0");
+
+		// Only add a tween when there is at least one tweenable prop; Anime.js
+		// rejects an animation with no properties.
+		if (Object.keys(tween).length > 0) {
+			const tweenSegment = Object.assign({}, segment, { props: tween });
+			tl.add(targets, tweenParams(tweenSegment), position);
+		}
+
+		if (texts.length > 0) {
+			const duration = segment.duration ?? defaultDuration;
+			for (const values of texts) {
+				tl.add(makeTextTimer(targets, values, duration), position);
+			}
+		}
 	}
 
 	return tl;

@@ -17,6 +17,7 @@
 ^Meta$
 ^cran-comments\.md$
 ^CRAN-SUBMISSION$
+^CLAUDE\.md$
 ^\.claude$
 ^skills-lock\.json$
 \.DS_Store$

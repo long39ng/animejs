@@ -1,3 +1,13 @@
+# animejs 1.1.0
+
+## New features
+
+* `anime_text()` adds discrete text keyframes: a segment prop whose values are
+  swapped into the target element's `textContent` as the timeline advances,
+  rather than tweened. It composes with ordinary tween props on the same
+  segment and follows the play/pause and scrub controls. Useful for animated
+  titles, counters, and tickers.
+
 # animejs 1.0.0
 
 ## Breaking changes

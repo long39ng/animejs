@@ -19,6 +19,7 @@ reference:
     contents:
       - anime_from_to
       - anime_keyframes
+      - anime_text
 
   - title: Stagger
     desc: >

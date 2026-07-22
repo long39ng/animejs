@@ -4,6 +4,7 @@
 
 ## Notes
 
-This 1.0.0 release corrects the easing serialisation to match the Anime.js
-v4 API (v3 residue removed), adds `anime_animate()` and Shiny bindings, and
-adopts structured input validation throughout.
+This is a minor release. It adds `anime_text()`, a discrete text-keyframe
+segment property that swaps an element's text content as the timeline plays,
+following the same tagged-object serialisation pattern as the existing easing
+and property constructors. No user-facing changes to existing functions.
