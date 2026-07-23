@@ -137,6 +137,8 @@ Describe how individual CSS or SVG properties change over time.
   : Specify a from/to property range
 - [`anime_keyframes()`](https://long39ng.github.io/animejs/reference/anime_keyframes.md)
   : Specify per-property keyframes for an animation
+- [`anime_text()`](https://long39ng.github.io/animejs/reference/anime_text.md)
+  : Specify discrete text keyframes for an element
 
 ## Stagger
 
