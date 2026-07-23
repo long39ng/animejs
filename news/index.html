@@ -46,6 +46,12 @@
 <ul><li>
 <code><a href="../reference/anime_text.html">anime_text()</a></code> adds discrete text keyframes: a segment prop whose values are swapped into the target element’s <code>textContent</code> as the timeline advances, rather than tweened. It composes with ordinary tween props on the same segment and follows the play/pause and scrub controls. Useful for animated titles, counters, and tickers.</li>
 </ul></div>
+<div class="section level3">
+<h3 id="bug-fixes-1-1-0">Bug fixes<a class="anchor" aria-label="anchor" href="#bug-fixes-1-1-0"></a></h3>
+<ul><li><p>An injected SVG that carries a <code>viewBox</code> but no <code>width</code>/<code>height</code> is now fitted to the widget’s width, with its height derived from the viewBox aspect ratio and the widget box grown to hold the drawing plus any controls bar. It no longer sizes itself from its intrinsic ratio and overflows, nor is it letterboxed inside a fixed box. SVGs with explicit dimensions are untouched.</p></li>
+<li><p>The controls bar stylesheet is now actually loaded. It had been declared in the widget YAML under the same dependency name htmlwidgets uses for the binding script, so the higher-versioned auto entry won the deduplication and the CSS was dropped once the package version rose above the hardcoded one.</p></li>
+<li><p>The play / pause button and scrub bar are fully styled and reset, so they render consistently across browsers and no longer inherit a host page’s button or range-input styling. The filled part of the track is painted with a gradient rather than browser-specific progress pseudo-elements.</p></li>
+</ul></div>
 </div>
     <div class="section level2">
 <h2 class="pkg-version" data-toc-text="1.0.0" id="animejs-100">animejs 1.0.0<a class="anchor" aria-label="anchor" href="#animejs-100"></a></h2><p class="text-muted">CRAN release: 2026-07-20</p>

@@ -8,6 +8,35 @@ HTMLWidgets.widget({
 				// 1. Inject SVG markup into the widget element.
 				el.innerHTML = x.svg || "";
 
+				// A root SVG with a viewBox but no width/height would size
+				// itself from its intrinsic ratio and overflow the widget box.
+				// Instead, fit it to the element's width and derive its height
+				// from the viewBox aspect ratio, letting the element grow to
+				// hold the drawing plus any controls bar. The drawing is then
+				// shown at full size, not letterboxed inside a fixed box. An SVG
+				// that carries explicit dimensions is left alone.
+				const root = el.querySelector("svg");
+				if (root && !root.hasAttribute("width") && !root.hasAttribute("height")) {
+					const vb = (root.getAttribute("viewBox") || "")
+						.split(/[\s,]+/)
+						.map(Number);
+					root.style.display = "block";
+					root.style.width = "100%";
+					if (vb.length === 4 && vb[2] > 0 && vb[3] > 0) {
+						root.style.height = "auto";
+						root.style.aspectRatio = vb[2] + " / " + vb[3];
+						// Override the fixed height htmlwidgets set on the box so
+						// it grows to the drawing's height plus the controls bar.
+						el.style.height = "auto";
+					} else {
+						// No usable viewBox: fall back to filling the box.
+						el.style.display = "flex";
+						el.style.flexDirection = "column";
+						root.style.flex = "1 1 auto";
+						root.style.minHeight = "0";
+					}
+				}
+
 				// 2. Build and play the Anime.js animation or timeline.
 				const config = x.config || {};
 				const instance =
@@ -250,6 +279,8 @@ function resolveStagger(s) {
 function attachControls(el, instance, autoplay) {
 	const bar = document.createElement("div");
 	bar.className = "animejs-controls";
+	// Keep the bar at its natural height when the widget is a flex column.
+	bar.style.flex = "0 0 auto";
 
 	const btn = document.createElement("button");
 	btn.setAttribute("aria-label", autoplay ? "Pause" : "Play");
@@ -280,17 +311,28 @@ function attachControls(el, instance, autoplay) {
 	bar.appendChild(scrubber);
 	el.appendChild(bar);
 
+	// Paint the filled part of the track. The track background is a hard-stop
+	// gradient driven by this custom property, so the fill looks the same in
+	// every engine instead of relying on browser-specific progress pseudos.
+	function updateFill() {
+		const pct = (scrubber.value / scrubber.max) * 100;
+		scrubber.style.setProperty("--animejs-pct", pct + "%");
+	}
+	updateFill();
+
 	// Keep the scrubber in sync while playing, chaining any user callback.
 	const userOnUpdate = instance.onUpdate;
 	instance.onUpdate = function (self) {
 		if (typeof userOnUpdate === "function") userOnUpdate(self);
 		scrubber.value = Math.round(self.iterationProgress * 1000);
+		updateFill();
 	};
 
 	const userOnComplete = instance.onComplete;
 	instance.onComplete = function (self) {
 		if (typeof userOnComplete === "function") userOnComplete(self);
 		scrubber.value = 0;
+		updateFill();
 		syncBtn();
 	};
 
@@ -310,6 +352,7 @@ function attachControls(el, instance, autoplay) {
 	scrubber.addEventListener("input", () => {
 		const fraction = scrubber.value / 1000;
 		instance.seek(instance.iterationDuration * fraction);
+		updateFill();
 
 		// Seeking to a mid-point after completion un-completes the animation.
 		if (instance.completed) {

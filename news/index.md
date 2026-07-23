@@ -11,6 +11,27 @@
   segment and follows the play/pause and scrub controls. Useful for
   animated titles, counters, and tickers.
 
+### Bug fixes
+
+- An injected SVG that carries a `viewBox` but no `width`/`height` is
+  now fitted to the widget’s width, with its height derived from the
+  viewBox aspect ratio and the widget box grown to hold the drawing plus
+  any controls bar. It no longer sizes itself from its intrinsic ratio
+  and overflows, nor is it letterboxed inside a fixed box. SVGs with
+  explicit dimensions are untouched.
+
+- The controls bar stylesheet is now actually loaded. It had been
+  declared in the widget YAML under the same dependency name htmlwidgets
+  uses for the binding script, so the higher-versioned auto entry won
+  the deduplication and the CSS was dropped once the package version
+  rose above the hardcoded one.
+
+- The play / pause button and scrub bar are fully styled and reset, so
+  they render consistently across browsers and no longer inherit a host
+  page’s button or range-input styling. The filled part of the track is
+  painted with a gradient rather than browser-specific progress
+  pseudo-elements.
+
 ## animejs 1.0.0
 
 CRAN release: 2026-07-20
